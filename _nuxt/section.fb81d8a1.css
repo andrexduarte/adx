@@ -1,0 +1,1 @@
+.full-height.full-height--forced[data-v-e46297ae]{height:calc(100vh - theme("spacing.nav"))}@screen md{.full-height[data-v-e46297ae]:not(.full-height--forced){height:calc(100vh - theme("spacing.nav"))}}
