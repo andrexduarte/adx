@@ -1,0 +1,1 @@
+.identifier .letter{animation:fadeIn .5s forwards;display:inline-block;opacity:0;transform:translateY(-20px)}@keyframes fadeIn{0%{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
