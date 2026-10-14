@@ -1,1 +1,5 @@
-
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Sitemap: https://andre.is-a.dev/sitemap.xml

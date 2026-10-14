@@ -1,0 +1,46 @@
+<div class="axis" aria-hidden="true">
+  <span [style.transform]="'scaleY(' + progress() + ')'"></span>
+</div>
+
+@for (moment of moments(); track moment.id) {
+  <section
+    class="moment"
+    [id]="'momento-' + moment.slug"
+    [attr.aria-labelledby]="'titulo-' + moment.slug"
+    [class.is-active]="activeId() === 'momento-' + moment.slug"
+  >
+    <header class="moment-lead">
+      <p class="moment-year">{{ moment.year }}</p>
+      <p class="moment-location eyebrow">{{ moment.place }}</p>
+      <h3 [id]="'titulo-' + moment.slug">{{ moment.company }}</h3>
+      <p class="period">{{ moment.excerpt }}</p>
+    </header>
+    <div class="moment-writing">
+      @if (moment.excerpt.toLowerCase().includes('presente')) {
+        <p class="moment-context eyebrow">Trabalho atual</p>
+      }
+      <h4 class="moment-role">{{ moment.title }}</h4>
+      <div class="moment-body reading" [innerHTML]="moment.html"></div>
+      @if (moment.reflection) {
+        <blockquote>{{ moment.reflection }}</blockquote>
+      }
+      @if (moment.article; as article) {
+        <a class="related-text" [routerLink]="['/caderno', article.slug]">
+          <span class="related-label">Uma página do caderno <span aria-hidden="true">↗</span></span>
+          <span class="related-title">{{ article.title }}</span>
+        </a>
+      }
+    </div>
+  </section>
+  @if (moment.slug === '2015') {
+    <figure class="landscape" id="paisagem">
+      <img
+        src="/images/cerrado-xilogravura.jpg"
+        width="1536"
+        height="1024"
+        loading="lazy"
+        alt="André a cavalo, visto de costas, acompanhado por seu red heeler no cerrado, em xilogravura."
+      />
+    </figure>
+  }
+}

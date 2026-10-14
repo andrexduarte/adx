@@ -1,0 +1,118 @@
+.rich-editor {
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.editor-toolbar {
+  display: flex;
+  gap: 4px;
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  background: #f3f0e9;
+  position: sticky;
+  top: 85px;
+  z-index: 4;
+}
+.editor-toolbar button {
+  height: 40px;
+  min-width: 38px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 12px;
+  color: var(--ink);
+}
+.editor-toolbar button[aria-pressed='true'] {
+  border-color: var(--ink);
+}
+.editor-toolbar em {
+  color: var(--ink);
+}
+.editor-surface .tiptap {
+  padding: 28px;
+  min-height: 380px;
+  outline: none;
+  font: 16px/1.85 var(--sans);
+  overflow-wrap: anywhere;
+}
+.editor-surface .tiptap p {
+  margin: 0 0 1.2em;
+}
+.editor-surface .tiptap h2 {
+  font-size: 32px;
+  line-height: 1.3;
+}
+.editor-surface .tiptap h3 {
+  font-size: 25px;
+}
+.editor-surface .tiptap blockquote {
+  margin: 25px 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--red);
+  font: italic 24px/1.6 var(--serif);
+}
+.editor-surface .tiptap pre {
+  padding: 16px;
+  background: #eee9df;
+  overflow: auto;
+  font: 13px/1.6 monospace;
+}
+.editor-surface .tiptap img {
+  max-height: 450px;
+  object-fit: contain;
+  display: block;
+  margin: 20px 0;
+}
+.editor-loading {
+  font-size: 12px;
+  padding: 20px;
+  color: var(--muted);
+}
+.editor-extra {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.editor-extra label {
+  flex: 1 1 220px;
+  margin: 0;
+}
+.editor-extra input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.editor-extra button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.editor-extra p {
+  width: 100%;
+  color: var(--red);
+  margin: 0;
+}
+@media (max-width: 620px) {
+  .editor-toolbar {
+    top: 69px;
+    gap: 2px;
+    padding: 7px;
+  }
+  .editor-toolbar button {
+    padding: 0 9px;
+    font-size: 11px;
+  }
+  .editor-surface .tiptap {
+    padding: 20px;
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,548 @@
+{
+  "date": "2026-10-14",
+  "scope": "Registro de verificações por revisão. A revisão mais recente é productionPreparation: build, testes locais, SSR empacotado e prévia no navegador. Deploy e banco remoto ainda pendentes.",
+  "build": {
+    "command": "npm run build:vercel",
+    "passed": true,
+    "warnings": 0,
+    "initialRawKB": 359.94,
+    "initialEstimatedTransferKB": 103.24
+  },
+  "automatedTests": {
+    "contentHydrationMetaAndPolicies": {
+      "command": "npm test",
+      "passed": 19,
+      "failed": 0
+    },
+    "packagedSSR": {
+      "command": "npm run test:ssr",
+      "passed": 8,
+      "failed": 0
+    },
+    "database": "PostgreSQL isolado via PGlite; auth e storage são fixtures, políticas do site vêm das migrações reais. Não valida Auth/Storage HTTP do Supabase remoto."
+  },
+  "server": {
+    "tested": "Vercel Build Output function loaded locally through Node.js",
+    "timelineChapters": 11,
+    "articleContentInServerHTML": true,
+    "rssItems": 10,
+    "sitemapURLs": 13,
+    "missingPagesReturn404": true,
+    "adminCacheControl": "no-store",
+    "adminRobots": "noindex, nofollow",
+    "mediumLiveFeed": {
+      "status": 200,
+      "posts": 10
+    }
+  },
+  "browser": {
+    "testedBuild": "Angular development server on localhost:4301; SSR tests use packaged production function",
+    "viewportWidths": [
+      320,
+      390,
+      933
+    ],
+    "horizontalOverflowObserved": false,
+    "blogCodeFilterResults": 2,
+    "caseInsensitiveSearchVerified": true,
+    "timelinePresentAnchorTopPx": 130,
+    "stickyChapterTitles": true,
+    "allTenChaptersEditable": true,
+    "untitledDraftRestoredAfterReload": true,
+    "draftPhotosAndOrderRestoredAfterReload": true,
+    "draftJSONImportKeepsOriginal": true,
+    "exportEmbedsBothStoryPhotos": true,
+    "embeddedPhotosRestoredFromJSON": true,
+    "inlineImageDescriptionVerifiedInPreview": true,
+    "invalidLinkRejected": true,
+    "validLinkInserted": true,
+    "mediumImportAvoidsExistingPosts": true,
+    "localTestDraftsRemoved": true,
+    "publishingDisabledWithoutSupabase": true,
+    "physicalPhoneTested": false,
+    "currentWorkAnchorTopPx": 130,
+    "careerOrder": [
+      "agora",
+      "2025",
+      "2023",
+      "2022",
+      "2015",
+      "2012",
+      "2011",
+      "2011-hollo",
+      "2010",
+      "2009",
+      "2008"
+    ],
+    "darkFooterRevealsUnderMain": true,
+    "footerOverlapMeasuredPx": 39.84375,
+    "discreetAcauaWidthPx": 84,
+    "storiesPublicRouteRetired": true,
+    "runtimeWarnings": "NG0913: original signature asset dimensions exceed displayed size; no runtime errors observed in final navigation."
+  },
+  "pending": [
+    "Projeto Supabase dedicado e validação remota de Auth/Storage/publicação",
+    "Autenticação da Vercel, deployment e domínio",
+    "Revisão editorial dos candidatos do Facebook e exportação do Instagram",
+    "Confirmação do término da Webroom: agosto/2010 no Facebook, setembro/2010 no LinkedIn",
+    "Perfil no Fediverso e participação no Fediring",
+    "Auditoria automatizada de acessibilidade e teste em telefone físico",
+    "Otimização do arquivo original da assinatura"
+  ],
+  "preview": "http://localhost:4301/",
+  "editor": "http://localhost:4301/admin",
+  "screenshots": [
+    "../research/site-travessia-ready.png",
+    "../research/site-current-work-ready.png",
+    "../research/site-dark-footer-ready.png"
+  ],
+  "signatureUpdate": {
+    "buildPassed": true,
+    "browserWidthsChecked": [
+      320,
+      390,
+      933
+    ],
+    "horizontalOverflow": false,
+    "automatedSuitesRerun": false,
+    "note": "Alteração visual da assinatura; compilação e verificação no navegador realizadas."
+  },
+  "structureUpdate": {
+    "organizedByFeature": true,
+    "extractedComponents": [
+      "SiteHeader",
+      "SiteFooter",
+      "Wordmark",
+      "StoryViewer"
+    ],
+    "testsPassed": 25,
+    "buildPassed": true,
+    "developmentServer": "npm start on http://localhost:4301/",
+    "hotReloadObserved": true,
+    "browserChecks": [
+      "sticky header",
+      "story next and Escape",
+      "rich editor loaded"
+    ],
+    "browserWarning": "NG0913: a imagem original da assinatura é maior que o tamanho renderizado; aviso de otimização, sem erro de execução.",
+    "concurrentHomeEdit": "Texto do usuário incorporado em features/home/home.html e verificado no navegador em modo dev após os testes. Cópia antiga preservada em pages/home.html por bloqueio de limpeza."
+  },
+  "facebookCuration": {
+    "zipFilesLocated": 13,
+    "distinctParts": 11,
+    "ownTexts": 2794,
+    "years": "2009–2026",
+    "mediaReferences": 771,
+    "mediaExtracted": false,
+    "candidatePostsPublished": false,
+    "location": "imports/facebook",
+    "report": "../research/facebook-export-review.md",
+    "excludedFromSourceZip": true
+  },
+  "homeRefinement": {
+    "developmentHttpStatus": 200,
+    "lintRun": false,
+    "horizontalOverflowObserved": false,
+    "scope": "Apresentação profissional, navegação da home, seleção editorial do caderno e contato no rodapé; somente versão local.",
+    "automatedTestsRun": false,
+    "activeSectionVerified": true,
+    "newContentPresentInDevelopmentServerHtml": true,
+    "screenshot": "../research/site-work-refined.jpg",
+    "existingObservations": [
+      "Aviso NG0913 sobre as dimensões da assinatura.",
+      "AbortError nas transições ignoradas durante navegação rápida; configuração de transições preexistente não alterada."
+    ],
+    "careerDeepLinkVerified": "Evavip.com: /trajetoria#momento-2023",
+    "browserWidths": [
+      320,
+      390,
+      933,
+      1280
+    ],
+    "productionBuildRun": false,
+    "deployed": false,
+    "date": "2026-10-14",
+    "nativeDetailsMouseAndKeyboardVerified": true,
+    "featuredArticleVerified": "/caderno/do-caos-flash-ao-tedio-flat"
+  },
+  "integratedHomeJourney": {
+    "companyDirectoryRemoved": true,
+    "personalSection": true,
+    "lintRun": false,
+    "productionBuildRun": false,
+    "scope": "Trajetória incorporada à home e revisão do conteúdo pessoal.",
+    "careerChapters": 10,
+    "automatedExpectationsUpdated": true,
+    "order": [
+      "2025",
+      "2023",
+      "2022",
+      "2015",
+      "2012",
+      "2011",
+      "2011-hollo",
+      "2010",
+      "2009",
+      "2008"
+    ],
+    "horizontalOverflowObserved": false,
+    "automatedTestsRun": false,
+    "browserWidths": [
+      320,
+      390,
+      933,
+      1280
+    ],
+    "date": "2026-10-14",
+    "oldRoute": {
+      "location": "/",
+      "status": 302,
+      "deepLinkVerified": "/trajetoria#momento-2023 -> /#momento-2023"
+    },
+    "anchorOffsetIncludesStickyNavigation": true,
+    "deployed": false,
+    "screenshots": [
+      "../research/site-home-trajectory.jpg",
+      "../research/site-life-rewritten.jpg"
+    ],
+    "sitemapUrls": 12,
+    "newContentPresentInDevelopmentServerHtml": true,
+    "remoteDatabaseChanged": false,
+    "duplicateWorkSummaryRemoved": true
+  },
+  "editorialHome": {
+    "automatedTestsRun": false,
+    "horizontalOverflowObserved": false,
+    "lintRun": false,
+    "disclosureEntries": 5,
+    "developmentHttpStatus": 200,
+    "originalHeroSha256": "E5CEA7CC215B8DC24C45DC3692AA9EFF586474CB9A170A7480A57EBF3FDE8BA6",
+    "productionBuildRun": false,
+    "editorialChapters": 5,
+    "screenshots": [
+      "../research/site-editorial-country.jpg",
+      "../research/site-editorial-mobile.jpg",
+      "../research/site-editorial-life.jpg"
+    ],
+    "remoteDatabaseChanged": false,
+    "physicalPhoneTested": false,
+    "date": "2026-10-14",
+    "originalHeroPreserved": true,
+    "scope": "Home em cinco capítulos editoriais, artigos contextuais, experiências expansíveis e novas xilogravuras; somente versão local.",
+    "careerEntries": 10,
+    "expandedStateSurvivesNavigation": true,
+    "generatedIllustrations": [
+      "/images/andre-retrato-xilogravura.png",
+      "/images/cavalo-cerrado-xilogravura.png"
+    ],
+    "deployed": false,
+    "existingObservations": [
+      "Aviso NG0913 sobre o tamanho original da assinatura.",
+      "AbortError ao ignorar transições entre âncoras; comportamento anterior à revisão."
+    ],
+    "browserBackScroll": {
+      "after": 3798,
+      "before": 3798
+    },
+    "keyboardAndMouseDisclosureVerified": true,
+    "rawPhotosAddedToHome": false,
+    "relatedArticleVerified": "/caderno/um-ano-e-meio-de-roca",
+    "browserWidths": [
+      320,
+      390,
+      1280
+    ]
+  },
+  "linkedInCopy": {
+    "date": "2026-10-14",
+    "source": "../research/linkedin-experience-review.json",
+    "sourceObservedOn": "2026-10-14",
+    "professionalDescriptionsReplaced": 8,
+    "scope": "Descrições originais do LinkedIn na trajetória, listas de atividades e títulos profissionais concretos; versão local.",
+    "activitiesByMoment": {
+      "2009": 5,
+      "2010": 5,
+      "2011": 5,
+      "2012": 5,
+      "2015": 5,
+      "2022": 5,
+      "2023": 0,
+      "2025": 8
+    },
+    "browserWidths": [
+      933
+    ],
+    "horizontalOverflowObserved": false,
+    "agencyDisclosureVerified": "3bits Estúdio Criativo",
+    "originalHeroPreserved": true,
+    "automatedTestsRun": false,
+    "productionBuildRun": false,
+    "lintRun": false,
+    "remoteDatabaseChanged": false,
+    "migrationsRegenerated": false,
+    "deployed": false
+  },
+  "singleColumnJourney": {
+    "date": "2026-10-14",
+    "scope": "Trajetória em uma coluna no desktop, incluindo abertura, empresas, ilustração e detalhes de agências.",
+    "browserWidths": [
+      390,
+      933,
+      1280
+    ],
+    "horizontalOverflowObserved": false,
+    "headingAboveBodyVerified": true,
+    "teamsStackedVerified": true,
+    "agencyDisclosureVerified": true,
+    "agencyHeadingAndBodyAligned": true,
+    "readingLabelVerified": "2023 · Evavip.com",
+    "linkedInCopyUnchanged": true,
+    "imagesUnchanged": true,
+    "screenshot": "../research/site-trajectory-single-column.jpg",
+    "productionBuildRun": false,
+    "automatedTestsRun": false,
+    "lintRun": false,
+    "deployed": false
+  },
+  "restoredJourney": {
+    "date": "2026-10-14",
+    "scope": "Disposição anterior recuperada conforme referência escolhida: identificação à esquerda, texto à direita, linha central e todas as experiências abertas.",
+    "reference": "../research/site-home-trajectory.jpg",
+    "browserWidths": [
+      390,
+      933,
+      1280
+    ],
+    "careerEntries": 10,
+    "desktopSideBySideVerifiedForAllEntries": true,
+    "mobileStackingVerifiedForAllEntries": true,
+    "horizontalOverflowObserved": false,
+    "chapterGroups": 0,
+    "collapsibleEntries": 0,
+    "anchor": {
+      "url": "/#momento-2012",
+      "entryTop": 184.390625,
+      "navigationBottom": 160,
+      "readingLabel": "2012 · 3bits Estúdio Criativo"
+    },
+    "linkedInCopyUnchanged": true,
+    "originalHeroSha256": "E5CEA7CC215B8DC24C45DC3692AA9EFF586474CB9A170A7480A57EBF3FDE8BA6",
+    "priorLayoutSnapshot": "../research/trajectory-before-restore-20261014",
+    "screenshot": "../research/site-trajectory-restored.jpg",
+    "automatedTestsRun": false,
+    "productionBuildRun": false,
+    "lintRun": false,
+    "remoteDatabaseChanged": false,
+    "deployed": false
+  },
+  "scrollBrand": {
+    "date": "2026-10-14",
+    "scope": "Assinatura do cabeçalho recolhida para um monograma A. vetorial durante a rolagem.",
+    "reference": "https://www.anthropic.com/",
+    "asset": "public/images/andre-monogram.svg",
+    "browserWidths": [
+      320,
+      390,
+      1280
+    ],
+    "compactStateObserved": true,
+    "expandedStateOnReturnToTopObserved": true,
+    "homeLinkObserved": true,
+    "horizontalOverflowObserved": false,
+    "headerHeights": {
+      "320": 101,
+      "390": 76,
+      "1280": 90
+    },
+    "footerFullSignaturePreserved": true,
+    "reducedMotion": "CSS sem transições; preferência revisada no código, sem emulação no navegador.",
+    "browserObservations": "Aviso NG0913 da assinatura PNG existente e AbortError de skipTransition na navegação por âncora; não alterados por esta tarefa.",
+    "screenshots": [
+      "../research/site-brand-expanded.png",
+      "../research/site-brand-compact.png",
+      "../research/site-brand-mobile.png"
+    ],
+    "automatedTestsRun": false,
+    "productionBuildRun": false,
+    "lintRun": false,
+    "deployed": false
+  },
+  "landscapeJourney": {
+    "date": "2026-10-14",
+    "scope": "Seção Vida removida da home e imagem vertical substituída pela xilogravura original em largura total entre Freelancer e 3bits.",
+    "browserWidths": [
+      390,
+      1280,
+      1920
+    ],
+    "careerEntries": 10,
+    "landscapeBefore": "momento-2015",
+    "landscapeAfter": "momento-2012",
+    "landscapeWidthMatchesSite": true,
+    "landscapeMaximumWidth": 1440,
+    "horizontalOverflowObserved": false,
+    "homeSections": [
+      "apresentacao",
+      "percurso",
+      "textos"
+    ],
+    "lifeNavigationRemoved": true,
+    "originalImageSha256": "E5CEA7CC215B8DC24C45DC3692AA9EFF586474CB9A170A7480A57EBF3FDE8BA6",
+    "priorLayoutSnapshot": "../research/layout-before-landscape-20261014-170948",
+    "screenshots": [
+      "../research/site-landscape-desktop.png",
+      "../research/site-landscape-mobile.png"
+    ],
+    "automatedTestsRun": false,
+    "productionBuildRun": false,
+    "lintRun": false,
+    "deployed": false
+  },
+  "workersHero": {
+    "date": "2026-10-14",
+    "scope": "Nova xilogravura de trabalhadores construindo uma interface web aplicada exclusivamente à imagem do topo.",
+    "asset": "public/images/construtores-web-xilogravura-transparente.png",
+    "generation": "Built-in image_gen: geração com referências e refinamento de transparência.",
+    "promptRecord": "../research/web-workers-generation.txt",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "C358C7DFC7D6B76FAAE146D9DA912B1EC741B28515FD98CDDBC2511C5C19CF12",
+    "transparentCornerVerified": true,
+    "picturesCopyVerified": true,
+    "browserWidths": [
+      390,
+      1280
+    ],
+    "imageLoaded": true,
+    "horizontalOverflowObserved": false,
+    "originalLandscapePreserved": true,
+    "screenshots": [
+      "../research/site-workers-hero-desktop.png",
+      "../research/site-workers-hero-mobile.png"
+    ],
+    "automatedTestsRun": false,
+    "productionBuildRun": false,
+    "lintRun": false,
+    "deployed": false
+  },
+  "scrollWorkshop": {
+    "date": "2026-10-14",
+    "scope": "Hero em camadas de xilogravura com transformação reversível de layout desktop para mobile conforme a rolagem. Refinamento da textura, cenário e encaixe dos trabalhadores.",
+    "generation": "Built-in ImageGen: atlas de personagens e atlas de molduras, paisagem, andaime e ferramentas.",
+    "assets": [
+      "public/images/workshop/workers-atlas.png",
+      "public/images/workshop/engraving-atlas.png"
+    ],
+    "promptRecord": "../research/workshop-animation-generation.txt",
+    "picturesFolder": "C:/Users/andre/OneDrive/Imagens/Xilogravuras - Andre Duarte",
+    "picturesCopiesMatchSha256": true,
+    "browserWidths": [
+      390,
+      1280
+    ],
+    "additionalOverflowCheckWidth": 320,
+    "desktopFrameWidth": 580,
+    "mobileFrameWidth": 264,
+    "heroPinnedTopAtDesktop": 90,
+    "cardsAtEnd": [
+      [
+        444,
+        284
+      ],
+      [
+        444,
+        368
+      ],
+      [
+        444,
+        452
+      ]
+    ],
+    "reverseScrollRestoresDesktop": true,
+    "mobileScrollVerified": true,
+    "horizontalOverflowObserved": false,
+    "careerEntries": 10,
+    "careerAnchor": {
+      "hash": "#momento-2025",
+      "chapterTop": 184.265625,
+      "navigationBottom": 160
+    },
+    "reducedMotion": "Composição estática e trecho adicional de rolagem desativado por CSS; preferência revisada no código, sem emulação no navegador.",
+    "originalLandscapeSha256": "E5CEA7CC215B8DC24C45DC3692AA9EFF586474CB9A170A7480A57EBF3FDE8BA6",
+    "existingBrowserObservations": [
+      "NG0913: dimensões da assinatura PNG preexistente.",
+      "AbortError: skipTransition durante a navegação por âncora, comportamento preexistente."
+    ],
+    "screenshots": [
+      "../research/site-workshop-rich-desktop.png",
+      "../research/site-workshop-mobile-layout.png",
+      "../research/site-workshop-rich-mobile.png"
+    ],
+    "priorHeroSnapshot": "../research/hero-before-scroll-workshop-20261014-172443",
+    "automatedTestsRun": false,
+    "productionBuildRun": false,
+    "lintRun": false,
+    "physicalPhoneTested": false,
+    "remoteDatabaseChanged": false,
+    "deployed": false
+  },
+  "productionPreparation": {
+    "date": "2026-10-14",
+    "supabaseOrganization": "cgqlklpsdhsvbikdcfdk",
+    "supabaseOrganizationName": "andrexduarte@gmail.com's Org",
+    "build": {
+      "initialRawKB": 359.36,
+      "command": "npm run build:vercel",
+      "initialEstimatedTransferKB": 103.14,
+      "usesLocalSeed": true,
+      "passed": true,
+      "warnings": 0
+    },
+    "tests": {
+      "failed": 0,
+      "passed": 20,
+      "command": "npm test"
+    },
+    "packagedSSR": {
+      "failed": 0,
+      "passed": 8,
+      "command": "npm run test:ssr",
+      "internalChecks": 7
+    },
+    "browser": {
+      "horizontalOverflow": false,
+      "screenshots": [
+        "../research/site-production-package-desktop.png",
+        "../research/site-production-package-mobile.png"
+      ],
+      "widths": [
+        1280,
+        390
+      ],
+      "consoleErrors": 0,
+      "url": "http://127.0.0.1:4303/",
+      "brokenImages": 0
+    },
+    "deploymentGuardTested": true,
+    "nodeMajor": 22,
+    "localArchivesExcludedFromVercel": true,
+    "lintRun": false,
+    "remoteDatabaseCreated": false,
+    "remoteDatabaseChanged": false,
+    "deployed": false,
+    "domainChanged": false,
+    "blockers": [
+      "Supabase: ferramenta de custo indisponível; painel pede login.",
+      "Vercel: painel pede login, plugin ainda não conectado."
+    ],
+    "githubProfile": {
+      "published": true,
+      "browserVerified": true,
+      "screenshot": "../research/github-profile/profile-workers-published.png",
+      "image": "assets/construtores-web.png",
+      "commit": "495eaff6b3b659be98094c0e9c1dfd77c84c1758"
+    }
+  }
+}
