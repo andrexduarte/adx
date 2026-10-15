@@ -13,11 +13,14 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
     return { response, body: await response.text() };
   };
   try {
-    await t.test('homepage contains the personal presentation and Person metadata', async () => {
+    await t.test('homepage retains an accessible heading and Person metadata', async () => {
       const { response, body } = await get('/');
       assert.equal(response.status, 200);
-      assert.match(body, /Código,/);
-      assert.match(body, /café\./);
+      assert.match(
+        body,
+        /<h1[^>]*class="hero-title"[^>]*>André Duarte, desenvolvedor front-end<\/h1>/,
+      );
+      assert.doesNotMatch(body, /class="hero-copy"|Código,<br|hero-actions/);
       assert.match(body, /application\/ld\+json/);
       assert.match(body, /"@type":"Person"/);
       assert.match(response.headers.get('x-robots-tag'), /noindex/);
@@ -84,8 +87,8 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         assert.match(body, /\/images\/workshop\/engraving-atlas.png/);
         assert.doesNotMatch(body, /acaua-mark.png|id="vida"/);
         assert.doesNotMatch(body, /id="projetos"|app-wakawa-project/);
-        assert.match(body, /Experiência profissional/);
-        assert.match(body, /mailto:andrexduarte@gmail.com/);
+        assert.match(body, /https:\/\/www.linkedin.com\/in\/andrexdev\//);
+        assert.match(body, /https:\/\/github.com\/andrexduarte/);
         assert.doesNotMatch(body, /Abrir os stories|home-stories/);
         for (const asset of ['workers-atlas.png', 'engraving-atlas.png']) {
           const { response } = await get('/images/workshop/' + asset);
