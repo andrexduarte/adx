@@ -1,27 +1,50 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
+  "name": "andre-site",
+  "version": "0.0.0",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev --host",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
+    "ng": "ng",
+    "prestart": "node --env-file-if-exists=.env scripts/configure.mjs",
+    "start": "ng serve --host 127.0.0.1 --port 4301",
+    "build": "node --env-file-if-exists=.env scripts/configure.mjs && ng build",
+    "build:vercel": "npm run build && node scripts/package-vercel.mjs",
+    "watch": "ng build --watch --configuration development",
+    "preview": "node dist/andre-site/server/server.mjs",
+    "test": "node scripts/compile-tests.mjs && node --test tests/*.test.mjs",
+    "test:ssr": "node --test tests/ssr.mjs",
+    "content:generate": "node scripts/seed-content.mjs",
+    "format": "prettier --write src scripts tests content/*.json README.md"
+  },
+  "private": true,
+  "packageManager": "npm@10.9.8",
+  "engines": {
+    "node": "22.x"
   },
   "dependencies": {
-    "@nuxt/image": "^1.8.1",
-    "@nuxtjs/color-mode": "^3.5.2",
-    "@nuxtjs/i18n": "^9.1.1",
-    "nuxt": "^3.14.1592",
-    "nuxt-gtag": "^3.0.2",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "@angular/common": "22.2.2",
+    "@angular/compiler": "22.2.2",
+    "@angular/core": "22.2.2",
+    "@angular/forms": "22.2.2",
+    "@angular/platform-browser": "22.2.2",
+    "@angular/platform-server": "22.2.2",
+    "@angular/router": "22.2.2",
+    "@angular/ssr": "22.2.2",
+    "@supabase/supabase-js": "2.117.3",
+    "@tiptap/core": "3.32.0",
+    "@tiptap/extension-image": "3.32.0",
+    "@tiptap/starter-kit": "3.32.0",
+    "express": "^5.1.0",
+    "fast-xml-parser": "5.11.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "push-dir": "^0.4.1",
-    "sass": "^1.83.0",
-    "sass-loader": "^16.0.4"
+    "@angular/build": "^22.2.2",
+    "@angular/cli": "^22.2.2",
+    "@angular/compiler-cli": "^22.2.0",
+    "@electric-sql/pglite": "0.5.9",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.12.0",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2"
   }
 }

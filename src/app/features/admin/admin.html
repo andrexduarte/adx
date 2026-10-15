@@ -1,0 +1,377 @@
+<div class="page admin">
+  <div class="admin-heading">
+    <div>
+      <p class="eyebrow">Seu espaço de escrita</p>
+      <h1>O que vamos<br />colocar no <em>papel?</em></h1>
+    </div>
+    @if (authorized()) {
+      <button class="button secondary" type="button" (click)="logout()">Sair</button>
+    }
+  </div>
+  @if (!gateway.configured) {
+    <p class="local-notice">
+      Você está experimentando o editor. Os rascunhos ficam salvos neste navegador. A publicação
+      estará disponível quando conectarmos sua conta.
+    </p>
+  }
+  @if (checking()) {
+    <p class="local-notice" role="status">Verificando seu acesso…</p>
+  }
+  @if (gateway.configured && !authorized() && !checking()) {
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+      <h2>Entre para escrever.</h2>
+      <label
+        >E-mail<input
+          type="email"
+          formControlName="email"
+          autocomplete="username"
+          required /></label
+      ><label
+        >Senha<input
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          required /></label
+      ><button class="button" type="submit" [disabled]="busy()">Entrar</button>
+    </form>
+  }
+  @if (!gateway.configured || authorized()) {
+    <div class="editor-layout">
+      <aside class="draft-sidebar">
+        <button class="button" type="button" (click)="newEntry()" [disabled]="busy()">
+          + Novo texto
+        </button>
+        <details class="draft-library" [open]="libraryOpen()" (toggle)="toggledLibrary($event)">
+          <summary class="library-toggle">
+            Rascunhos e conteúdo <span>{{ drafts().length }}</span>
+          </summary>
+          <div class="backup-actions">
+            <label class="button secondary upload-button"
+              >Importar rascunhos<input
+                type="file"
+                accept="application/json,.json"
+                (change)="importDraft($event)"
+                [disabled]="busy()"
+            /></label>
+            <button
+              class="button secondary"
+              type="button"
+              (click)="exportDraft(true)"
+              [disabled]="busy() || !drafts().length"
+            >
+              Exportar rascunhos
+            </button>
+            <button
+              class="button secondary"
+              type="button"
+              (click)="importMedium()"
+              [disabled]="busy()"
+            >
+              Buscar textos do Medium
+            </button>
+            @if (authorized()) {
+              <button
+                class="button secondary"
+                type="button"
+                (click)="refreshDrafts()"
+                [disabled]="busy()"
+              >
+                Atualizar da conta
+              </button>
+            }
+          </div>
+          <h2>Rascunhos</h2>
+          @for (draft of drafts(); track draft.id) {
+            <button
+              class="draft-item"
+              type="button"
+              (click)="load(draft)"
+              [class.selected]="entryId() === draft.id"
+              [disabled]="busy()"
+            >
+              <span>{{ draft.title || 'Rascunho sem título' }}</span
+              ><small>{{
+                draft.kind === 'story' ? 'Story' : draft.kind === 'moment' ? 'Trajetória' : 'Texto'
+              }}</small>
+            </button>
+          } @empty {
+            <p class="empty-drafts">Seu próximo texto começa aqui.</p>
+          }
+          <details>
+            <summary>Textos do caderno</summary>
+            @for (entry of library(); track entry.id) {
+              @if (entry.kind === 'article') {
+                <button class="draft-item" type="button" (click)="load(entry)" [disabled]="busy()">
+                  {{ entry.title }}
+                  @if (entry.status === 'archived') {
+                    <small>Retirado do site</small>
+                  }
+                </button>
+              }
+            }
+          </details>
+          <details>
+            <summary>Capítulos da trajetória</summary>
+            @for (entry of library(); track entry.id) {
+              @if (entry.kind === 'moment') {
+                <button class="draft-item" type="button" (click)="load(entry)" [disabled]="busy()">
+                  <small>{{ entry.year }} · {{ entry.company }}</small
+                  >{{ entry.title }}
+                </button>
+              }
+            }
+          </details>
+          <details>
+            <summary>Fotos e coleções guardadas</summary>
+            @for (entry of library(); track entry.id) {
+              @if (entry.kind === 'story') {
+                <button class="draft-item" type="button" (click)="load(entry)" [disabled]="busy()">
+                  {{ entry.title }}
+                </button>
+              }
+            }
+          </details>
+        </details>
+      </aside>
+      <div class="compose">
+        <form [formGroup]="form" (submit)="$event.preventDefault()">
+          <fieldset [disabled]="busy()">
+            <div class="field-row">
+              <label
+                >Formato<select formControlName="kind">
+                  <option value="article">Texto do caderno</option>
+                  <option value="moment">Momento da trajetória</option>
+                  <option value="story" disabled>Coleção guardada (fora do site)</option>
+                </select></label
+              ><label
+                >Assunto<select formControlName="category">
+                  <option>Código</option>
+                  <option>Vida</option>
+                  <option>Roça</option>
+                </select></label
+              >
+            </div>
+            <label class="title-label"
+              >Título<input
+                class="title-input"
+                formControlName="title"
+                placeholder="Um título para começar"
+                maxlength="180"
+                required /></label
+            ><label
+              >Uma breve apresentação<textarea
+                formControlName="excerpt"
+                rows="2"
+                maxlength="400"
+                placeholder="Sobre o que você quer escrever?"
+              ></textarea>
+            </label>
+            @if (form.controls.kind.value === 'moment') {
+              <div class="field-row">
+                <label>Ano ou período<input formControlName="year" placeholder="2026" /></label
+                ><label
+                  >Lugar<input formControlName="place" placeholder="Cidade ou região"
+                /></label>
+              </div>
+              <label
+                >Empresa ou capítulo<input
+                  formControlName="company"
+                  placeholder="Trabalho, estudo, vida…"
+              /></label>
+              <label
+                >Uma frase desse momento<input
+                  formControlName="reflection"
+                  maxlength="400"
+                  placeholder="Algo que ficou com você"
+              /></label>
+              <label
+                >Texto relacionado<select formControlName="articleSlug">
+                  <option value="">Sem texto relacionado</option>
+                  @for (entry of content.articles(); track entry.id) {
+                    <option [value]="entry.slug">{{ entry.title }}</option>
+                  }
+                </select></label
+              >
+            }
+            <label class="body-label">Texto</label
+            ><app-rich-editor [value]="html()" [disabled]="busy()" (changed)="changed($event)" />
+            <div class="media-actions">
+              <label class="button secondary upload-button"
+                >Adicionar imagens<input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                  (change)="addImages($event)"
+                  [disabled]="busy()" /></label
+              ><span>JPG, PNG ou WebP · até 5 MB</span>
+            </div>
+            @if (form.controls.kind.value === 'story') {
+              <p class="intro">
+                A área de stories saiu do site. Suas fotos continuam guardadas; você pode salvar e
+                exportar esta coleção.
+              </p>
+              <div class="story-uploads">
+                @for (image of images(); track $index) {
+                  <div>
+                    <img [src]="image.url" [alt]="image.alt || image.caption" /><label
+                      >Legenda<input
+                        [value]="image.caption"
+                        maxlength="1000"
+                        (input)="updateMedia($index, 'caption', $event)" /></label
+                    ><label
+                      >Descrição da imagem<input
+                        [value]="image.alt || ''"
+                        maxlength="1000"
+                        (input)="updateMedia($index, 'alt', $event)"
+                        placeholder="O que aparece nesta foto?"
+                    /></label>
+                    <div class="image-actions">
+                      <button
+                        type="button"
+                        (click)="moveImage($index, -1)"
+                        [disabled]="$first"
+                        [attr.aria-label]="'Mover imagem ' + ($index + 1) + ' para antes'"
+                      >
+                        ↑ Antes</button
+                      ><button
+                        type="button"
+                        (click)="moveImage($index, 1)"
+                        [disabled]="$last"
+                        [attr.aria-label]="'Mover imagem ' + ($index + 1) + ' para depois'"
+                      >
+                        ↓ Depois</button
+                      ><button type="button" (click)="removeImage($index)">Remover</button>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+            <details class="address-details">
+              <summary>Endereço do texto</summary>
+              <label
+                >Endereço<input
+                  formControlName="slug"
+                  placeholder="Gerado a partir do título"
+                /><small>Use letras minúsculas, números e hífens.</small></label
+              >
+            </details>
+          </fieldset>
+        </form>
+        <div class="editor-actions">
+          <span class="saved" role="status">{{ saved() }}</span>
+          <div>
+            <button class="button secondary" type="button" (click)="preview()" [disabled]="busy()">
+              Prévia
+            </button>
+            @if (gateway.configured) {
+              <button
+                class="button secondary"
+                type="button"
+                (click)="saveCloud('draft')"
+                [disabled]="busy()"
+              >
+                Salvar rascunho
+              </button>
+            }
+            <button
+              class="button secondary"
+              type="button"
+              (click)="exportDraft()"
+              [disabled]="busy()"
+            >
+              Exportar</button
+            ><button
+              class="button secondary"
+              type="button"
+              (click)="discardLocalDraft()"
+              [disabled]="busy()"
+            >
+              Descartar rascunho
+            </button>
+            <button
+              class="button red"
+              type="button"
+              (click)="saveCloud('published')"
+              [disabled]="!authorized() || busy() || form.controls.kind.value === 'story'"
+              [attr.title]="!gateway.configured ? 'Aguardando conexão da sua conta' : null"
+            >
+              Publicar no site
+            </button>
+          </div>
+          @if (
+            authorized() &&
+            publishedEntry()?.status === 'published' &&
+            form.controls.kind.value !== 'story'
+          ) {
+            <button class="unpublish" type="button" (click)="askArchive()" [disabled]="busy()">
+              Retirar do site
+            </button>
+          }
+          @if (publishedPath()) {
+            <a
+              class="text-link"
+              [routerLink]="publishedPath().split('#')[0].split('?')[0]"
+              [fragment]="publishedPath().includes('#') ? publishedPath().split('#')[1] : undefined"
+              [queryParams]="
+                form.controls.kind.value === 'story'
+                  ? { story: form.controls.slug.value || publishedEntry()?.slug }
+                  : {}
+              "
+              >Ver no site ↗</a
+            >
+          }
+        </div>
+      </div>
+    </div>
+  }
+  @if (error()) {
+    <p class="feedback error" role="alert">{{ error() }}</p>
+  }
+  @if (message()) {
+    <p class="feedback" role="status">{{ message() }}</p>
+  }
+</div>
+<dialog #archiveModal class="archive-dialog" aria-labelledby="archive-title">
+  <h2 id="archive-title">Retirar este conteúdo do site?</h2>
+  <p>{{ publishedEntry()?.title }}</p>
+  <p>
+    Ele deixará de aparecer nas páginas públicas. Uma cópia do que você está editando ficará nos
+    rascunhos.
+  </p>
+  <div>
+    <button class="button secondary" type="button" (click)="closeArchive()">Manter no site</button
+    ><button class="button red" type="button" (click)="archive()" [disabled]="busy()">
+      Retirar do site
+    </button>
+  </div>
+</dialog>
+<dialog #previewModal class="preview-dialog" aria-labelledby="preview-title">
+  <div class="preview-top">
+    <span>Prévia do rascunho</span
+    ><button class="button secondary" type="button" (click)="closePreview()">Fechar ×</button>
+  </div>
+  @if (previewEntry(); as entry) {
+    <article>
+      <p class="eyebrow">
+        {{ entry.kind === 'moment' ? entry.year + ' · ' + entry.place : entry.category }}
+      </p>
+      <h1 id="preview-title">{{ entry.title || 'Sem título' }}</h1>
+      @if (entry.kind === 'moment') {
+        <p class="eyebrow">{{ entry.company }}</p>
+      }
+      <p class="intro">{{ entry.excerpt }}</p>
+      <div class="reading" [innerHTML]="entry.html"></div>
+      @if (entry.reflection) {
+        <blockquote class="moment-preview-reflection">{{ entry.reflection }}</blockquote>
+      }
+      @if (entry.kind === 'story') {
+        @for (image of entry.images; track $index) {
+          <figure>
+            <img [src]="image.url" [alt]="image.alt || image.caption" />
+            <figcaption>{{ image.caption }}</figcaption>
+          </figure>
+        }
+      }
+    </article>
+  }
+</dialog>

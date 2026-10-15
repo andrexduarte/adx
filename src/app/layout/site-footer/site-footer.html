@@ -1,0 +1,29 @@
+<footer class="site-footer">
+  <nav aria-label="Links do rodapé">
+    <a href="https://github.com/andrexduarte" target="_blank" rel="noopener">GitHub ↗</a
+    ><a href="https://www.linkedin.com/in/andrexdev/" target="_blank" rel="noopener">LinkedIn ↗</a
+    ><a href="/rss.xml">RSS ↗</a
+    ><a href="https://fediring.net/" target="_blank" rel="noopener">Fediring ↗</a>
+    @if (config.fediringMember) {
+      <a
+        href="https://fediring.net/previous?host=andre.is-a.dev"
+        aria-label="Site anterior do Fediring"
+        >← Anterior</a
+      >
+    }
+    <a href="https://fediring.net/random" target="_blank" rel="noopener">Passear pela web ↗</a>
+    @if (config.fediringMember) {
+      <a href="https://fediring.net/next?host=andre.is-a.dev" aria-label="Próximo site do Fediring"
+        >Próximo →</a
+      >
+    }
+    <a routerLink="/admin">Escrever</a>
+    @if (config.fediverseProfile) {
+      <a [href]="config.fediverseProfile" rel="me noopener" target="_blank">Fediverso ↗</a>
+    }
+  </nav>
+  <div class="footer-brand">
+    <app-wordmark loading="lazy" />
+  </div>
+  <small>André Duarte · Minas Gerais, Brasil.</small>
+</footer>

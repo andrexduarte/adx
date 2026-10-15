@@ -1,0 +1,14 @@
+# Local archives and credentials must never be uploaded to the deployment service.
+imports/
+supabase/.temp/
+tmp/
+.env
+.env.*
+.vscode/
+.git/
+.angular/
+.test-output/
+node_modules/
+dist/
+coverage/
+npm-debug.log*

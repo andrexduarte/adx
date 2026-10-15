@@ -1,0 +1,51 @@
+<dialog
+  #viewer
+  class="story-dialog"
+  aria-labelledby="story-title"
+  (click)="backdrop($event)"
+  (cancel)="selected.set(null)"
+  (keydown.arrowright)="next()"
+  (keydown.arrowleft)="previous()"
+>
+  <button class="close-story" type="button" (click)="close()" aria-label="Fechar story">×</button>
+  @if (selected(); as story) {
+    <div class="story-view">
+      <div class="segments" aria-hidden="true">
+        @for (media of story.images; track $index) {
+          <span [class.read]="$index <= index()"></span>
+        }
+      </div>
+      <div class="story-heading">
+        <h2 id="story-title">{{ story.title }}</h2>
+        <span>{{ index() + 1 }} / {{ story.images.length }}</span>
+      </div>
+      @if (image(); as current) {
+        <img class="viewer-image" [src]="current.url" [alt]="current.alt || current.caption" />
+        <p class="viewer-caption" aria-live="polite">{{ current.caption }}</p>
+      }
+      @if (story.html && story.html !== '<p></p>') {
+        <details class="story-description">
+          <summary>Sobre essa história</summary>
+          <div [innerHTML]="story.html"></div>
+        </details>
+      }
+      <div class="story-controls">
+        <button
+          type="button"
+          (click)="previous()"
+          [disabled]="index() === 0"
+          aria-label="Registro anterior"
+        >
+          ← Anterior</button
+        ><button
+          type="button"
+          (click)="next()"
+          [disabled]="index() === story.images.length - 1"
+          aria-label="Próximo registro"
+        >
+          Próximo →
+        </button>
+      </div>
+    </div>
+  }
+</dialog>

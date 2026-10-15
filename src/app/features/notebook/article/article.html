@@ -1,0 +1,33 @@
+<article class="page article">
+  @if (article(); as text) {
+    <div class="article-top">
+      <a routerLink="/caderno">← Voltar ao caderno</a><span>André Duarte</span>
+    </div>
+    <header class="article-header">
+      <p class="eyebrow">Caderno aberto</p>
+      <h1>{{ text.title }}</h1>
+      <div class="article-meta">
+        <span>{{ text.category }}</span
+        ><span>·</span
+        ><time [attr.datetime]="text.publishedAt">{{ text.publishedAt | date: 'dd.MM.yyyy' }}</time>
+      </div>
+    </header>
+    <div class="article-body">
+      <div class="reading" [innerHTML]="text.html"></div>
+      <footer class="article-end">
+        @if (text.sourceUrl) {
+          <p>Do meu arquivo de textos publicados no Medium.</p>
+        }
+        <a class="text-link" routerLink="/caderno">Continuar lendo <span>↗</span></a>
+      </footer>
+    </div>
+  } @else if (unavailable()) {
+    <p class="eyebrow">Vamos tentar novamente em instantes</p>
+    <h1 class="page-title">Esse texto está<br />indisponível <em>por agora.</em></h1>
+    <a class="text-link" routerLink="/caderno">Voltar ao caderno <span>↗</span></a>
+  } @else {
+    <p class="eyebrow">Página não encontrada</p>
+    <h1 class="page-title">Esse texto<br />ainda não está <em>aqui.</em></h1>
+    <a class="text-link" routerLink="/caderno">Voltar ao caderno <span>↗</span></a>
+  }
+</article>

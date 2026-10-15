@@ -1,0 +1,20 @@
+<a class="wordmark" routerLink="/" aria-label="André Duarte, início">
+  <img
+    class="signature"
+    src="/images/andre-duarte-signature.png"
+    width="2172"
+    height="724"
+    alt=""
+    [attr.loading]="loading()"
+  />
+  @if (collapsible()) {
+    <img
+      class="monogram"
+      src="/images/andre-monogram.svg"
+      width="48"
+      height="48"
+      alt=""
+      aria-hidden="true"
+    />
+  }
+</a>

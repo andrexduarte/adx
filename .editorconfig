@@ -1,21 +1,17 @@
-# EditorConfig é uma ferramenta para manter estilos de codificação consistentes
-# Definições aplicadas a todos os arquivos
+# Editor configuration, see https://editorconfig.org
 root = true
 
 [*]
-# Definir indentação de dois espaços
+charset = utf-8
 indent_style = space
 indent_size = 2
-
-# Remover espaços em branco no final das linhas
+insert_final_newline = true
 trim_trailing_whitespace = true
 
-# Inserir uma nova linha no final do arquivo
-insert_final_newline = true
+[*.ts]
+quote_type = single
+ij_typescript_use_double_quotes = false
 
-# Definir o encoding dos arquivos como UTF-8
-charset = utf-8
-
-# Arquivos com extensão .md, .txt e .json
-[*.md, *.txt, *.json]
-indent_size = 2
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false

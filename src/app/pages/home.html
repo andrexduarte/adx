@@ -1,0 +1,103 @@
+<div class="page home">
+  <section class="hero" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Front-end desde 2009</p>
+      <h1 id="home-title">
+        Entre o código<br />
+        cerrado e a <em>vida.</em>
+      </h1>
+      <p class="intro">Sou André. Desenvolvedor front-end, sertanejo e pai de Acauã.</p>
+    </div>
+    <figure class="hero-art">
+      <img
+        ngSrc="/images/cerrado-xilogravura.jpg"
+        width="1536"
+        height="1024"
+        priority
+        alt="Xilogravura de André a cavalo, visto de costas, acompanhado por seu red heeler no cerrado"
+      />
+    </figure>
+  </section>
+
+  <section class="home-notebook" aria-labelledby="caderno-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">O que fica no papel</p>
+        <h2 id="caderno-title">Caderno <em>aberto.</em></h2>
+      </div>
+      <a class="text-link" routerLink="/caderno"
+        >Todos os textos <span aria-hidden="true">↗</span></a
+      >
+    </div>
+    <div class="article-list">
+      @for (article of content.articles().slice(0, 3); track article.id) {
+        <a class="article-row" [routerLink]="['/caderno', article.slug]"
+          ><time [attr.datetime]="article.publishedAt">{{
+            article.publishedAt | date: 'dd.MM.yyyy'
+          }}</time>
+          <div>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.excerpt }}</p>
+          </div>
+          <span class="category">{{ article.category }}</span
+          ><span class="arrow" aria-hidden="true">↗</span></a
+        >
+      }
+    </div>
+  </section>
+  <section class="home-path" aria-labelledby="caminho-title">
+    <div>
+      <p class="eyebrow">Lugares, trabalho & vida</p>
+      <h2 id="caminho-title">O caminho<br />até <em>aqui.</em></h2>
+    </div>
+    <div class="path-body">
+      <p>
+        Ipatinga. Uberlândia. Belo Horizonte. Angueretá. Cada lugar deixou alguma coisa em mim. Cada
+        trabalho também.
+      </p>
+      <p>
+        Uma trajetória feita de interfaces, mudanças de cidade, aprendizado na roça e perguntas que
+        ainda me acompanham.
+      </p>
+      <a class="text-link" routerLink="/trajetoria"
+        >Percorrer a trajetória <span aria-hidden="true">↓</span></a
+      >
+    </div>
+    <span class="path-years">2008<br />— agora</span>
+  </section>
+  <section class="home-stories" aria-labelledby="stories-title">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Pequenos registros</p>
+        <h2 id="stories-title">Fora da <em>tela.</em></h2>
+      </div>
+      <a class="text-link" routerLink="/stories"
+        >Abrir os stories <span aria-hidden="true">↗</span></a
+      >
+    </div>
+    <div class="story-strip">
+      @for (story of content.stories().slice(0, 3); track story.id) {
+        <a routerLink="/stories" [queryParams]="{ story: story.slug }" class="story-teaser"
+          ><div class="teaser-photo">
+            <img
+              [ngSrc]="story.images[0].url"
+              fill
+              sizes="(max-width: 620px) 50vw, 33vw"
+              [alt]="story.images[0].alt || story.images[0].caption"
+            />
+          </div>
+          <span>{{ story.title }}</span
+          ><small>{{ story.excerpt }}</small></a
+        >
+      }
+    </div>
+  </section>
+  <section class="now">
+    <p class="eyebrow">O capítulo de agora</p>
+    <h2>A vida com Acauã.<br /><em>E o que vem depois.</em></h2>
+    <p>Realização no presente. Incerteza sobre o futuro do front-end. As duas coisas cabem aqui.</p>
+    <a class="text-link" routerLink="/trajetoria" fragment="momento-agora"
+      >Chegar ao presente <span aria-hidden="true">↗</span></a
+    >
+  </section>
+</div>

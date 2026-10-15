@@ -1,0 +1,94 @@
+<div class="rich-editor">
+  <div class="editor-toolbar" role="group" aria-label="Formatação do texto">
+    <button
+      type="button"
+      aria-label="Negrito"
+      [attr.aria-pressed]="isActive('bold')"
+      (click)="command('bold')"
+    >
+      <strong>B</strong>
+    </button>
+    <button
+      type="button"
+      aria-label="Itálico"
+      [attr.aria-pressed]="isActive('italic')"
+      (click)="command('italic')"
+    >
+      <em>I</em>
+    </button>
+    <button
+      type="button"
+      aria-label="Título"
+      [attr.aria-pressed]="isActive('heading')"
+      (click)="command('heading')"
+    >
+      H2
+    </button>
+    <button
+      type="button"
+      aria-label="Lista"
+      [attr.aria-pressed]="isActive('bulletList')"
+      (click)="command('list')"
+    >
+      Lista
+    </button>
+    <button
+      type="button"
+      aria-label="Citação"
+      [attr.aria-pressed]="isActive('blockquote')"
+      (click)="command('quote')"
+    >
+      Citação
+    </button>
+    <button
+      type="button"
+      aria-label="Bloco de código"
+      [attr.aria-pressed]="isActive('codeBlock')"
+      (click)="command('code')"
+    >
+      Código
+    </button>
+    <button type="button" aria-label="Desfazer" (click)="command('undo')">↶</button>
+    <button type="button" aria-label="Refazer" (click)="command('redo')">↷</button>
+    <button
+      type="button"
+      aria-label="Inserir ou editar link"
+      [attr.aria-pressed]="isActive('link')"
+      (click)="toggleLink()"
+    >
+      Link
+    </button>
+  </div>
+  @if (linkOpen()) {
+    <div class="editor-extra">
+      <label
+        >Endereço do link<input
+          #linkUrl
+          type="url"
+          [value]="linkValue()"
+          placeholder="https://…"
+          (keydown.enter)="$event.preventDefault(); applyLink(linkUrl.value)" /></label
+      ><button type="button" (click)="applyLink(linkUrl.value)">Aplicar</button
+      ><button type="button" (click)="removeLink()">Remover</button
+      ><button type="button" (click)="linkOpen.set(false)">Fechar</button>
+      @if (linkError()) {
+        <p role="alert">{{ linkError() }}</p>
+      }
+    </div>
+  }
+  @if (isActive('image')) {
+    <div class="editor-extra">
+      <label
+        >Descrição da imagem selecionada<input
+          maxlength="1000"
+          [value]="imageAlt()"
+          (input)="setImageAlt($event)"
+          placeholder="O que aparece nesta imagem?"
+      /></label>
+    </div>
+  }
+  <div #surface class="editor-surface"></div>
+  @if (!editor()) {
+    <p class="editor-loading">Abrindo o editor…</p>
+  }
+</div>

@@ -1,0 +1,3 @@
+-- Períodos confirmados pelo proprietário com base no histórico do Facebook.
+update public.content set year='2012',excerpt='Fevereiro de 2012 — agosto de 2012',body_html='<p>Na Lápis Raro, desenvolvi interfaces com HTML5, CSS e JavaScript, funcionalidades com jQuery e temas personalizados para WordPress.</p><p>Trabalhava com designers na implementação dos layouts e na adaptação das páginas a diferentes telas.</p>' where id='63e4a774-cffc-5184-aca6-4aa26afaa65f';
+update public.content set year='2011',excerpt='Abril de 2011 — fevereiro de 2012',body_html='<p>Atuei como Front End Developer na hollo interact, em Belo Horizonte.</p>' where id='68ff3f83-95f5-5f16-ac3b-2de2781b8cca';

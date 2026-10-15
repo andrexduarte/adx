@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  width: 100%;
+  aspect-ratio: 10 / 7.2;
+}
+.workshop {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.engraved-lines {
+  filter: url(#workshop-cut);
+}
+.ink-line {
+  fill: none;
+  stroke: #242320;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+.ink {
+  fill: #242320;
+}
+.red {
+  fill: url(#workshop-red-ink);
+}
+.ground {
+  stroke-width: 0.8;
+}

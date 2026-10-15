@@ -1,0 +1,115 @@
+.story-dialog {
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  width: min(460px, 95vw);
+  max-height: 93dvh;
+  overflow: auto;
+}
+.story-dialog::backdrop {
+  background: rgba(15, 14, 12, 0.88);
+}
+.story-view {
+  padding: 20px;
+}
+.close-story {
+  position: absolute;
+  right: 16px;
+  top: 28px;
+  z-index: 2;
+  background: none;
+  border: 0;
+  color: var(--paper);
+  font-size: 30px;
+  width: 44px;
+  height: 44px;
+}
+.segments {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 18px;
+}
+.segments span {
+  flex: 1;
+  height: 2px;
+  background: #777;
+}
+.segments span.read {
+  background: var(--paper);
+}
+.story-heading {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  margin: 0 50px 16px 0;
+}
+.story-heading h2 {
+  font: 22px/1.2 var(--serif);
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+.story-heading > span {
+  font-size: 10px;
+  white-space: nowrap;
+  color: #ccc;
+}
+.viewer-image {
+  width: 100%;
+  height: min(58dvh, 570px);
+  object-fit: contain;
+  display: block;
+  background: #191816;
+}
+.viewer-caption {
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 18px 0 0;
+  min-height: 40px;
+}
+.story-controls {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #5a554e;
+  padding-top: 14px;
+}
+.story-description {
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 6px 0 18px;
+}
+.story-description summary {
+  cursor: pointer;
+  padding: 10px 0;
+  min-height: 44px;
+  font-size: 12px;
+}
+.story-description > div {
+  margin: 10px 0;
+  overflow: auto;
+  overflow-wrap: anywhere;
+}
+.story-controls button {
+  background: transparent;
+  border: 0;
+  color: var(--paper);
+  padding: 8px 0;
+  min-height: 44px;
+  font-size: 12px;
+}
+.story-controls button:disabled {
+  opacity: 0.35;
+}
+
+@media (max-width: 620px) {
+  .story-dialog {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+  }
+  .viewer-image {
+    height: 64dvh;
+  }
+}

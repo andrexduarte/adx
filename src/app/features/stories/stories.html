@@ -1,0 +1,32 @@
+<div class="page">
+  <p class="eyebrow">Pequenos registros</p>
+  <h1 class="page-title">Fora da <em>tela.</em></h1>
+  <p class="intro">
+    Caminhos, bichos, colheitas e a vida de todos os dias. Histórias curtas para guardar por aqui.
+  </p>
+  <div class="stories-grid">
+    @for (story of content.stories(); track story.id) {
+      <button
+        type="button"
+        class="story-open"
+        (click)="open(story)"
+        [attr.aria-label]="'Abrir story: ' + story.title"
+      >
+        <div class="story-photo">
+          <img
+            [ngSrc]="story.images[0].url"
+            fill
+            sizes="(max-width: 620px) 100vw, 33vw"
+            [priority]="$first"
+            [alt]="story.images[0].alt || story.images[0].caption"
+          /><span class="story-count"
+            >{{ story.images.length }} registros <span aria-hidden="true">↗</span></span
+          >
+        </div>
+        <h2>{{ story.title }}</h2>
+        <p>{{ story.excerpt }}</p>
+      </button>
+    }
+  </div>
+</div>
+<app-story-viewer />

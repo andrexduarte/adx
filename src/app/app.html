@@ -1,0 +1,19 @@
+<a class="skip-link" [href]="router.url.split('#')[0] + '#conteudo'">Pular para o conteúdo</a>
+<app-site-header />
+<main id="conteudo" tabindex="-1">
+  @if (content.connectionError()) {
+    <div class="connection-notice" role="alert">
+      <p>Não foi possível carregar o conteúdo agora.</p>
+      <button
+        class="button secondary"
+        type="button"
+        (click)="content.load()"
+        [disabled]="content.loading()"
+      >
+        {{ content.loading() ? 'Carregando…' : 'Tentar novamente' }}
+      </button>
+    </div>
+  }
+  <router-outlet />
+</main>
+<app-site-footer />
