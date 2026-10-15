@@ -1,0 +1,11 @@
+project_id = "andre-is-a-dev"
+
+[auth]
+site_url = "https://andre.is-a.dev"
+additional_redirect_urls = ["https://andre.is-a.dev/admin", "https://andre-is-a-dev.vercel.app/admin", "http://127.0.0.1:4301/admin"]
+enable_signup = false
+minimum_password_length = 12
+
+[auth.email]
+# Keep the email provider enabled for password login; public signup is disabled above.
+enable_signup = true

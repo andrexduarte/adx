@@ -1,25 +1,31 @@
 # Publicação de andre.is-a.dev
 
-## Estado em 14/10/2026
+## Recursos
 
-- Código preparado na branch `publish/andre-site-angular` de `andrexduarte/adx`.
-- Build de produção e empacotamento Vercel aprovados; 20 testes locais e sete cenários de SSR aprovados.
-- Organização Supabase escolhida: `andrexduarte@gmail.com's Org`, ID `cgqlklpsdhsvbikdcfdk`. Plano Free confirmado pelo conector; apenas o projeto nos aparece na listagem atual.
-- Nenhum projeto Supabase do site foi criado. O projeto nos não foi alterado.
-- Nenhum deployment foi criado. Painéis e CLIs do Supabase e Vercel estão sem sessão. A consulta de custo do conector Supabase está indisponível. A Vercel recusou o fluxo temporário sem autenticação nesta tentativa.
-- O domínio continua no GitHub Pages. A branch main e a publicação existente permanecem preservadas.
+| Recurso | Configuração |
+| --- | --- |
+| Repositório | `andrexduarte/adx` |
+| Projeto Vercel | `andre-duarte/andre-is-a-dev` |
+| URL Vercel | https://andre-is-a-dev.vercel.app/ |
+| Domínio | https://andre.is-a.dev/ |
+| Projeto Supabase | `andre-is-a-dev`, ref `qwhzexecvrgzcieaknwv` |
+| Organização Supabase | `cgqlklpsdhsvbikdcfdk` |
+| Região do banco | São Paulo, `sa-east-1` |
+| Planos | Supabase Free e Vercel Hobby |
 
-## 1. Banco dedicado
+O projeto nos permanece separado. Credenciais privadas ficam fora do código e do ambiente público do site.
 
-No [painel da organização](https://supabase.com/dashboard/org/cgqlklpsdhsvbikdcfdk), criar o projeto `andre-is-a-dev`, região São Paulo (`sa-east-1`), após conferir que a criação permanece no plano gratuito. A senha do banco deve ser definida e guardada pelo proprietário; nunca colocá-la no frontend ou no repositório.
+## Banco e editor
 
-Aplicar as cinco migrações de `supabase/migrations` na ordem dos nomes, com o conector autenticado no projeto novo. Executar `supabase/verify.sql` e conferir RLS, permissões dos papéis `anon`/`authenticated`, as 24 entradas iniciais e os buckets `site-media` (público) e `editor-media` (privado).
+As seis migrações de `supabase/migrations` foram aplicadas em ordem. Há 24 registros: dez artigos, dez capítulos profissionais públicos e quatro registros arquivados, preservados para o proprietário. RLS está habilitado em `content`, `editor_drafts` e `editors`.
 
-Criar o usuário proprietário no Auth e cadastrar apenas seu UUID em `public.editors`. Confirmar login, bloqueio de visitantes, rascunho privado com imagem, reabertura, publicação e arquivamento. Uma conta Auth sem cadastro em `editors` não pode editar.
+O usuário proprietário criou sua senha diretamente no Supabase e recebeu permissão em `public.editors`. O cadastro público está desabilitado; contas Auth sem essa permissão não podem editar. `auth.email.enable_signup` permanece habilitado para permitir login por e-mail, enquanto `auth.enable_signup = false` impede novos cadastros públicos.
 
-## 2. Prévia na Vercel
+`editor-media` é privado; `site-media` é público. Ambos aceitam JPG, PNG e WebP de até 5 MB. Rascunhos, imagens privadas, publicação e arquivamento foram conferidos pela API real. As contas e os dados temporários de verificação foram removidos.
 
-Importar a branch de publicação de `andrexduarte/adx` ou usar a CLI autenticada a partir deste checkout. Configuração do projeto:
+Para alterações futuras, crie uma migração com `supabase migration new`, revise o projeto de destino e as migrações pendentes antes de aplicar. Não regenere a migração inicial. Execute `supabase/verify.sql` e os advisors após mudanças de permissões ou estrutura.
+
+## Vercel
 
 | Campo | Valor |
 | --- | --- |
@@ -29,14 +35,25 @@ Importar a branch de publicação de `andrexduarte/adx` ou usar a CLI autenticad
 | Build command | `npm run build:vercel` |
 | Output directory | `.vercel/output` |
 
-Adicionar `SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY` aos ambientes Preview e Production. A chave pública começa com `sb_publishable_`. Não usar `service_role` ou `sb_secret_`. O build remoto falha se faltar a configuração.
+`SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY` estão configuradas em Production, Preview e Development. A chave do cliente começa com `sb_publishable_`. Não adicionar chaves secretas ao build.
 
-Conferir a URL real da prévia: home, trajetória, imagens, artigos, RSS, sitemap, 404, redirecionamentos, login do editor e persistência. A função aceita o host informado pela variável de sistema `VERCEL_URL`; prévias recebem `noindex, nofollow`.
+O pacote contém uma função Node.js para SSR e recursos estáticos na CDN. Os HTML de entrada e o RSS são tratados pela função; isso evita uma home sem conteúdo renderizado e mantém o feed atualizado. `/admin` usa `no-store` e `noindex`; hosts alternativos também não são indexados.
 
-Arquivos `.env`, `imports`, temporários das CLIs, dependências locais e configurações do editor ficam fora do upload. Use o código deste checkout; não publique a pasta superior de pesquisa ou exportações.
+As regras `.vercelignore` excluem ambientes, importações privadas, temporários, dependências e arquivos do editor. Implante apenas o checkout do repositório do site.
 
-## 3. Domínio
+## Domínio
 
-Após validar o deployment, adicionar `andre.is-a.dev` ao projeto Vercel. Usar exatamente os registros apresentados pelo painel, inclusive o TXT de verificação se solicitado. Preparar o PR no [registro is-a.dev](https://github.com/is-a-dev/register/blob/main/domains/andre.json), seguindo o [guia da Vercel](https://docs.is-a.dev/guides/vercel/).
+O [PR 56611](https://github.com/is-a-dev/register/pull/56611) foi aprovado e integrado. DNS consultado em 15/10/2026:
 
-Não substituir o DNS por um endereço genérico nem apontar para um deployment temporário. Depois do merge do registro, verificar HTTPS, domínio canônico, indexação pública, RSS, sitemap e login. A migração só está concluída depois dessas verificações.
+- CNAME de `andre.is-a.dev`: `336b420493fe2b96.vercel-dns-017.com`.
+- TXT de `_vercel.andre.is-a.dev`: `vc-domain-verify=andre.is-a.dev,f45064f0fc1824d7b808`.
+
+Esses valores foram retornados pelo projeto Vercel. A propriedade do domínio foi verificada na Vercel em 15/10/2026. HTTPS e home renderizada foram confirmados no domínio final, que permite indexação pública. O painel continua protegido por login e não é indexado.
+
+## Evidências
+
+Em 14/10/2026, `npm test` aprovou 20 testes; `npm run build:vercel` passou sem avisos; `npm run test:ssr` aprovou sete cenários, além do agrupador. A revisão visual abrangeu desktop e mobile; login foi conferido no navegador. Auth, RLS e Storage foram verificados contra o projeto dedicado. Lint não foi executado.
+
+O estado da implantação e da verificação do domínio consta em `verification.json`. A publicação do código passa pelo [PR 1](https://github.com/andrexduarte/adx/pull/1).
+
+O advisor de 15/10 apontou apenas a proteção contra senhas vazadas desabilitada. Esse recurso [exige Supabase Pro ou superior](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection); o projeto permanece no Free, com cadastro público desabilitado e permissão de edição restrita ao proprietário.

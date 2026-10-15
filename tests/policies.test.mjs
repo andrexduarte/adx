@@ -39,10 +39,15 @@ test('prepared migrations enforce public, authenticated visitor and editor acces
     const count = async (table) =>
       Number((await db.query('select count(*) as n from ' + table)).rows[0].n);
     await t.test(
-      'anonymous readers see all initial public content and cannot access drafts, edit content or self-enroll',
+      'anonymous readers see active content and cannot access retired sections, drafts or editor access',
       async () => {
         await asRole('anon', null, async () => {
-          assert.equal(await count('public.content'), 24);
+          assert.equal(await count('public.content'), 20);
+          assert.equal(
+            (await db.query("select id from public.content where kind = 'story' or slug = 'agora'"))
+              .rows.length,
+            0,
+          );
           await assert.rejects(db.query('select * from public.editor_drafts'));
           await assert.rejects(db.query('select * from public.editors'));
           await assert.rejects(db.query("update public.content set title = 'Visitor edit'"));
@@ -53,7 +58,7 @@ test('prepared migrations enforce public, authenticated visitor and editor acces
     );
     await t.test('having an Auth account does not grant editor powers', async () => {
       await asRole('authenticated', outsider, async () => {
-        assert.equal(await count('public.content'), 24);
+        assert.equal(await count('public.content'), 20);
         assert.equal(await count('public.editor_drafts'), 0);
         assert.equal(await count('public.editors'), 0);
         const update = await db.query(
@@ -74,6 +79,7 @@ test('prepared migrations enforce public, authenticated visitor and editor acces
       async () => {
         await asRole('authenticated', owner, async () => {
           assert.equal(await count('public.editors'), 1);
+          assert.equal(await count('public.content'), 24);
           article = (await db.query("select * from public.content where slug = 'penar'")).rows[0];
           await db.query(
             `insert into public.editor_drafts (id,slug,kind,title,category,body_html,base_revision)
@@ -113,7 +119,7 @@ test('prepared migrations enforce public, authenticated visitor and editor acces
           assert.equal(await count('public.content'), 24);
         });
         await asRole('anon', null, async () => {
-          assert.equal(await count('public.content'), 23);
+          assert.equal(await count('public.content'), 19);
           assert.equal(
             (await db.query('select * from public.content where id = $1', [article.id])).rows
               .length,
@@ -130,7 +136,7 @@ test('prepared migrations enforce public, authenticated visitor and editor acces
             article.id,
           ]);
         });
-        await asRole('anon', null, async () => assert.equal(await count('public.content'), 24));
+        await asRole('anon', null, async () => assert.equal(await count('public.content'), 20));
       },
     );
     await t.test(

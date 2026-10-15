@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-14",
-  "scope": "Registro de verificações por revisão. A revisão mais recente é productionPreparation: build, testes locais, SSR empacotado e prévia no navegador. Deploy e banco remoto ainda pendentes.",
+  "date": "2026-10-15",
+  "scope": "Histórico de verificações. A etapa mais recente é productionPublication: Supabase real, Vercel, DNS e HTTPS no domínio final.",
   "build": {
     "command": "npm run build:vercel",
     "passed": true,
@@ -544,5 +544,123 @@
       "image": "assets/construtores-web.png",
       "commit": "495eaff6b3b659be98094c0e9c1dfd77c84c1758"
     }
+  },
+  "productionPublication": {
+    "date": "2026-10-15",
+    "url": "https://andre.is-a.dev/",
+    "vercelUrl": "https://andre-is-a-dev.vercel.app/",
+    "verifiedDeployment": "dpl_BzgbrFJ4PDPZh6dnbnQNx6VVmFKe",
+    "supabaseProject": "qwhzexecvrgzcieaknwv",
+    "migrationsApplied": 6,
+    "publicEntries": 20,
+    "archivedEntries": 4,
+    "editorAccounts": 1,
+    "domainVerified": true,
+    "httpsVerified": true,
+    "homeServerRendered": true,
+    "publicIndexingAllowed": true,
+    "httpChecks": [
+      {
+        "path": "/",
+        "status": 200,
+        "bytes": 88554,
+        "type": "text/html; charset=UTF-8",
+        "robots": "",
+        "cache": "public, must-revalidate, max-age=0"
+      },
+      {
+        "path": "/caderno",
+        "status": 200,
+        "bytes": 54168,
+        "type": "text/html; charset=UTF-8",
+        "robots": "",
+        "cache": "public, must-revalidate, max-age=0"
+      },
+      {
+        "path": "/caderno/penar",
+        "status": 200,
+        "bytes": 49801,
+        "type": "text/html; charset=UTF-8",
+        "robots": "",
+        "cache": "public, must-revalidate, max-age=0"
+      },
+      {
+        "path": "/admin",
+        "status": 200,
+        "bytes": 1898,
+        "type": "text/html; charset=UTF-8",
+        "robots": "noindex, nofollow",
+        "cache": "no-store"
+      },
+      {
+        "path": "/rss.xml",
+        "status": 200,
+        "bytes": 4577,
+        "type": "application/rss+xml; charset=utf-8",
+        "robots": "",
+        "cache": "public, max-age=300"
+      },
+      {
+        "path": "/sitemap.xml",
+        "status": 200,
+        "bytes": 945,
+        "type": "application/xml; charset=utf-8",
+        "robots": "",
+        "cache": "public, max-age=300"
+      },
+      {
+        "path": "/robots.txt",
+        "status": 200,
+        "bytes": 100,
+        "type": "text/plain; charset=utf-8",
+        "robots": "",
+        "cache": "public, must-revalidate, max-age=0"
+      },
+      {
+        "path": "/nao-existe",
+        "status": 404,
+        "bytes": 44448,
+        "type": "text/html; charset=UTF-8",
+        "robots": "",
+        "cache": "public, must-revalidate, max-age=0"
+      },
+      {
+        "path": "/images/workshop/workers-atlas.png",
+        "status": 200,
+        "bytes": 1761285,
+        "type": "image/png",
+        "robots": "",
+        "cache": "public, must-revalidate, max-age=0"
+      }
+    ],
+    "browser": {
+      "url": "https://andre.is-a.dev/",
+      "width": 1280,
+      "horizontalOverflow": false,
+      "brokenImages": 0,
+      "consoleErrors": 0,
+      "ownerPasswordKnown": false,
+      "authenticatedLoginPreviouslyVerified": true,
+      "authenticatedDraftStorageAndPublicationApiVerified": true
+    },
+    "security": {
+      "rlsEnabled": true,
+      "publicSignupDisabled": true,
+      "advisorErrors": 0,
+      "advisorWarnings": [
+        "Leaked password protection requires Supabase Pro or above; Free plan retained."
+      ],
+      "remediationUrl": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+    },
+    "localChecks": {
+      "checkedOn": "2026-10-14",
+      "testsPassed": 20,
+      "ssrScenariosPassed": 7,
+      "productionBuildPassed": true,
+      "buildWarnings": 0,
+      "lintRun": false
+    },
+    "dnsPullRequest": "https://github.com/is-a-dev/register/pull/56611",
+    "dnsPullRequestMerged": true
   }
 }

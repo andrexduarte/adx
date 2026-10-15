@@ -1,5 +1,5 @@
--- Read-only checks after applying all five migrations to the dedicated project.
-select kind, count(*) from public.content group by kind order by kind;
+-- Read-only checks after applying all six migrations to the dedicated project.
+select kind, status, count(*) from public.content group by kind, status order by kind, status;
 select tablename, policyname, roles, cmd from pg_policies
 where schemaname = 'public' and tablename in ('content','editor_drafts','editors')
 order by tablename, cmd;

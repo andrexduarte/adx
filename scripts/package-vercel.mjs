@@ -23,6 +23,10 @@ cpSync('dist/andre-site/server', join(fn, 'server'), { recursive: true });
 cpSync('dist/andre-site/browser', join(fn, 'browser'), { recursive: true });
 cpSync('dist/andre-site/browser', join(output, 'static'), { recursive: true });
 rmSync(join(output, 'static/rss.xml'), { force: true });
+// HTML entry points must pass through Angular SSR, including the home page.
+for (const entry of ['index.html', 'index.csr.html']) {
+  rmSync(join(output, 'static', entry), { force: true });
+}
 writeFileSync(
   join(fn, 'index.mjs'),
   "export { reqHandler as default } from './server/server.mjs';\n",
