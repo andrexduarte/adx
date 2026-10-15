@@ -25,16 +25,6 @@ export class Home {
   private readonly destroyRef = inject(DestroyRef);
   readonly activeSection = signal<string | null>(null);
   readonly readingMoment = signal('Do presente ao começo');
-  readonly currentWork = computed(() =>
-    this.content
-      .entries()
-      .find(
-        (entry) =>
-          entry.kind === 'moment' &&
-          entry.status === 'published' &&
-          entry.company === 'Trade Arena',
-      ),
-  );
   readonly hasJourney = computed(() =>
     this.content
       .entries()
