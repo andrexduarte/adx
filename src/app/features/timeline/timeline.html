@@ -1,46 +1,49 @@
-<div class="axis" aria-hidden="true">
-  <span [style.transform]="'scaleY(' + progress() + ')'"></span>
-</div>
-
-@for (moment of moments(); track moment.id) {
-  <section
-    class="moment"
-    [id]="'momento-' + moment.slug"
-    [attr.aria-labelledby]="'titulo-' + moment.slug"
-    [class.is-active]="activeId() === 'momento-' + moment.slug"
-  >
-    <header class="moment-lead">
-      <p class="moment-year">{{ moment.year }}</p>
-      <p class="moment-location eyebrow">{{ moment.place }}</p>
-      <h3 [id]="'titulo-' + moment.slug">{{ moment.company }}</h3>
-      <p class="period">{{ moment.excerpt }}</p>
-    </header>
-    <div class="moment-writing">
-      @if (moment.excerpt.toLowerCase().includes('presente')) {
-        <p class="moment-context eyebrow">Trabalho atual</p>
-      }
-      <h4 class="moment-role">{{ moment.title }}</h4>
-      <div class="moment-body reading" [innerHTML]="moment.html"></div>
-      @if (moment.reflection) {
-        <blockquote>{{ moment.reflection }}</blockquote>
-      }
-      @if (moment.article; as article) {
-        <a class="related-text" [routerLink]="['/caderno', article.slug]">
-          <span class="related-label">Uma página do caderno <span aria-hidden="true">↗</span></span>
-          <span class="related-title">{{ article.title }}</span>
-        </a>
-      }
+@if (frames().length) {
+  <div class="timeline-track" [style.--frame-count]="frames().length">
+    <div class="timeline-stage">
+      <div class="timeline-top">
+        <h2>Antes disso</h2>
+        <span class="page-counter" [hidden]="!animated()" aria-label="Posição no percurso">{{ counter() }}</span>
+      </div>
+      <div class="frame-space">
+        @for (frame of frames(); track frame.anchor; let i = $index) {
+          @if (frame.kind === 'moment') {
+            <section class="moment timeline-frame" [attr.id]="animated() ? null : frame.anchor" [attr.data-frame-index]="i"
+              [attr.aria-labelledby]="'titulo-' + frame.moment.slug" [attr.aria-hidden]="animated() && active() !== i ? true : null"
+              [attr.inert]="animated() && active() !== i ? '' : null"
+              [style.opacity]="animated() ? states()[i].opacity : 1" [style.transform]="animated() ? 'translateY(' + states()[i].offset + 'px)' : null">
+              <header class="moment-lead">
+                <p class="moment-year">{{ frame.moment.year }}</p>
+                <h3 [id]="'titulo-' + frame.moment.slug">{{ frame.moment.company }}</h3>
+              </header>
+              <div class="moment-summary">
+                <p class="moment-role">{{ frame.moment.title }}</p>
+                <p class="period">{{ frame.moment.excerpt }}</p>
+              </div>
+            </section>
+          } @else {
+            <figure class="landscape timeline-frame" [attr.id]="animated() ? null : frame.anchor" [attr.data-frame-index]="i"
+              [attr.aria-hidden]="animated() && active() !== i ? true : null" [attr.inert]="animated() && active() !== i ? '' : null"
+              [style.opacity]="animated() ? states()[i].opacity : 1" [style.transform]="animated() ? 'translateY(' + states()[i].offset + 'px)' : null">
+              <img src="/images/cerrado-xilogravura.jpg" width="1536" height="1024" loading="lazy"
+                alt="André a cavalo, visto de costas, acompanhado por seu red heeler no cerrado, em xilogravura." />
+            </figure>
+          }
+        }
+      </div>
+      <div class="timeline-bottom">
+        <nav aria-label="Experiências anteriores" [hidden]="!animated()">
+          @for (frame of frames(); track frame.anchor; let i = $index) {
+            <button type="button" [attr.aria-label]="frame.label" [attr.title]="frame.label" [attr.aria-current]="active() === i ? 'step' : null" (click)="goTo(i)"><span></span></button>
+          }
+        </nav>
+        <button class="motion-toggle" type="button" (click)="toggleMotion()">{{ animated() ? 'Ver sem animação' : 'Ativar transições' }}</button>
+      </div>
     </div>
-  </section>
-  @if (moment.slug === '2015') {
-    <figure class="landscape" id="paisagem">
-      <img
-        src="/images/cerrado-xilogravura.jpg"
-        width="1536"
-        height="1024"
-        loading="lazy"
-        alt="André a cavalo, visto de costas, acompanhado por seu red heeler no cerrado, em xilogravura."
-      />
-    </figure>
-  }
+    @if (animated()) {
+      @for (frame of frames(); track frame.anchor; let i = $index) {
+        <span class="chapter-anchor" [id]="frame.anchor" [style.top]="'calc(' + (i + .25) + ' * var(--chapter-distance))'" aria-hidden="true"></span>
+      }
+    }
+  </div>
 }

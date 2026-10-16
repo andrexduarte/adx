@@ -1,0 +1,41 @@
+:host { display: block; width: min(100%, 950px); }
+.chapter-kicker { color: #aca59a; font: 9px monospace; letter-spacing: .15em; margin-bottom: 18px; }
+.panels { position: relative; height: 460px; }
+.panel { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.idea h3 { font: 45px/1.1 var(--serif); letter-spacing: -.04em; margin: 0 0 35px; }
+.note { color: #aaa090; font: 8px/1.5 monospace; margin: 15px 0 0; }
+.tech-row { display: flex; gap: 25px; align-items: center; margin-bottom: 20px; }
+.tech-row span { display: flex; align-items: center; gap: 8px; color: #d3c4b0; font: 10px var(--sans); }
+.tech-row span:last-child { font: 9px monospace; color: #dab17e; }
+.workspace { display: grid; grid-template-columns: 280px 1fr; width: 100%; text-align: left; border: 1px solid #494238; border-radius: 10px; overflow: hidden; background: #1d1d1d; }
+aside { background: #26221e; padding: 22px 18px; }
+.editor-label { display: block; color: #c0a580; font: 9px monospace; margin-bottom: 22px; }
+.file { display: block; font: 10px/2.6 monospace; color: #bcb09f; white-space: nowrap; }
+.file i { font: 7px monospace; color: #d5a15d; margin-right: 7px; }
+.source { padding: 22px; min-width: 0; }
+.source pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: #e0c19a; font: 11px/1.8 monospace; }
+.caption { font: italic 20px var(--serif); color: #c9bdac; margin: 18px 0 0; }
+.process { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 20px; color: #8d8070; font: 8px monospace; }
+.process i { width: 30px; height: 1px; background: #534535; }
+.process .active { color: #dfb784; }
+:host(.static) .panels { height: auto; }
+:host(.static) .panel { position: relative; padding-block: 40px; }
+:host(.static) .process { display: none; }
+@media (max-width: 760px) {
+  .chapter-kicker { font-size: 8px; }
+  .panels { height: 480px; }
+  .idea h3 { font-size: 37px; line-height: 1.15; }
+  .workspace { grid-template-columns: 1fr; }
+  aside { padding: 12px 15px; }
+  .editor-label { font-size: 8px; margin-bottom: 10px; }
+  .file { font-size: 8px; line-height: 1.8; }
+  .source { padding: 15px; }
+  .source pre { font-size: 9px; line-height: 1.7; }
+  .tech-row { gap: 18px; margin-bottom: 14px; }
+  .tech-row span { font-size: 9px; }
+  .tech-row span:last-child { font-size: 8px; }
+  .caption { font-size: 17px; line-height: 1.4; }
+  .process { margin-top: 16px; font-size: 7px; }
+  .process i { width: 12px; }
+  .process { gap: 7px; }
+}

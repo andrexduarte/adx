@@ -1,13 +1,19 @@
 import { afterNextRender, Component, DestroyRef, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Wordmark } from '../../shared/wordmark/wordmark';
+import { PageChrome } from '../../core/ui/page-chrome';
 @Component({
   selector: 'app-site-header',
-  imports: [RouterLink, RouterLinkActive, Wordmark],
+  imports: [Wordmark],
   templateUrl: './site-header.html',
   styleUrl: './site-header.scss',
+  host: {
+    '[class.hidden-for-closing]': 'chrome.hideHeader()',
+    '[attr.inert]': 'chrome.hideHeader() ? "" : null',
+    '[attr.aria-hidden]': 'chrome.hideHeader() ? "true" : null',
+  },
 })
 export class SiteHeader {
+  readonly chrome = inject(PageChrome);
   private readonly destroyRef = inject(DestroyRef);
   readonly compactBrand = signal(false);
 

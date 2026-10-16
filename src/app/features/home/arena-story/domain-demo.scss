@@ -1,0 +1,41 @@
+:host { display: block; width: min(100%, 830px); text-align: left; }
+.domain-workspace { border: 1px solid #514436; border-radius: 12px; background: #1d1d1d; overflow: hidden; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 22px; border-bottom: 1px solid #ffffff0b; font: 8px monospace; color: #b7a287; }
+.badge { background: #3b2d20; border-radius: 4px; color: #f4ba76; padding: 5px 8px; }
+.migration-path { display: flex; justify-content: center; gap: 18px; align-items: center; padding: 21px; border-bottom: 1px solid #ffffff0b; font: 11px monospace; }
+.migration-path code { color: #ad9780; }
+.migration-path code.retired { color: #8c8173; text-decoration: line-through; }
+.migration-path > span { transform: rotate(-90deg); color: #e0a762; font-size: 18px; }
+.migration-path strong { color: #a79176; font-weight: 400; }
+.migration-path strong.active { color: #ffbd72; }
+.domain-layout { display: grid; grid-template-columns: 1fr 1fr; }
+.tree, .boundary { padding: 22px 28px; }
+.tree { border-right: 1px solid #ffffff0b; background: #24211c; }
+.tree-label { display: block; font: 7px monospace; letter-spacing: .1em; color: #9d8f7c; margin-bottom: 14px; }
+.tree > div { font: 11px/2.25 monospace; color: #d9b989; }
+.tree i { color: #8e7150; font-style: normal; margin-right: 11px; }
+.boundary > code { display: block; font: 11px/1.9 monospace; color: #d8c2a1; }
+.dependency { margin-top: 17px; padding-top: 15px; border-top: 1px solid #ffffff0b; }
+.dependency > span { display: block; font: 7px monospace; color: #a58a65; margin-bottom: 11px; }
+.dependency strong { display: block; color: #c6bdad; font: 10px monospace; }
+.dependency i { display: block; color: #f3b060; font-style: normal; margin-block: 4px; }
+.dependency small { display: block; color: #ad9d85; font: 8px/1.5 var(--sans); margin-top: 12px; }
+footer { border-top: 1px solid #ffffff0b; background: #28231c; padding: 14px 22px; color: #d3b992; font: 9px var(--sans); }
+.boundary-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #d7a460; margin-right: 8px; }
+.note { text-align: center; font: 8px/1.5 monospace; color: #a99b88; margin: 13px 0 0; }
+@media (max-width:760px) {
+  header { padding: 13px; font-size: 6px; gap: 8px; }
+  .badge { font-size: 6px; white-space: nowrap; }
+  .migration-path { flex-direction: column; gap: 7px; padding: 13px; font-size: 10px; }
+  .migration-path > span { transform: none; font-size: 14px; }
+  .tree, .boundary { padding: 18px 12px; }
+  .tree-label { font-size: 6px; margin-bottom: 11px; }
+  .tree > div { font-size: 8px; line-height: 2.7; }
+  .tree i { margin-right: 5px; }
+  .boundary > code { font-size: 8px; }
+  .dependency { margin-top: 12px; padding-top: 13px; }
+  .dependency strong { font-size: 7px; overflow-wrap: anywhere; }
+  .dependency small { font-size: 7px; }
+  footer { font-size: 8px; line-height: 1.5; padding: 12px; }
+  .note { font-size: 7px; }
+}

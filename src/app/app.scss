@@ -21,6 +21,6 @@
 main {
   position: relative;
   z-index: 1;
-  background: var(--paper);
+  background: color-mix(in srgb, var(--paper), #141414 calc(var(--arena-depth, 0) * 100%));
   box-shadow: 0 24px 45px -25px rgb(0 0 0 / 45%);
 }

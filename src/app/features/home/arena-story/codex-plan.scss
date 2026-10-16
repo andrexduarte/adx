@@ -1,0 +1,19 @@
+:host { display:block; width:min(100%,768px); margin-inline:auto; color:#ececec; font:15px/1.65 Arial,Helvetica,sans-serif; text-align:left; }
+.conversation { display:flex; flex-direction:column; gap:28px; }
+.user-message { align-self:flex-end; max-width:85%; padding:12px 20px; margin:0; border-radius:20px; background:#262626; color:#f3f3f3; }
+.assistant-response { padding:0 16px; }
+.assistant-name { margin:0 0 10px; font-size:13px; font-weight:600; color:#aaa; }
+h3 { margin:0 0 14px; font:400 16px/1.5 Arial,Helvetica,sans-serif; letter-spacing:0; }
+ol { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+li { display:flex; align-items:baseline; gap:12px; }
+.step-number { flex:0 0 14px; color:#aaa; font-variant-numeric:tabular-nums; }
+@media(max-width:600px) {
+  :host { font-size:13px; line-height:1.55; }
+  .conversation { gap:24px; }
+  .user-message { padding:11px 16px; }
+  .assistant-response { padding:0 8px; }
+  .assistant-name { font-size:12px; margin-bottom:8px; }
+  h3 { font-size:15px; }
+  ol { gap:10px; }
+  li { gap:7px; }
+}

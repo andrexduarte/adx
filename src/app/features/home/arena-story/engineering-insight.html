@@ -1,0 +1,53 @@
+<div class="insight">
+  <p class="kicker">{{ kind() === 'ranking' ? 'TOP TRADERS V2' : kind() === 'signals' ? 'LEAGUE V3' : 'ENGENHARIA / TESTES' }}</p>
+  <div class="panels">
+  <section class="panel" [style.opacity]="opacity(0)" [attr.aria-hidden]="!staticMode() && stage() !== 0 ? true : null">
+    <app-prompt-composer [text]="typedPrompt()" [sent]="staticMode() || progress() >= .18" />
+    <span class="prompt-note">Prompt reconstruído a partir do trabalho no projeto</span>
+  </section>
+  <section class="panel" [style.opacity]="opacity(1)" [attr.aria-hidden]="!staticMode() && stage() !== 1 ? true : null">
+    <app-build-plan [steps]="steps()" [progress]="plan()" />
+  </section>
+  <section class="panel" [style.opacity]="opacity(2)" [attr.aria-hidden]="!staticMode() && stage() !== 2 ? true : null">
+  <div class="work">
+    @switch (kind()) {
+      @case ('ranking') {
+        <div class="ranking-demo">
+          <div class="ranking-heading"><span>Top Traders<span class="accent">.</span></span><span class="live-tag">ESTADO → INTERFACE</span></div>
+          <div class="filter-row"><span class="filter active">Pontos</span><span class="filter" [class.active]="!changed()">Semana</span><span class="filter" [class.active]="changed()">Mês</span><span class="search-icon">⌕</span></div>
+          <div class="ranking-list">
+            @for (person of ranking(); track person.letter; let i = $index) {
+              <div class="ranking-row"><span class="position">0{{ i + 1 }}</span><span class="person-mark">{{ person.letter }}</span><span>{{ person.name }}</span><strong>{{ person.score }}</strong><small>pts</small></div>
+            }
+          </div>
+          <div class="flow"><code>signal</code><span>→</span><code>switchMap</code><span>→</span><code>ViewModel</code></div>
+        </div>
+        <p class="caption">O filtro muda. A interface acompanha.</p>
+        <p class="evidence">Top Traders V2 em desenvolvimento · dados demonstrativos</p>
+      }
+      @case ('signals') {
+        <div class="refactor-panel">
+          <div class="refactor-top"><img src="/images/technology/angular.svg" width="28" height="28" alt="Angular" /><span>Estado de apresentação</span><span class="badge">OnPush</span></div>
+          <div class="refactor-body">
+            <div class="diff-block"><span class="diff-label">{{ changed() ? 'DEPOIS / SIGNALS' : 'ANTES / TEMPLATE' }}</span><code [class.added]="changed()">{{ changed() ? signalAfter : signalBefore }}</code><pre>{{ signalCode }}</pre></div>
+            <div class="scope"><strong>16</strong><span>arquivos alterados</span><div class="file-matrix" aria-hidden="true">@for (cell of cells.slice(0,16); track cell) { <i [class.filled]="work() * 16 > cell"></i> }</div></div>
+          </div>
+          <div class="file-strip"><span>league.component.ts</span><span>league.component.html</span><span>feature-teams</span></div>
+        </div>
+        <p class="caption">RxJS no fluxo. Signals na apresentação.</p>
+        <p class="evidence">Mudança real na League · trechos reduzidos para apresentação</p>
+      }
+      @case ('tests') {
+        <div class="migration-panel">
+          <div class="runner-change"><span [class.retired]="changed()">Karma / Jasmine</span><span class="migration-arrow">→</span><strong [class.current]="changed()">Vitest</strong></div>
+          <div class="migration-body"><div class="migration-metric"><strong>197<span>specs</span></strong><p>convertidos para o novo runner</p><span class="total-files">206 arquivos alterados na migração</span></div><div class="test-matrix" aria-hidden="true">@for (cell of cells; track cell) { <span [class.converted]="work() * 62 > cell">{{ work() * 62 > cell ? '✓' : '·' }}</span> }</div></div>
+          <div class="runner-code"><span>angular.json</span><code>{{ changed() ? '@angular/build:unit-test' : '@angular/build:karma' }}</code><span class="runner-tag">{{ changed() ? 'runner: vitest' : 'karma.conf.cjs' }}</span></div>
+        </div>
+        <p class="caption">Evoluir também é cuidar do que já existe.</p>
+        <p class="evidence">Karma/Jasmine → Vitest · contagem do commit de migração</p>
+      }
+    }
+  </div>
+  </section>
+  </div>
+</div>

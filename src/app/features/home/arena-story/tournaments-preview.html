@@ -1,0 +1,38 @@
+<div class="browser-frame" aria-label="Demonstração dos componentes de Torneios">
+  <div class="browser-bar" aria-hidden="true"><span class="lights">● ● ●</span><span>trade arena / tournaments</span><span>↗</span></div>
+  <div class="tournaments-page">
+    <header class="page-hero">
+      <h4>Torneios</h4><span>Seu próximo desafio começa aqui.</span>
+      <img src="/images/work/arena-tournaments-hero.webp" alt="" width="768" height="160" loading="lazy" />
+    </header>
+    <section class="catalog" aria-label="Todos os torneios">
+      <div class="catalog-heading"><h5>Todos os torneios</h5><span class="count">{{ state() === 'ready' || state() === 'refresh-error' ? '02' : '—' }}</span></div>
+      <div class="filters" aria-hidden="true"><span [class.selected]="state() === 'filtered-empty'">{{ state() === 'filtered-empty' ? 'Ativo: DOL' : 'Todos os ativos' }} <i>⌄</i></span><span>Todos os status <i>⌄</i></span></div>
+      @if (state() === 'refresh-error') { <div class="refresh-warning" role="status"><span>Os torneios exibidos podem estar desatualizados.</span><button type="button" (click)="recover.emit()">Atualizar novamente ↻</button></div> }
+      <div class="table-scroll" tabindex="0" aria-label="Lista demonstrativa de torneios; role horizontalmente em telas pequenas">
+        <table>
+          <thead><tr><th>Torneio</th><th>Ativo</th><th>Data/hora</th><th>Status</th></tr></thead>
+          <tbody>
+            @if (state() === 'ready' || state() === 'refresh-error') {
+              @for (row of rows; track row.asset) {
+                <tr><th scope="row"><span class="trophy" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h10v7a5 5 0 0 1-10 0V3Zm0 2H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4m-5 3v5m-4 1h8" /></svg></span>{{ row.name }}</th><td><span class="asset">{{ row.asset }}</span></td><td>{{ row.date }}</td><td><span class="status" [class.live]="row.live"><i></i>{{ row.status }}</span></td></tr>
+              }
+            } @else {
+              <tr><td colspan="4" class="empty-cell">
+                <div class="state-message" role="status">
+                  @switch (state()) {
+                    @case ('loading') { <span class="state-icon" aria-hidden="true">◷</span><p>Carregando torneios.</p><div class="skeleton" aria-hidden="true"><i></i><i></i></div> }
+                    @case ('filtered-empty') { <span class="state-icon" aria-hidden="true">⌕</span><p>Nenhum torneio encontrado para os filtros selecionados.</p><button type="button" (click)="recover.emit()">Limpar filtros</button> }
+                    @case ('empty') { <span class="state-icon" aria-hidden="true">◇</span><p>Nenhum torneio disponível no momento.</p> }
+                    @case ('error') { <span class="state-icon error-icon" aria-hidden="true">!</span><p>Não foi possível carregar os torneios.</p><button type="button" (click)="recover.emit()">Tentar novamente ↻</button> }
+                  }
+                </div>
+              </td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination" aria-hidden="true"><span>{{ state() === 'ready' || state() === 'refresh-error' ? '2 torneios' : '—' }}</span><span>‹ <b>1</b> ›</span></div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+:host { display: block; }
+.editor { width: min(100%, 900px); border: 1px solid #47413a; border-radius: 12px; overflow: hidden; text-align: left; background: #1c1c1c; box-shadow: 0 20px 90px #0003; }
+.window-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 42px; padding: 0 18px; background: #262523; font: 10px monospace; color: #b0a99e; }
+.window-dots { font-size: 9px; letter-spacing: 3px; color: #65786a; }
+.source-path { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.code-language { color: #8bb6dd; }
+.editor-body { display: flex; min-height: 260px; }
+.file-tree { width: 240px; flex-shrink: 0; padding: 24px 12px; border-right: 1px solid #ffffff09; font: 10px/1.7 monospace; }
+.folder { display: block; padding: 0 8px 14px; color: #b8ad9f; }
+.file-group + .file-group { margin-top: 22px; }
+.file { display: flex; align-items: center; gap: 8px; padding: 8px; white-space: nowrap; color: #c4bcae; }
+.file.current { background: #352d23; border-radius: 4px; }
+.file i { font: 9px monospace; color: #81b6da; }
+.code-lines { flex: 1; min-width: 0; padding: 24px 18px; }
+.code-line { display: flex; font: 11px/1.8 monospace; white-space: pre-wrap; color: #bccfc0; }
+.code-line > span { width: 32px; flex-shrink: 0; font-size: 9px; color: #6d8074; user-select: none; }
+.code-line code { min-width: 0; font: inherit; word-break: break-all; }
+.code-line.omitted { margin-block: 10px; color: #8d877e; }
+.code-line.type { color: #96bdd6; }
+.code-line.stream { color: #e3c396; }
+.code-line.template { color: #e0b58b; }
+.editor-status { display: flex; justify-content: space-between; gap: 15px; padding: 10px 20px; border-top: 1px solid #ffffff09; color: #a59c90; font: 9px monospace; }
+
+@media(max-width:760px) { .file-tree { width: 100%; padding: 10px; overflow: hidden; border-right: 0; border-bottom: 1px solid #ffffff09; } .file-group { display: flex; gap: 6px; } .folder, .file-group + .file-group { display: none; } .file { padding: 6px; font-size: 8px; } .file:nth-of-type(n+4) { display: none; } .editor-body { flex-direction: column; } .code-lines { padding: 18px 10px; } .code-line { font-size: 9px; } .code-line > span { width: 26px; } .editor-status { padding-inline: 12px; font-size: 8px; } }
+@media(max-width:380px) { .code-line { font-size: 8px; } }

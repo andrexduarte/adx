@@ -1,0 +1,65 @@
+<section class="story-track" id="momento-2025" aria-labelledby="titulo-2025">
+  <div class="story-stage">
+    <div class="scene-space">
+      <header class="scene introduction" [style.opacity]="opacity(0)" [attr.aria-hidden]="!staticMode() && active() !== 0 ? true : null">
+        <span class="timeline-point" aria-hidden="true"></span>
+        <span class="logo-origin" #logoOrigin [class.is-travelling]="logoPositioned()">
+          <img class="arena-logo" src="/images/work/trade-arena-logo.png" width="350" height="350" alt="" loading="lazy" />
+        </span>
+        <h2 id="titulo-2025">Trade Arena<span>.</span></h2>
+        <p class="role">Front-end developer<br /><em>experimentando IA</em></p>
+        <p class="season">Desde o verão de 2025</p>
+      </header>
+
+      <section class="scene prompt-scene" aria-label="A ideia: vamos construir um chat" [style.opacity]="opacity(1)" [style.transform]="'translateY(' + shift(1) + 'px)'" [attr.aria-hidden]="!staticMode() && active() !== 1 ? true : null">
+        <app-prompt-composer [text]="prompt()" [sent]="sent()" worktree="task: chat" />
+      </section>
+
+      <section class="scene plan-scene" aria-label="O plano para construir o chat" [style.opacity]="opacity(2)" [attr.aria-hidden]="!staticMode() && active() !== 2 ? true : null">
+        <app-codex-plan [steps]="chatPlan" [progress]="plan()" />
+      </section>
+      <section class="scene tools-scene" aria-label="Angular, TypeScript, WebSocket, RxJS, SCSS e STOMP trabalham juntos" [style.opacity]="opacity(3)" [attr.aria-hidden]="!staticMode() && active() !== 3 ? true : null">
+        <p class="scene-kicker">03 / AS FERRAMENTAS</p>
+        <app-technology-map kind="chat" [progress]="toolProgress()" />
+      </section>
+
+      <section class="scene code-scene" aria-label="Arquivos e trechos reais de código do chat" [style.opacity]="opacity(4)" [style.transform]="'translateY(' + shift(4) + 'px)'" [attr.aria-hidden]="!staticMode() && active() !== 4 ? true : null">
+        <p class="scene-kicker">04 / A CONSTRUÇÃO</p>
+        <app-chat-code [build]="build()" />
+        <p class="scene-caption">Conectar os dados. Dar forma à conversa.</p>
+      </section>
+
+      <section class="scene result-scene" aria-label="Chat do Torneio: envio, recebimento e adaptação da interface" [style.opacity]="opacity(5)" [style.transform]="'translateY(' + shift(5) + 'px)'" [attr.aria-hidden]="!staticMode() && active() !== 5 ? true : null" [attr.inert]="!staticMode() && active() !== 5 ? '' : null">
+        <app-work-chapter [evidence]="evidence[5]" [reveal]="evidenceProgress(5)" [staticMode]="staticMode()">
+        <p class="scene-kicker">05 / O CHAT EM FUNCIONAMENTO</p>
+        <app-chat-preview [progress]="conversation()" />
+        </app-work-chapter>
+      </section>
+      <section class="scene insight-scene" aria-label="Torneios: da estrutura de arquivos aos estados dos componentes" [style.opacity]="opacity(6)" [attr.aria-hidden]="!staticMode() && active() !== 6 ? true : null" [attr.inert]="!staticMode() && active() !== 6 ? '' : null">
+        <app-work-chapter [evidence]="evidence[6]" [reveal]="evidenceProgress(6)" [staticMode]="staticMode()">
+        <app-tournaments-story [progress]="tournaments()" [staticMode]="staticMode()" (seek)="seekTournaments($event)" />
+        </app-work-chapter>
+      </section>
+      @for (item of productCases; track item.kind; let i = $index) {
+        <section class="scene insight-scene" [attr.aria-label]="item.label" [style.opacity]="opacity(i + 7)" [attr.aria-hidden]="!staticMode() && active() !== i + 7 ? true : null" [attr.inert]="!staticMode() && active() !== i + 7 ? '' : null">
+          <app-work-chapter [evidence]="evidence[i + 7]" [reveal]="evidenceProgress(i + 7)" [staticMode]="staticMode()">
+          <app-product-insight [kind]="item.kind" [progress]="localProgress(i + 7)" [staticMode]="staticMode()" />
+          </app-work-chapter>
+        </section>
+      }
+      <section class="scene insight-scene" aria-label="Angular: adoção de Signals na League" [style.opacity]="opacity(14)" [attr.aria-hidden]="!staticMode() && active() !== 14 ? true : null" [attr.inert]="!staticMode() && active() !== 14 ? '' : null">
+        <app-work-chapter [evidence]="evidence[14]" [reveal]="evidenceProgress(14)" [staticMode]="staticMode()">
+        <app-engineering-insight kind="signals" [progress]="localProgress(14)" [staticMode]="staticMode()" />
+        </app-work-chapter>
+      </section>
+      <section class="scene insight-scene" aria-label="Testes: migração de Karma e Jasmine para Vitest" [style.opacity]="opacity(15)" [attr.aria-hidden]="!staticMode() && active() !== 15 ? true : null" [attr.inert]="!staticMode() && active() !== 15 ? '' : null">
+        <app-work-chapter [evidence]="evidence[15]" [reveal]="evidenceProgress(15)" [staticMode]="staticMode()">
+        <app-engineering-insight kind="tests" [progress]="localProgress(15)" [staticMode]="staticMode()" />
+        </app-work-chapter>
+      </section>
+      <section class="scene activity-scene" aria-label="Atividade do perfil de André no GitHub" [style.opacity]="opacity(16)" [attr.aria-hidden]="!staticMode() && active() !== 16 ? true : null" [attr.inert]="!staticMode() && active() !== 16 ? '' : null">
+        <app-github-activity [progress]="localProgress(16)" />
+      </section>
+    </div>
+  </div>
+</section>

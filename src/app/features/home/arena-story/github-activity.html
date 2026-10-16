@@ -1,0 +1,44 @@
+<p class="kicker">O TRABALHO CONTINUA</p>
+<h3>Atividade no GitHub<span>.</span></h3>
+<div class="activity-card">
+  <header class="activity-heading">
+    <p aria-live="polite"><strong>{{ total() }}</strong> contribuições em {{ selectedYear() }}</p>
+    <div class="years" role="group" aria-label="Ano de atividade">
+      @for (year of snapshot.years; track year.year) {
+        <button type="button" [attr.aria-pressed]="selectedYear() === year.year" (click)="selectYear(year.year)">{{ year.year }}</button>
+      }
+    </div>
+  </header>
+  <div class="calendar-scroll" (mouseleave)="hoveredIndex.set(null)">
+    <div class="calendar" [style.--columns]="calendar().columns">
+      <div class="months" aria-hidden="true">
+        @for (month of calendar().months; track month.label) {
+          <span [style.grid-column]="month.column">{{ month.label }}</span>
+        }
+      </div>
+      <div class="weekdays" aria-hidden="true"><span>Seg</span><span>Qua</span><span>Sex</span></div>
+      <div class="days" role="group" [attr.aria-label]="'Contribuições diárias de ' + selectedYear()" aria-describedby="activity-keyboard-help">
+        @for (day of calendar().days; track day.date) {
+          @if (day.future) {
+            <span class="day future" [style.grid-column]="day.week + 1" [style.grid-row]="day.row + 1" aria-hidden="true"></span>
+          } @else {
+            <button #dayButton type="button" class="day" [attr.data-index]="day.index" [attr.data-level]="day.level"
+              [style.grid-column]="day.week + 1" [style.grid-row]="day.row + 1" [style.opacity]="reveal(day.week)"
+              [attr.aria-label]="day.label" [attr.tabindex]="(activeIndex() ?? calendar().lastAvailable) === day.index ? 0 : -1"
+              (mouseenter)="hoveredIndex.set(day.index)" (focus)="focusDay(day.index)" (blur)="focusedIndex.set(null)"
+              (keydown)="navigate($event, day.index, day.row)" (click)="focusDay(day.index)"></button>
+          }
+        }
+      </div>
+    </div>
+  </div>
+  <p id="activity-keyboard-help" class="sr-only">Use as setas para consultar os dias. Esquerda e direita mudam de semana; acima e abaixo mudam de dia.</p>
+  <div class="calendar-bottom">
+    <p class="day-detail">{{ detail() ?? 'Cada quadradinho, um dia.' }}</p>
+    <div class="legend" aria-label="Intensidade das contribuições, de menos a mais"><span>Menos</span>@for (level of levels; track level) {<i [attr.data-level]="level"></i>}<span>Mais</span></div>
+  </div>
+</div>
+<footer>
+  <p>Perfil completo · consulta em {{ updated }}</p>
+  <a [href]="yearUrl()" target="_blank" rel="noopener noreferrer">Ver no GitHub <span aria-hidden="true">↗</span></a>
+</footer>

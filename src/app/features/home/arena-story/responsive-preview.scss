@@ -1,0 +1,16 @@
+:host { display: block; width: 100%; }
+.ruler { display: flex; align-items: center; gap: 12px; max-width: 900px; margin: 0 auto 12px; color: #9f9485; font: 9px monospace; }
+.ruler i { height: 1px; flex: 1; background: #4c4032; }
+.ruler .active, .width { color: #e1b983; }
+.width { min-width: 48px; text-align: center; }
+.viewport-stage { position: relative; width: 100%; overflow: clip; }
+.viewport { position: absolute; top: 50%; left: 50%; transform-origin: center; overflow: auto; scrollbar-width: thin; scrollbar-color: #745735 #191919; pointer-events: auto; overscroll-behavior-x: contain; border-radius: 12px; text-align: left; }
+.viewport:focus-visible { outline: 2px solid #ffae57; outline-offset: -2px; }
+:host(.static) .ruler { display: none; }
+:host(.light) .ruler { color: #706a5c; }
+:host(.light) .ruler .active, :host(.light) .width { color: #80630c; }
+:host(.light) .ruler i { background: #c4bcaa; }
+:host(.light) .viewport { scrollbar-color: #b0a996 #f9f9fa; }
+:host(.static) .viewport-stage { overflow: visible; }
+:host(.static) .viewport { position: static; overflow: visible; width: 100%; }
+@media (max-width: 760px) { .ruler { font-size: 8px; gap: 8px; } }

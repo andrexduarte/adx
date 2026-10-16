@@ -19,11 +19,14 @@ html {
 }
 body {
   margin: 0;
-  background: var(--paper);
+  background: color-mix(in srgb, var(--paper), #141414 calc(var(--arena-depth, 0) * 100%));
   color: var(--ink);
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
 }
+html[data-showcase='nos'] body { background: #f2efe5; }
+html[data-showcase='wakawa'] body { background: #171713; }
+html[data-showcase='footer'] body { background: #141414; }
 body:has(dialog[open]) {
   overflow: hidden;
 }

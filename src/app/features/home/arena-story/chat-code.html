@@ -1,0 +1,29 @@
+<div class="editor">
+  <div class="window-bar">
+    <span class="window-dots" aria-hidden="true">● ● ●</span>
+    <span class="source-path">src/app/chat/v1/chat.component.ts</span>
+    <span class="code-language">TS</span>
+  </div>
+  <div class="editor-body">
+    <div class="file-tree" aria-label="Arquivos do chat em src/app">
+      @for (folder of folders; track folder.path) {
+        <div class="file-group">
+          <span class="folder">⌄ &nbsp; {{ folder.path }}</span>
+          @for (file of folder.files; track file.name) {
+            <span class="file" [class.current]="file.current" [style.opacity]="build() > file.reveal ? 1 : .18">
+              <i aria-hidden="true">{{ file.icon }}</i>{{ file.name }}
+            </span>
+          }
+        </div>
+      }
+    </div>
+    <div class="code-lines" role="region" aria-label="Trechos de chat.component.ts: conexão e envio de mensagens">
+      @for (line of code; track $index; let i = $index) {
+        <div [class]="'code-line ' + line.kind" [style.opacity]="build() * code.length >= i ? 1 : .05">
+          <span aria-hidden="true">{{ line.number }}</span><code>{{ line.text }}</code>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="editor-status"><span>◉ &nbsp; WebSocket + STOMP</span><span>Trechos do arquivo real</span></div>
+</div>

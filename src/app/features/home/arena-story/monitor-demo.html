@@ -1,0 +1,14 @@
+<div class="monitor-stage" [style.--detach]="detached()" aria-label="Demonstração visual do monitor flutuante; dados fictícios">
+  <div class="source-window" [style.opacity]="1 - detached() * .72" aria-hidden="true"><div class="source-bar"><span>● ● ●</span><span>trade arena / torneio</span></div><div class="source-content"><h4>Ranking do torneio</h4><div class="source-stats"><span>Participantes<strong>64</strong></span><span>Sua posição<strong>{{ position() }}º</strong></span></div><div class="source-row"><b>01</b><i></i><span>Participante A</span><em></em></div><div class="source-row"><b>02</b><i></i><span>Você</span><em></em></div><div class="source-row"><b>03</b><i></i><span>Participante B</span><em></em></div><span class="launch">▣ Acompanhar no painel flutuante</span></div></div>
+  <div class="floating-window" [class.detached]="detached() > .6">
+    <div class="window-controls" aria-hidden="true"><span>TRADE ARENA <i> / </i> MONITOR</span><span>↗ &nbsp; ×</span></div>
+    <div class="monitor-content"><span class="tournament-label">DIÁRIO WDO / DEMONSTRAÇÃO</span><h4>{{ ended() ? 'Resultado final' : started() ? 'Em andamento' : 'O torneio vai começar' }}</h4>
+      @if (started()) { <div class="position"><strong>{{ position() }}<sup>º</sup></strong><span>entre 64 participantes<small>{{ ended() ? 'Classificação final' : progress() > .65 ? '↑ 2 posições' : 'Classificação parcial' }}</small></span></div> }
+      @else { <div class="countdown"><strong>00:05</strong><span>para o início</span></div> }
+      <div class="monitor-footer"><span><i [class.final]="ended()"></i>{{ ended() ? 'Concluído' : 'Acompanhando' }}</span><span aria-label="Narração opcional">▥ Voz opcional</span></div>
+    </div>
+  </div>
+</div>
+<div class="pipeline" aria-hidden="true"><span>Canvas</span><i>→</i><span>MediaStream</span><i>→</i><span>Picture-in-Picture</span></div>
+<p class="caption">{{ caption() }}</p>
+<p class="note">Consulta a cada 3 minutos no projeto · tempo e resultados demonstrativos</p>

@@ -1,0 +1,17 @@
+<div class="handoff" aria-label="Reconstituição do fluxo de relato e acompanhamento no ClickUp">
+  <div class="notification" [style.opacity]="notification()" [style.transform]="'translateY(' + (1 - notification()) * -12 + 'px)'" aria-hidden="true"><span class="notification-icon">↗</span><div><small>CLICKUP / ACOMPANHAMENTO</small><strong>Tarefa em revisão</strong><span>Contrato pronto para validar na interface.</span></div><i>●</i></div>
+  <section class="task-card" [style.opacity]="ticket()" [attr.aria-hidden]="ticket() < .5 ? true : null">
+    <header><span class="clickup-name">ClickUp</span><span class="status">{{ progress() < .3 ? 'RELATO' : 'EM REVISÃO' }}</span></header>
+    <span class="task-area">FRONT-END → BACKEND</span><h4>Feed — avatar dos vencedores no pódio</h4>
+    <div class="task-detail"><span>PROBLEMA</span><p>O pódio tem posição e nickname, mas falta a foto.</p></div>
+    <div class="task-detail"><span>CONTRATO ESPERADO</span><code>{{ contract }}</code></div>
+    <div class="acceptance"><span>Critérios para validar</span><p>Com foto · sem foto · histórico e evento com o mesmo formato</p></div>
+    <footer><span class="author">AD</span><span>Relato de André Duarte</span><span class="owner">Backend</span></footer>
+  </section>
+  <section class="podium-card" [style.opacity]="result()" [attr.aria-hidden]="result() < .5 ? true : null">
+    <header><span>CENÁRIO DE VALIDAÇÃO</span><span class="status">FEED / LEAGUE</span></header><h4>O contrato ganha rosto.</h4>
+    <div class="podium">@for (winner of winners; track winner.position) { <div class="winner" [class.first]="winner.position === 1"><div class="avatar"><span class="fallback" [style.opacity]="winner.hasPicture ? 1 - photos() : 1" aria-hidden="true">♙</span>@if (winner.hasPicture) { <svg [style.opacity]="photos()" viewBox="0 0 64 64" role="img" [attr.aria-label]="'Avatar ilustrativo de ' + winner.name"><circle cx="32" cy="32" r="32" [attr.fill]="winner.position === 1 ? '#5e442f' : '#3e4a47'" /><circle cx="32" cy="25" r="11" [attr.fill]="winner.position === 1 ? '#c59570' : '#ddbf9a'" /><path d="M9 64c0-18 9-27 23-27s23 9 23 27" [attr.fill]="winner.position === 1 ? '#dfaf69' : '#91a99e'" /></svg> }</div><span class="winner-name">{{ winner.name }}</span><span class="place">{{ winner.position }}º</span></div> }</div>
+    <code class="avatar-code">{{ avatarCode }}</code><p class="fallback-note">Quem não tem foto mantém o avatar padrão.</p>
+  </section>
+</div>
+<p class="evidence">Caso real em revisão · fluxo reconstituído · avatares demonstrativos</p>

@@ -1,0 +1,27 @@
+<div class="avatar-window" aria-label="Demonstração da escolha de classe e avatar">
+  <header><span>PERSONALIZAR PERFIL</span><div class="profile" [class.updated]="saved()"><img [src]="'/images/work/avatars/' + (saved() ? avatar().image : 'analista1') + '-128.webp'" width="30" height="30" alt="Avatar do perfil demonstrativo" /><span>{{ saved() ? 'Perfil atualizado' : 'Seu perfil' }}</span></div></header>
+  <div class="avatar-body">
+    <div class="portrait">
+      @for (item of avatars; track item.image; let i = $index) {
+        <img [src]="'/images/work/avatars/' + item.image + '-512.webp'" [srcset]="'/images/work/avatars/' + item.image + '-128.webp 128w, /images/work/avatars/' + item.image + '-512.webp 512w'" sizes="(max-width: 760px) 145px, 300px" width="512" height="512" alt="" loading="lazy" [style.opacity]="imageOpacity(i)" />
+      }
+      <div class="portrait-label"><span>PRÉVIA DO AVATAR</span><strong>{{ className() }}</strong><small>Avatar {{ avatar().number }}</small></div>
+    </div>
+    <div class="selection">
+      <span class="eyebrow">UMA IDENTIDADE NO JOGO</span><h4>Escolha sua classe.</h4>
+      <div class="classes"><span [class.selected]="selected() < 2">Analista Gráfico</span><span [class.selected]="selected() >= 2">Sniper</span></div>
+      <div class="level"><span>Nível 1</span><small>Disponível</small></div>
+      <div class="avatar-options">
+        @for (item of avatars; track item.image; let i = $index) {
+          @if ((selected() < 2 && i < 2) || (selected() >= 2 && i >= 2)) {
+            <div class="option" [class.selected]="selected() === i"><img [src]="'/images/work/avatars/' + item.image + '-128.webp'" width="60" height="60" [alt]="item.label + ' — avatar ' + item.number" loading="lazy" /><span>{{ item.number }}</span></div>
+          }
+        }
+        <div class="locked"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><small>Próximo nível</small></div>
+      </div>
+      <div class="save-state" [class.saved]="saved()"><span aria-hidden="true">{{ saved() ? '✓' : '↗' }}</span>{{ saved() ? 'Avatar atualizado no perfil' : 'Prévia antes de salvar' }}</div>
+    </div>
+  </div>
+  <footer><code>{{ saved() ? 'atualizar perfil → atualizar cache' : 'seleção → preload → transição' }}</code><span>WebP · imagens responsivas</span></footer>
+</div>
+<p class="demo-note">Assets e fluxo do projeto · seleção demonstrativa</p>

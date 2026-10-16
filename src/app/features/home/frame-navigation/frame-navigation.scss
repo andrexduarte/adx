@@ -1,0 +1,25 @@
+:host { display:none; position:fixed; z-index:30; right:8px; top:110px; bottom:38px; width:30px; }
+:host(.ready) { display:block; }
+nav { height:100%; max-height:740px; display:flex; flex-direction:column; justify-content:center; margin:auto; }
+a { position:relative; display:flex; align-items:center; justify-content:center; flex:1 1 0; min-height:4px; max-height:12px; text-decoration:none; color:#e8e2d6; outline:none; }
+.tick { display:block; width:6px; height:2px; background:#88847766; transition:width 140ms ease,background-color 140ms ease; }
+.group-start .tick { width:10px; background:#88847799; }
+a[aria-current] .tick { width:20px; background:#c65e43; }
+a:hover .tick, a:focus-visible .tick { width:20px; background:#c65e43; }
+.label { pointer-events:none; position:absolute; right:34px; top:50%; transform:translateY(-50%); display:flex; gap:14px; padding:12px 16px; width:max-content; max-width:min(320px,78vw); background:#242320; border:1px solid #6d675f55; border-radius:5px; font:11px/1.5 var(--sans); box-shadow:0 8px 30px #0002; opacity:0; visibility:hidden; }
+.label strong { display:block; font-size:9px; font-weight:400; color:#c4a58e; margin-bottom:3px; }
+.number { color:#c4a58e; font:10px/1.5 monospace; }
+a:hover .label, a:focus-visible .label { opacity:1; visibility:visible; }
+.toggle { display:none; }
+@media(max-width:760px), (max-height:700px) {
+  :host { top:auto; bottom:18px; right:12px; width:auto; }
+  .toggle { display:flex; gap:6px; justify-content:center; align-items:center; border:1px solid #79756b66; border-radius:24px; min-width:62px; min-height:44px; padding:10px 13px; background:#242320; color:#f3eddf; font:11px monospace; cursor:pointer; }
+  .toggle span { color:#a9a292; }
+  nav { display:none; }
+  :host(.expanded) nav { display:flex; position:absolute; bottom:54px; right:0; width:min(340px,calc(100vw - 24px)); height:auto; max-height:calc(100svh - 150px); overflow:auto; padding:10px 4px; background:#242320; border:1px solid #79756b66; border-radius:8px; justify-content:flex-start; box-shadow:0 8px 40px #0005; }
+  a { flex:0 0 auto; min-height:50px; max-height:none; justify-content:flex-start; padding:8px 14px; gap:14px; }
+  .tick { width:6px!important; flex:0 0 6px; }
+  .label { position:static; transform:none; opacity:1; visibility:visible; padding:0; background:none; border:none; box-shadow:none; width:auto; max-width:none; }
+  a[aria-current] { background:#ffffff09; }
+  a:focus-visible, .toggle:focus-visible { outline:2px solid #c65e43; outline-offset:-2px; }
+}
