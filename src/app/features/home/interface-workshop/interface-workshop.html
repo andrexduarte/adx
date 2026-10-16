@@ -157,10 +157,6 @@
       <path [attr.d]="'M-11 ' + (s.platformY - s.top - 12) + 'l-8 5 5 9'" />
     </g>
 
-    <g class="wood-chips" [attr.transform]="'translate(' + (s.left + 8) + ' ' + (s.top - 2) + ')'">
-      <path d="m-8-9-7-7m26 3 8-8m-6 24 10-1" />
-    </g>
-
     <use
       class="browser-frame"
       href="#workshop-panel"
@@ -396,22 +392,7 @@
     </g>
 
     @for (worker of s.workers; track worker.id) {
-      <g
-        class="worker"
-        [attr.transform]="
-          'translate(' +
-          worker.x +
-          ' ' +
-          worker.y +
-          ') rotate(' +
-          worker.rotation +
-          ' ' +
-          worker.size / 2 +
-          ' ' +
-          worker.size +
-          ')'
-        "
-      >
+      <g class="worker" [attr.transform]="'translate(' + worker.x + ' ' + worker.y + ')'">
         <svg
           [attr.width]="worker.size"
           [attr.height]="worker.size"
