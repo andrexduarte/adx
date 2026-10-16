@@ -27,3 +27,171 @@
 .ground {
   stroke-width: 0.8;
 }
+.fine-line {
+  fill: none;
+  stroke: #242320;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.light-line {
+  fill: none;
+  stroke: #fcf1dc;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.address-bar {
+  fill: url(#workshop-hatching);
+  fill-opacity: 0.35;
+  stroke: #242320;
+  stroke-width: 1.5;
+}
+.construction-detail {
+  fill: none;
+  stroke: #787265;
+  stroke-width: 1;
+}
+.hoist {
+  fill: none;
+  stroke: #242320;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.wood-chips {
+  fill: none;
+  stroke: #aa3027;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .worker-body {
+    transform-box: view-box;
+    transform-origin: 50% 96%;
+    animation-duration: 3.6s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+  }
+  .hammer-arm {
+    transform-origin: 241px 150px;
+    animation: hammering 3.6s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .assembler {
+    transform-origin: 65% 94%;
+    animation-name: fitting;
+    animation-duration: 3.1s;
+    animation-delay: -1.2s;
+  }
+  .fitter {
+    animation-name: fastening;
+    animation-duration: 2.8s;
+    animation-delay: -0.7s;
+  }
+  .carrier-left,
+  .carrier-right {
+    animation-name: carrying;
+    animation-duration: 2.2s;
+  }
+  .planner {
+    animation-name: planning;
+    animation-duration: 4s;
+    animation-delay: -1.5s;
+  }
+  .carried-button {
+    animation: carried-weight 2.2s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .wood-chips {
+    animation: carving-chips 3.6s ease-out infinite;
+    animation-play-state: paused;
+  }
+  :host(.in-view) {
+    .worker-body,
+    .hammer-arm,
+    .wood-chips,
+    .carried-button {
+      animation-play-state: running;
+    }
+  }
+  @keyframes hammering {
+    0%,
+    36%,
+    74%,
+    100% {
+      transform: rotate(0deg);
+    }
+    18%,
+    54% {
+      transform: rotate(-10deg);
+    }
+    24%,
+    60% {
+      transform: rotate(5deg);
+    }
+  }
+  @keyframes fitting {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    45% {
+      transform: translateX(-6px) rotate(-4deg);
+    }
+    70% {
+      transform: translateX(2px) rotate(1deg);
+    }
+  }
+  @keyframes fastening {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    35%,
+    70% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(1deg);
+    }
+  }
+  @keyframes carrying {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-0.5deg);
+    }
+    50% {
+      transform: translateY(-4px) rotate(1deg);
+    }
+  }
+  @keyframes carried-weight {
+    50% {
+      translate: 0 -3px;
+    }
+  }
+  @keyframes planning {
+    0%,
+    100% {
+      transform: rotate(-1deg);
+    }
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+  @keyframes carving-chips {
+    0%,
+    19%,
+    34%,
+    55%,
+    72%,
+    100% {
+      opacity: 0;
+    }
+    25%,
+    61% {
+      opacity: 0.8;
+    }
+  }
+}

@@ -2,26 +2,51 @@
   class="workshop"
   viewBox="0 0 1000 720"
   role="img"
-  aria-label="Trabalhadores constroem uma interface e, conforme a página rola, reorganizam suas peças em um layout para celular."
+  aria-label="Trabalhadores constroem uma interface: três mulheres e três homens, com corpos e funções diferentes. Conforme a página rola, reorganizam suas peças em um layout para celular."
 >
   <defs>
+    <path
+      id="workshop-hammer-arm"
+      d="M219 129C235 113 260 109 276 115L322 103 363 60 380 43 390 8 431 8 440 44 417 71 390 115 340 150 292 172 252 179 222 163Z"
+    />
+    <clipPath id="workshop-arm-clip" clipPathUnits="userSpaceOnUse">
+      <use href="#workshop-hammer-arm" />
+    </clipPath>
+    <mask
+      id="workshop-rigger-body"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="1536"
+      height="1024"
+    >
+      <rect width="1536" height="1024" fill="white" />
+      <use href="#workshop-hammer-arm" fill="black" />
+    </mask>
     <symbol id="workshop-panel" viewBox="44 58 456 422" preserveAspectRatio="none">
-      <image href="/images/workshop/engraving-atlas.png" width="1536" height="1024" />
+      <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
     </symbol>
     <symbol id="workshop-landscape" viewBox="527 107 486 334" preserveAspectRatio="none">
-      <image href="/images/workshop/engraving-atlas.png" width="1536" height="1024" />
+      <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
     </symbol>
     <symbol id="workshop-tools" viewBox="1028 160 480 340">
-      <image href="/images/workshop/engraving-atlas.png" width="1536" height="1024" />
+      <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
     </symbol>
     <symbol id="workshop-plank" viewBox="30 694 474 128" preserveAspectRatio="none">
-      <image href="/images/workshop/engraving-atlas.png" width="1536" height="1024" />
+      <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
     </symbol>
     <symbol id="workshop-ladder" viewBox="610 500 294 495" preserveAspectRatio="none">
-      <image href="/images/workshop/engraving-atlas.png" width="1536" height="1024" />
+      <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
     </symbol>
     <symbol id="workshop-spares" viewBox="1028 624 482 364">
-      <image href="/images/workshop/engraving-atlas.png" width="1536" height="1024" />
+      <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
+    </symbol>
+    <pattern id="workshop-hatching" width="9" height="9" patternUnits="userSpaceOnUse">
+      <path d="m-2 9 11-11m-2 13 4-4" stroke="#242320" stroke-width=".8" />
+    </pattern>
+    <symbol id="workshop-peg" viewBox="-8 -8 16 16">
+      <path d="m-5-5 10 1 1 9-11 1z" fill="#242320" />
+      <path d="m-3-2 6 4m-6 0 6-4" stroke="#f6ecda" stroke-width="1.2" />
     </symbol>
     <pattern id="workshop-red-ink" width="67" height="43" patternUnits="userSpaceOnUse">
       <rect width="67" height="43" fill="#b33325" />
@@ -60,8 +85,34 @@
 
   @let s = scene();
   <g aria-hidden="true">
+    <!-- The measured span and suspended rope move with the same frame as the workers. -->
+    <g class="construction-detail">
+      <path
+        [attr.d]="
+          'M' +
+          (s.left - 8) +
+          ' ' +
+          (s.top - 37) +
+          'h' +
+          (s.width + 16) +
+          'm0-7v14m-' +
+          (s.width + 16) +
+          '-14v14'
+        "
+      />
+      @for (mark of [0, 1, 2, 3, 4, 5, 6, 7, 8]; track mark) {
+        <path [attr.d]="'M' + (s.left + (mark * s.width) / 8) + ' ' + (s.top - 40) + 'v6'" />
+      }
+    </g>
     <!-- Separate printed timbers let the scaffold close around the frame. -->
     <g class="scaffold-back">
+      <use
+        href="#workshop-plank"
+        [attr.x]="s.left - 60"
+        [attr.y]="s.top - 19"
+        [attr.width]="s.width + 136"
+        height="17"
+      />
       <use
         href="#workshop-plank"
         [attr.transform]="'translate(' + (s.left - 26) + ' 80) rotate(90)'"
@@ -96,6 +147,20 @@
       />
     </g>
 
+    <g
+      class="hoist engraved-lines"
+      [attr.transform]="'translate(' + (s.right + 35) + ' ' + (s.top - 8) + ')'"
+    >
+      <circle r="12" fill="#fcf1dc" />
+      <circle r="6" />
+      <path [attr.d]="'M-11 2v' + (s.platformY - s.top - 20) + 'q-2 13-10 10m32-10V2'" />
+      <path [attr.d]="'M-11 ' + (s.platformY - s.top - 12) + 'l-8 5 5 9'" />
+    </g>
+
+    <g class="wood-chips" [attr.transform]="'translate(' + (s.left + 8) + ' ' + (s.top - 2) + ')'">
+      <path d="m-8-9-7-7m26 3 8-8m-6 24 10-1" />
+    </g>
+
     <use
       class="browser-frame"
       href="#workshop-panel"
@@ -118,6 +183,26 @@
         />
       }
       <path
+        class="address-bar"
+        [attr.d]="
+          'M' +
+          (s.left + 108) +
+          ' ' +
+          (s.top + s.barHeight / 2 - 5) +
+          'h' +
+          (s.width - 180) +
+          'v13h-' +
+          (s.width - 180) +
+          'z'
+        "
+      />
+      <path
+        class="fine-line"
+        [attr.d]="
+          'M' + (s.left + 120) + ' ' + (s.top + s.barHeight / 2 + 1) + 'h' + (s.width - 218)
+        "
+      />
+      <path
         class="ink-line"
         [attr.opacity]="s.menuOpacity"
         [attr.d]="'M' + (s.right - 45) + ' ' + (s.top + 20) + 'h19m-19 8h19'"
@@ -128,9 +213,15 @@
       <use href="#workshop-panel" x="284" y="150" width="126" height="346" />
       <g class="engraved-lines">
         <circle class="red" cx="347" cy="194" r="23" />
+        <path d="m332 205 14-28h4l12 28h-7l-3-8h-12l-3 8zm11-14h7l-3-8z" fill="#fcf1dc" />
         <path
           class="ink-line"
           d="m305 245 82 1m-82 26 60-1m-60 27 76 1m-76 25 52 1m-52 57 82 1m-82 26 63-1"
+        />
+        <path class="fine-line" d="m305 325h79m-79 18h56m-56 112h80m-80 11h46" />
+        <path
+          class="red"
+          d="m305 355h22v8h-22zm31 0h13v8h-13zm-31 74h10v10h-10zm21 0h10v10h-10zm21 0h10v10h-10z"
         />
       </g>
     </g>
@@ -156,6 +247,21 @@
             [attr.height]="card.imageHeight"
             rx="2"
           />
+          <path
+            class="light-line engraved-lines"
+            [attr.transform]="
+              'translate(' +
+              (14 + card.imageWidth / 2) +
+              ' ' +
+              (13 + card.imageHeight / 2) +
+              ') scale(' +
+              card.imageWidth / 88 +
+              ' ' +
+              card.imageHeight / 58 +
+              ')'
+            "
+            d="m-17-12-13 12 13 12m34-24 13 12-13 12M5-17-5 17"
+          />
         } @else if (card.id === 1) {
           <path
             class="ink-line engraved-lines"
@@ -171,6 +277,11 @@
               ' 14h' +
               card.imageWidth * 0.88
             "
+          />
+          <path
+            class="red"
+            [attr.d]="'M16 62h' + card.imageWidth * 0.4 + 'v4H16z'"
+            [attr.opacity]="s.sidebarOpacity"
           />
         } @else {
           <use
@@ -196,8 +307,18 @@
             card.lineWidth * 0.7
           "
         />
+        <path
+          class="fine-line engraved-lines"
+          [attr.opacity]="s.sidebarOpacity"
+          [attr.d]="'M14 ' + (card.height - 16) + 'h' + (card.width - 28)"
+        />
       </g>
     }
+
+    <g class="interface-detail engraved-lines" [attr.opacity]="s.sidebarOpacity">
+      <path class="fine-line" d="M439 516h371m-371 10h149m16 0h90" />
+      <path class="red" d="m774 521h36v8h-36z" />
+    </g>
 
     <g class="carried-button" [attr.transform]="'translate(' + s.button.x + ' 550)'">
       <use href="#workshop-panel" x="-7" y="-8" [attr.width]="s.button.width + 14" height="62" />
@@ -227,9 +348,48 @@
     />
     <use href="#workshop-plank" [attr.x]="s.right - 48" y="450" width="195" height="18" />
 
+    @for (level of [452, 630]; track level) {
+      <use
+        href="#workshop-peg"
+        [attr.x]="s.left - 46"
+        [attr.y]="level + 3"
+        width="12"
+        height="12"
+      />
+      <use
+        href="#workshop-peg"
+        [attr.x]="s.right + 27"
+        [attr.y]="level + 3"
+        width="12"
+        height="12"
+      />
+    }
+
+    <g
+      class="plans engraved-lines"
+      [attr.transform]="'translate(' + (s.left - 91) + ' 624) rotate(-9)'"
+    >
+      <path d="m0 6 96-6 13 58-98 5z" fill="#fcf1dc" stroke="#242320" stroke-width="2" />
+      <path
+        class="fine-line"
+        d="m14 17 60-4 5 31-60 4zm6 7 18-1 2 19m-2-19 31-2m-29 10 30-2m13-14 9-1m-7 9 8-1m-7 8 10-1m-8 8 10-1"
+      />
+      <path d="m22 36 9-1-1-6-9 1z" class="red" />
+      <path d="m79 8 4 48" stroke="#b33325" stroke-width="2" />
+    </g>
+
     <g class="ground" fill="none" stroke="#242320" stroke-linecap="round">
       <path
         d="m44 682 36-2m17 5 39-2m22-4 52 2m-77 9 30-1m23-2 66 2m10-7 33-1m18 6 58 1m-24-9 17-1m17 10 68-1m33-7 46 2m22 3 35-1m22-4 43 1m25 9 59-2m15-6 39 1m19 5 34-2m22-4 53 1m21 5 32-2"
+      />
+      <path
+        d="m380 675 32-1 14 8-40 2zm191 6 30-4 13 5-28 5zm124-8 24 2 9 9-31-3z"
+        fill="url(#workshop-hatching)"
+        stroke="none"
+      />
+      <path
+        d="m421 688q-10-9-16-1t12 5m178-3q5-11 12-5t-6 8m116-2q-5-13 3-12t3 9"
+        stroke-width="1.5"
       />
       <path
         d="m64 692 18-1m35 3 29-1m100-5 34 2m39 5 58-1m35-9 14 1m39 7 47-1m34 4 20-1m66-7 38 1m27 4 51-1m19-6 21 1m26 7 38-1m23-3 26 1m26-8 19-1m31 10 25-1"
@@ -256,15 +416,40 @@
         <svg
           [attr.width]="worker.size"
           [attr.height]="worker.size"
-          [attr.viewBox]="worker.crop"
+          viewBox="0 0 512 512"
           overflow="hidden"
         >
-          <image href="/images/workshop/workers-atlas.png" width="1536" height="1024" />
+          <g [attr.class]="'worker-body ' + worker.id">
+            @if (worker.id === 'rigger') {
+              <image
+                href="/images/workshop/workers-atlas-v2.webp"
+                width="1536"
+                height="1024"
+                mask="url(#workshop-rigger-body)"
+              />
+              <g class="hammer-arm">
+                <image
+                  href="/images/workshop/workers-atlas-v2.webp"
+                  width="1536"
+                  height="1024"
+                  clip-path="url(#workshop-arm-clip)"
+                />
+              </g>
+            } @else {
+              <image
+                href="/images/workshop/workers-atlas-v2.webp"
+                [attr.x]="worker.offsetX"
+                [attr.y]="worker.offsetY"
+                width="1536"
+                height="1024"
+              />
+            }
+          </g>
         </svg>
       </g>
     }
 
-    <use href="#workshop-tools" x="4" y="555" width="156" height="138" />
+    <use href="#workshop-tools" x="4" y="606" width="112" height="90" />
     <use href="#workshop-spares" x="828" y="556" width="166" height="140" />
   </g>
 </svg>
