@@ -20,11 +20,13 @@ const phase = (value: number, start: number, end: number) => {
   selector: 'app-interface-workshop',
   templateUrl: './interface-workshop.html',
   styleUrl: './interface-workshop.scss',
+  host: { '[class.in-view]': 'inView()' },
 })
 export class InterfaceWorkshop {
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   readonly progress = signal(0);
+  readonly inView = signal(false);
   readonly scene = computed(() => {
     const progress = this.progress();
     const frame = phase(progress, 0.08, 0.83);
@@ -34,8 +36,8 @@ export class InterfaceWorkshop {
     const right = blend(840, 686, frame);
     const buttonLeft = blend(302, 444, button);
     const buttonRight = blend(798, 664, button);
-    const footstep = Math.sin(button * Math.PI * 6) * Math.sin(button * Math.PI) * 4;
-    const lean = Math.sin(frame * Math.PI * 4) * Math.sin(frame * Math.PI) * 1.8;
+    const footstep = Math.sin(button * Math.PI * 6) * Math.sin(button * Math.PI) * 7;
+    const lean = Math.sin(frame * Math.PI * 4) * Math.sin(frame * Math.PI) * 4;
     const featureBottom = blend(330, 262, content);
 
     return {
@@ -75,7 +77,8 @@ export class InterfaceWorkshop {
       workers: [
         {
           id: 'rigger',
-          crop: '0 0 512 512',
+          offsetX: 0,
+          offsetY: 0,
           x: left - 204,
           y: blend(54, 19, frame),
           size: 260,
@@ -83,7 +86,8 @@ export class InterfaceWorkshop {
         },
         {
           id: 'assembler',
-          crop: '512 0 512 512',
+          offsetX: -512,
+          offsetY: 0,
           x: right - 222,
           y: featureBottom - 206,
           size: 220,
@@ -91,7 +95,8 @@ export class InterfaceWorkshop {
         },
         {
           id: 'fitter',
-          crop: '1024 0 512 512',
+          offsetX: -1024,
+          offsetY: 0,
           x: right - 44,
           y: 207,
           size: 250,
@@ -99,19 +104,30 @@ export class InterfaceWorkshop {
         },
         {
           id: 'carrier-left',
-          crop: '0 512 512 512',
-          x: buttonLeft - 202,
+          offsetX: 0,
+          offsetY: -512,
+          x: buttonLeft - 224,
           y: 440 + footstep,
           size: 250,
           rotation: -lean * 0.6,
         },
         {
           id: 'carrier-right',
-          crop: '512 512 512 512',
-          x: buttonRight - 78,
+          offsetX: -512,
+          offsetY: -512,
+          x: buttonRight - 61,
           y: 436 - footstep,
           size: 250,
           rotation: lean * 0.6,
+        },
+        {
+          id: 'planner',
+          offsetX: -1024,
+          offsetY: -512,
+          x: left - 285,
+          y: 493,
+          size: 190,
+          rotation: -lean * 0.3,
         },
       ],
     };
@@ -120,7 +136,7 @@ export class InterfaceWorkshop {
   constructor() {
     // SVG image references are discovered late by the preload scanner.
     const document = inject(DOCUMENT);
-    const preloads = ['engraving-atlas', 'workers-atlas'].map((atlas) => {
+    const preloads = ['engraving-atlas', 'workers-atlas-v2'].map((atlas) => {
       const href = '/images/workshop/' + atlas + '.webp';
       const existing = document.head.querySelector<HTMLLinkElement>(
         'link[rel="preload"][href="' + href + '"]',
@@ -142,6 +158,11 @@ export class InterfaceWorkshop {
       const track = host.closest<HTMLElement>('.hero-scroll');
       const art = host.closest<HTMLElement>('.hero-art');
       if (!track || !art) return;
+
+      const visibility = new IntersectionObserver(([entry]) =>
+        this.inView.set(entry.isIntersecting),
+      );
+      visibility.observe(host);
 
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       const compactViewport = window.matchMedia('(max-width: 760px)');
@@ -177,6 +198,7 @@ export class InterfaceWorkshop {
         window.removeEventListener('resize', scheduleUpdate);
         reducedMotion.removeEventListener('change', scheduleUpdate);
         resizeObserver.disconnect();
+        visibility.disconnect();
       });
     });
   }

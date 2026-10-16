@@ -1,71 +1,59 @@
+@font-face {
+  font-family: 'Space Grotesk Brand';
+  src: url('/fonts/space-grotesk-wordmark.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
 :host {
   display: inline-flex;
   flex: 0 0 auto;
   width: var(--wordmark-width, 216px);
 }
 .wordmark {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  width: 100%;
-  height: 44px;
+  min-height: 44px;
   text-decoration: none;
-  transition: width 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  font:
+    700 24px/1 'Space Grotesk Brand',
+    Arial,
+    sans-serif;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
 }
-.signature {
+.initial,
+.name,
+.brand-point {
   display: block;
-  flex: 0 0 auto;
-  width: var(--wordmark-width, 216px);
-  max-width: none;
-  height: auto;
-  clip-path: inset(0 0 0 0);
+}
+.name {
+  max-width: 195px;
+  overflow: hidden;
   opacity: 1;
-  transform: translateX(0);
-  pointer-events: none;
   transition:
-    clip-path 560ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 220ms ease 120ms,
-    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+    max-width 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms ease;
 }
-.monogram {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 48px;
-  height: 48px;
+.brand-point {
+  color: var(--brand-accent, var(--red));
+}
+:host(.is-compact) .name {
+  max-width: 0;
   opacity: 0;
-  transform: translate(-3px, -50%) scale(0.88);
-  transform-origin: left center;
-  pointer-events: none;
-  transition:
-    opacity 180ms ease,
-    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-:host(.is-compact) {
+@media (max-width: 620px) {
   .wordmark {
-    width: 48px;
-  }
-  .signature {
-    clip-path: inset(0 80% 0 0);
-    opacity: 0;
-    transform: translateX(-3px);
-    transition-delay: 0ms, 140ms, 0ms;
-  }
-  .monogram {
-    opacity: 1;
-    transform: translate(0, -50%) scale(1);
-    transition-delay: 160ms, 80ms;
+    font-size: 19px;
   }
 }
 @media (max-width: 380px) {
-  :host(.is-compact) {
+  :host {
     justify-content: center;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .wordmark,
-  .signature,
-  .monogram {
+  .name {
     transition: none;
   }
 }

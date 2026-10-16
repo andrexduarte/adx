@@ -2,9 +2,27 @@
   class="workshop"
   viewBox="0 0 1000 720"
   role="img"
-  aria-label="Trabalhadores constroem uma interface e, conforme a página rola, reorganizam suas peças em um layout para celular."
+  aria-label="Trabalhadores constroem uma interface: três mulheres e três homens, com corpos e funções diferentes. Conforme a página rola, reorganizam suas peças em um layout para celular."
 >
   <defs>
+    <path
+      id="workshop-hammer-arm"
+      d="M219 129C235 113 260 109 276 115L322 103 363 60 380 43 390 8 431 8 440 44 417 71 390 115 340 150 292 172 252 179 222 163Z"
+    />
+    <clipPath id="workshop-arm-clip" clipPathUnits="userSpaceOnUse">
+      <use href="#workshop-hammer-arm" />
+    </clipPath>
+    <mask
+      id="workshop-rigger-body"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="1536"
+      height="1024"
+    >
+      <rect width="1536" height="1024" fill="white" />
+      <use href="#workshop-hammer-arm" fill="black" />
+    </mask>
     <symbol id="workshop-panel" viewBox="44 58 456 422" preserveAspectRatio="none">
       <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
     </symbol>
@@ -137,6 +155,10 @@
       <circle r="6" />
       <path [attr.d]="'M-11 2v' + (s.platformY - s.top - 20) + 'q-2 13-10 10m32-10V2'" />
       <path [attr.d]="'M-11 ' + (s.platformY - s.top - 12) + 'l-8 5 5 9'" />
+    </g>
+
+    <g class="wood-chips" [attr.transform]="'translate(' + (s.left + 8) + ' ' + (s.top - 2) + ')'">
+      <path d="m-8-9-7-7m26 3 8-8m-6 24 10-1" />
     </g>
 
     <use
@@ -394,15 +416,40 @@
         <svg
           [attr.width]="worker.size"
           [attr.height]="worker.size"
-          [attr.viewBox]="worker.crop"
+          viewBox="0 0 512 512"
           overflow="hidden"
         >
-          <image href="/images/workshop/workers-atlas.webp" width="1536" height="1024" />
+          <g [attr.class]="'worker-body ' + worker.id">
+            @if (worker.id === 'rigger') {
+              <image
+                href="/images/workshop/workers-atlas-v2.webp"
+                width="1536"
+                height="1024"
+                mask="url(#workshop-rigger-body)"
+              />
+              <g class="hammer-arm">
+                <image
+                  href="/images/workshop/workers-atlas-v2.webp"
+                  width="1536"
+                  height="1024"
+                  clip-path="url(#workshop-arm-clip)"
+                />
+              </g>
+            } @else {
+              <image
+                href="/images/workshop/workers-atlas-v2.webp"
+                [attr.x]="worker.offsetX"
+                [attr.y]="worker.offsetY"
+                width="1536"
+                height="1024"
+              />
+            }
+          </g>
         </svg>
       </g>
     }
 
-    <use href="#workshop-tools" x="4" y="555" width="156" height="138" />
+    <use href="#workshop-tools" x="4" y="606" width="112" height="90" />
     <use href="#workshop-spares" x="828" y="556" width="166" height="140" />
   </g>
 </svg>

@@ -21,6 +21,8 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         /<h1[^>]*class="hero-title"[^>]*>André Duarte, desenvolvedor front-end<\/h1>/,
       );
       assert.doesNotMatch(body, /class="hero-copy"|Código,<br|hero-actions/);
+      assert.match(body, /NDRÉ DUARTE/);
+      assert.doesNotMatch(body, /andre-duarte-signature\.png|andre-monogram\.svg/);
       assert.match(body, /application\/ld\+json/);
       assert.match(body, /"@type":"Person"/);
       assert.match(response.headers.get('x-robots-tag'), /noindex/);
@@ -83,11 +85,12 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       async () => {
         const { body } = await get('/');
         assert.match(body, /Trabalhadores constroem uma interface/);
-        assert.match(body, /\/images\/workshop\/workers-atlas.webp/);
+        assert.match(body, /três mulheres e três homens/);
+        assert.match(body, /\/images\/workshop\/workers-atlas-v2.webp/);
         assert.match(body, /\/images\/workshop\/engraving-atlas.webp/);
         assert.doesNotMatch(body, /\/images\/workshop\/[^"\s]+\.png/);
         const head = body.slice(0, body.indexOf('</head>'));
-        for (const atlas of ['workers-atlas', 'engraving-atlas']) {
+        for (const atlas of ['workers-atlas-v2', 'engraving-atlas']) {
           assert.match(
             head,
             new RegExp(
@@ -102,7 +105,7 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         assert.match(body, /https:\/\/www.linkedin.com\/in\/andrexdev\//);
         assert.match(body, /https:\/\/github.com\/andrexduarte/);
         assert.doesNotMatch(body, /Abrir os stories|home-stories/);
-        for (const asset of ['workers-atlas.webp', 'engraving-atlas.webp']) {
+        for (const asset of ['workers-atlas-v2.webp', 'engraving-atlas.webp']) {
           const { response } = await get('/images/workshop/' + asset);
           assert.equal(response.status, 200);
           assert.match(response.headers.get('content-type'), /image\/webp/);
@@ -129,6 +132,9 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         assert.equal((await get('/not-a-page')).response.status, 404);
         assert.equal((await get('/caderno/not-an-article')).response.status, 404);
         assert.equal((await get('/images/cerrado-xilogravura.jpg')).response.status, 200);
+        const { response: font } = await get('/fonts/space-grotesk-wordmark.woff2');
+        assert.equal(font.status, 200);
+        assert.match(font.headers.get('content-type'), /font\/woff2/);
       },
     );
   } finally {
