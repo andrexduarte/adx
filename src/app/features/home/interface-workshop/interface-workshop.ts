@@ -7,6 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 const blend = (start: number, end: number, progress: number) => start + (end - start) * progress;
@@ -117,6 +118,25 @@ export class InterfaceWorkshop {
   });
 
   constructor() {
+    // SVG image references are discovered late by the preload scanner.
+    const document = inject(DOCUMENT);
+    const preloads = ['engraving-atlas', 'workers-atlas'].map((atlas) => {
+      const href = '/images/workshop/' + atlas + '.webp';
+      const existing = document.head.querySelector<HTMLLinkElement>(
+        'link[rel="preload"][href="' + href + '"]',
+      );
+      if (existing) return existing;
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.type = 'image/webp';
+      link.href = href;
+      link.setAttribute('fetchpriority', 'high');
+      document.head.appendChild(link);
+      return link;
+    });
+    this.destroyRef.onDestroy(() => preloads.forEach((link) => link.remove()));
+
     afterNextRender(() => {
       const host = this.element.nativeElement;
       const track = host.closest<HTMLElement>('.hero-scroll');

@@ -83,17 +83,29 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       async () => {
         const { body } = await get('/');
         assert.match(body, /Trabalhadores constroem uma interface/);
-        assert.match(body, /\/images\/workshop\/workers-atlas.png/);
-        assert.match(body, /\/images\/workshop\/engraving-atlas.png/);
+        assert.match(body, /\/images\/workshop\/workers-atlas.webp/);
+        assert.match(body, /\/images\/workshop\/engraving-atlas.webp/);
+        assert.doesNotMatch(body, /\/images\/workshop\/[^"\s]+\.png/);
+        const head = body.slice(0, body.indexOf('</head>'));
+        for (const atlas of ['workers-atlas', 'engraving-atlas']) {
+          assert.match(
+            head,
+            new RegExp(
+              '<link[^>]+rel="preload"[^>]+href="/images/workshop/' +
+                atlas +
+                '\\.webp"[^>]+fetchpriority="high"',
+            ),
+          );
+        }
         assert.doesNotMatch(body, /acaua-mark.png|id="vida"/);
         assert.doesNotMatch(body, /id="projetos"|app-wakawa-project/);
         assert.match(body, /https:\/\/www.linkedin.com\/in\/andrexdev\//);
         assert.match(body, /https:\/\/github.com\/andrexduarte/);
         assert.doesNotMatch(body, /Abrir os stories|home-stories/);
-        for (const asset of ['workers-atlas.png', 'engraving-atlas.png']) {
+        for (const asset of ['workers-atlas.webp', 'engraving-atlas.webp']) {
           const { response } = await get('/images/workshop/' + asset);
           assert.equal(response.status, 200);
-          assert.match(response.headers.get('content-type'), /image\/png/);
+          assert.match(response.headers.get('content-type'), /image\/webp/);
         }
         const oldRoute = await fetch(base + '/stories', { redirect: 'manual' });
         assert.ok([301, 302, 307, 308].includes(oldRoute.status));

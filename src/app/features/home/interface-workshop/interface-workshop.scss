@@ -27,3 +27,34 @@
 .ground {
   stroke-width: 0.8;
 }
+.fine-line {
+  fill: none;
+  stroke: #242320;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.light-line {
+  fill: none;
+  stroke: #fcf1dc;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.address-bar {
+  fill: url(#workshop-hatching);
+  fill-opacity: 0.35;
+  stroke: #242320;
+  stroke-width: 1.5;
+}
+.construction-detail {
+  fill: none;
+  stroke: #787265;
+  stroke-width: 1;
+}
+.hoist {
+  fill: none;
+  stroke: #242320;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
