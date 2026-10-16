@@ -22,6 +22,7 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       );
       assert.doesNotMatch(body, /class="hero-copy"|Código,<br|hero-actions/);
       assert.match(body, /NDRÉ DUARTE/);
+      assert.match(body, /src="\/images\/andre-mark\.svg"/);
       assert.doesNotMatch(body, /andre-duarte-signature\.png|andre-monogram\.svg/);
       assert.match(body, /application\/ld\+json/);
       assert.match(body, /"@type":"Person"/);
@@ -135,6 +136,9 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         const { response: font } = await get('/fonts/space-grotesk-wordmark.woff2');
         assert.equal(font.status, 200);
         assert.match(font.headers.get('content-type'), /font\/woff2/);
+        const { response: mark } = await get('/images/andre-mark.svg');
+        assert.equal(mark.status, 200);
+        assert.match(mark.headers.get('content-type'), /image\/svg\+xml/);
       },
     );
   } finally {

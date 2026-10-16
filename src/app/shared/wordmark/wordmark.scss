@@ -8,7 +8,7 @@
 :host {
   display: inline-flex;
   flex: 0 0 auto;
-  width: var(--wordmark-width, 216px);
+  width: var(--wordmark-width, 248px);
 }
 .wordmark {
   display: inline-flex;
@@ -16,35 +16,49 @@
   min-height: 44px;
   text-decoration: none;
   font:
-    700 24px/1 'Space Grotesk Brand',
+    700 22px/1 'Space Grotesk Brand',
     Arial,
     sans-serif;
   letter-spacing: -0.045em;
   white-space: nowrap;
 }
-.initial,
-.name,
-.brand-point {
+.brand-mark,
+.name {
   display: block;
 }
+.brand-mark {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+}
 .name {
-  max-width: 195px;
+  max-width: 210px;
+  margin-inline-start: 12px;
   overflow: hidden;
   opacity: 1;
   transition:
     max-width 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    margin-inline-start 560ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 240ms ease;
-}
-.brand-point {
-  color: var(--brand-accent, var(--red));
 }
 :host(.is-compact) .name {
   max-width: 0;
+  margin-inline-start: 0;
   opacity: 0;
 }
 @media (max-width: 620px) {
   .wordmark {
     font-size: 19px;
+  }
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+  .name {
+    margin-inline-start: 9px;
+  }
+  :host(.is-compact) .name {
+    margin-inline-start: 0;
   }
 }
 @media (max-width: 380px) {

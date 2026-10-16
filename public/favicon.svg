@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="#fcfbf7"/><path fill="#242320" fill-rule="evenodd" d="M7 49 23 13h9l16 36H37l-3-8H20l-3 8zm16-16h8l-4-11z"/><circle cx="54" cy="45" r="4" fill="#aa3027"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <pattern id="andre-red-ink" width="67" height="43" patternUnits="userSpaceOnUse">
+      <rect width="67" height="43" fill="#b33325"/>
+      <path d="m3 4 21 1m8-2 16 1M8 12l37-2m7 4 8-1M1 26l17-3m14 0 22-2M9 36l25-3m8 5 16-1M20 17l8 1m28 11h9" stroke="#f6ecda" stroke-width=".8" opacity=".7" fill="none"/>
+      <path d="m4 19 11-1m35 15 6-1m-18-26 8-1M2 41l17-2" stroke="#342219" stroke-width=".7" opacity=".6" fill="none"/>
+    </pattern>
+  </defs>
+  <path d="M46.8 24.3C46.4 37.2 36.3 47.1 23.5 46.8 10.8 46.5.9 36.3 1.1 23.6 1.3 11 11.4.8 24.1 1.1 37 1.3 47.2 11.6 46.8 24.3Z" fill="url(#andre-red-ink)"/>
+  <path d="m9 35 14-28h4l12 28h-7l-3-8H17l-3 8zm11-14h7l-3-8z" fill="#fcf1dc"/>
+</svg>
