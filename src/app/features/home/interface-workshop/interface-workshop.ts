@@ -36,8 +36,6 @@ export class InterfaceWorkshop {
     const right = blend(840, 686, frame);
     const buttonLeft = blend(302, 444, button);
     const buttonRight = blend(798, 664, button);
-    const footstep = Math.sin(button * Math.PI * 6) * Math.sin(button * Math.PI) * 7;
-    const lean = Math.sin(frame * Math.PI * 4) * Math.sin(frame * Math.PI) * 4;
     const featureBottom = blend(330, 262, content);
 
     return {
@@ -82,7 +80,6 @@ export class InterfaceWorkshop {
           x: left - 204,
           y: blend(54, 19, frame),
           size: 260,
-          rotation: lean,
         },
         {
           id: 'assembler',
@@ -91,7 +88,6 @@ export class InterfaceWorkshop {
           x: right - 222,
           y: featureBottom - 206,
           size: 220,
-          rotation: -lean,
         },
         {
           id: 'fitter',
@@ -100,25 +96,22 @@ export class InterfaceWorkshop {
           x: right - 44,
           y: 207,
           size: 250,
-          rotation: lean * 0.5,
         },
         {
           id: 'carrier-left',
           offsetX: 0,
           offsetY: -512,
           x: buttonLeft - 224,
-          y: 440 + footstep,
+          y: 440,
           size: 250,
-          rotation: -lean * 0.6,
         },
         {
           id: 'carrier-right',
           offsetX: -512,
           offsetY: -512,
           x: buttonRight - 61,
-          y: 436 - footstep,
+          y: 436,
           size: 250,
-          rotation: lean * 0.6,
         },
         {
           id: 'planner',
@@ -127,7 +120,6 @@ export class InterfaceWorkshop {
           x: left - 285,
           y: 493,
           size: 190,
-          rotation: -lean * 0.3,
         },
       ],
     };
