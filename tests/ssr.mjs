@@ -94,7 +94,7 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
           assert.match(
             head,
             new RegExp(
-              '<link[^>]+rel="preload"[^>]+href="/images/workshop/' +
+              '<link[^>]+rel="preload"[^>]+as="image"[^>]+href="/images/workshop/' +
                 atlas +
                 '\\.webp"[^>]+fetchpriority="high"',
             ),

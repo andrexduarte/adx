@@ -144,7 +144,7 @@ export class InterfaceWorkshop {
       if (existing) return existing;
       const link = document.createElement('link');
       link.rel = 'preload';
-      link.as = 'image';
+      link.setAttribute('as', 'image');
       link.type = 'image/webp';
       link.href = href;
       link.setAttribute('fetchpriority', 'high');
