@@ -45,9 +45,6 @@
 .footer-contact:hover {
   color: #e78871;
 }
-app-wordmark {
-  --brand-accent: #e78871;
-}
 .footer-brand {
   justify-self: end;
 }
@@ -85,7 +82,7 @@ small {
     grid-template-columns: 1fr;
     padding-top: 42px;
     gap: 18px;
-    --wordmark-width: 160px;
+    --wordmark-width: 190px;
   }
   nav {
     justify-content: flex-start;
