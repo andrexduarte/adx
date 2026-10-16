@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-15",
-  "scope": "Histórico de verificações. A etapa mais recente é productionPublication: Supabase real, Vercel, DNS e HTTPS no domínio final.",
+  "date": "2026-10-16",
+  "scope": "Histórico de verificações. A etapa mais recente é scrollPortfolioPublication: narrativa por frames publicada e conferida no domínio final.",
   "build": {
     "command": "npm run build:vercel",
     "passed": true,
@@ -662,5 +662,76 @@
     },
     "dnsPullRequest": "https://github.com/is-a-dev/register/pull/56611",
     "dnsPullRequestMerged": true
+  },
+  "scrollPortfolioPublication": {
+    "date": "2026-10-16T20:09:44.4725715-03:00",
+    "url": "https://andre.is-a.dev/",
+    "status": 200,
+    "commit": "1e46604970785f48249dedfe1d67fe1a055a33ce",
+    "pullRequest": "https://github.com/andrexduarte/adx/pull/7",
+    "deployment": "https://vercel.com/andre-duarte/andre-is-a-dev/HuLWZaSf369guoW2teVrNwfxmLEp",
+    "vercelStatus": "success",
+    "arena": true,
+    "nos": true,
+    "wakawa": true,
+    "closing": true,
+    "frameNavigation": true,
+    "oldHeroCopy": false,
+    "resources": [
+      {
+        "path": "/caderno",
+        "status": 200,
+        "contentType": "text/html; charset=UTF-8",
+        "cacheControl": "public, must-revalidate, max-age=0",
+        "robots": ""
+      },
+      {
+        "path": "/admin",
+        "status": 200,
+        "contentType": "text/html; charset=UTF-8",
+        "cacheControl": "no-store",
+        "robots": "noindex, nofollow"
+      },
+      {
+        "path": "/fonts/sora-latin.woff2",
+        "status": 200,
+        "contentType": "font/woff2",
+        "cacheControl": "public, must-revalidate, max-age=0",
+        "robots": ""
+      },
+      {
+        "path": "/images/footer/andre-pontilhismo.webp",
+        "status": 200,
+        "contentType": "image/webp",
+        "cacheControl": "public, must-revalidate, max-age=0",
+        "robots": ""
+      },
+      {
+        "path": "/images/projects/wakawa-wallpaper.webp",
+        "status": 200,
+        "contentType": "image/webp",
+        "cacheControl": "public, must-revalidate, max-age=0",
+        "robots": ""
+      }
+    ],
+    "localChecks": {
+      "testsPassed": 44,
+      "testsFailed": 0,
+      "ssrScenariosPassed": 9,
+      "productionBuildPassed": true,
+      "buildWarnings": 0,
+      "lintRun": false
+    },
+    "browser": {
+      "desktopViewport": "1280x800",
+      "mobileViewport": "390x844",
+      "chatSteps": 3,
+      "frameLinksVerified": true,
+      "closingPortraitVerified": true,
+      "headerRestoredAfterClosing": true,
+      "mobileHorizontalOverflow": false,
+      "siteConsoleErrorsObserved": 0,
+      "authenticatedArenaComparison": "pending"
+    }
   }
 }

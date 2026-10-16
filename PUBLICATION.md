@@ -2,9 +2,9 @@
 
 ## Revisão de 16/10/2026
 
-A versão em preparação acrescenta a narrativa por frames, os exemplos da Trade Arena, Nós e waka’wã, a trajetória por telas e o encerramento em pontilhismo. A revisão individual está concluída até o frame 07; o frame 08 aguarda uma decisão. [TASK_PROGRESS.md](TASK_PROGRESS.md) registra o estado e a sequência de continuidade.
+A versão publicada pelo [PR #7](https://github.com/andrexduarte/adx/pull/7), commit `1e46604970785f48249dedfe1d67fe1a055a33ce`, acrescenta a narrativa por frames, os exemplos da Trade Arena, Nós e waka’wã, a trajetória por telas e o encerramento em pontilhismo. A revisão individual está concluída até o frame 07; o frame 08 aguarda uma decisão. [TASK_PROGRESS.md](TASK_PROGRESS.md) registra o estado e a sequência de continuidade.
 
-Validação local desta versão: 44 testes aprovados, build de produção sem avisos e nove cenários SSR aprovados, além do agrupador. A implantação deve ser confirmada no domínio final após o merge, distinguindo o preview da Vercel do site em produção. Banco, permissões e variáveis de ambiente não fazem parte desta alteração.
+Validação local desta versão: 44 testes aprovados, build de produção sem avisos e nove cenários SSR aprovados, além do agrupador. A [implantação de produção](https://vercel.com/andre-duarte/andre-is-a-dev/HuLWZaSf369guoW2teVrNwfxmLEp) foi concluída e o domínio final retornou HTTP 200 com a nova narrativa em 16/10/2026 às 20h09 (Brasília). Chat e navegação foram conferidos em desktop e celular; o encerramento em pontilhismo também foi confirmado no site publicado. Banco, permissões e variáveis de ambiente não foram alterados.
 
 ## Recursos
 

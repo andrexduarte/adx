@@ -1,6 +1,6 @@
 # Progresso da revisão do site pessoal
 
-Atualizado em 16 de outubro de 2026. Esta tarefa transforma a home em uma narrativa visual controlada pela rolagem. A versão atual está sendo publicada; a revisão individual está concluída até o frame 07. O próximo ponto de decisão é o frame 08.
+Atualizado em 16 de outubro de 2026. Esta tarefa transforma a home em uma narrativa visual controlada pela rolagem. A versão atual está publicada em [andre.is-a.dev](https://andre.is-a.dev/); a revisão individual está concluída até o frame 07. O próximo ponto de decisão é o frame 08.
 
 ## Direção aprovada
 
@@ -37,13 +37,12 @@ Esses trechos estão implementados, mas ainda não passaram por esta rodada de r
 
 ## Próximos passos
 
-1. Concluir a publicação desta versão e confirmar o resultado no domínio final.
-2. Retomar pela resposta pendente do frame 08, sem presumir uma escolha.
-3. Revisar Torneios por etapas: prompt, plano, ferramentas, estrutura, código, estados dos componentes e números.
-4. Seguir com Dashboard, monitor, avatar, League e os demais exemplos da Arena, perguntando sobre cada frame e reduzindo passagens redundantes.
-5. Conferir a fidelidade das interfaces contra o código, os prints e, quando disponível, a aplicação autenticada ou o Figma. Pedir uma referência específica quando faltar informação visual; não inventar estados ou resultados.
-6. Revisar Nós, waka’wã, experiências anteriores e encerramento, mantendo a ideia do pontilhismo.
-7. Fazer a verificação final de navegação por links, rolagem reversa, desktop, celular, movimento reduzido, build e SSR antes da próxima publicação.
+1. Retomar pela resposta pendente do frame 08, sem presumir uma escolha.
+2. Revisar Torneios por etapas: prompt, plano, ferramentas, estrutura, código, estados dos componentes e números.
+3. Seguir com Dashboard, monitor, avatar, League e os demais exemplos da Arena, perguntando sobre cada frame e reduzindo passagens redundantes.
+4. Conferir a fidelidade das interfaces contra o código, os prints e, quando disponível, a aplicação autenticada ou o Figma. Pedir uma referência específica quando faltar informação visual; não inventar estados ou resultados.
+5. Revisar Nós, waka’wã, experiências anteriores e encerramento, mantendo a ideia do pontilhismo.
+6. Fazer a verificação final de navegação por links, rolagem reversa, desktop, celular, movimento reduzido, build e SSR antes da próxima publicação.
 
 ## Referências e arquivos principais
 
@@ -65,4 +64,14 @@ As mensagens do chat são demonstrativas. A reconstrução usa referências reai
 - Frame 07 conferido em 1280 × 800, 390 × 844 e 360 × 780. Transição para o layout compacto e visibilidade da mensagem mais recente verificadas.
 - Evidências visuais locais preservadas em `research`, fora dos recursos públicos do site.
 
-O resultado de produção será registrado ao concluir a implantação. A revisão visual do chat usa o código e os prints fornecidos; a comparação ao vivo com a Arena autenticada continua pendente.
+## Publicação concluída
+
+- [PR #7](https://github.com/andrexduarte/adx/pull/7) integrado em `main`; commit da entrega: `1e46604970785f48249dedfe1d67fe1a055a33ce`.
+- [Implantação de produção na Vercel](https://vercel.com/andre-duarte/andre-is-a-dev/HuLWZaSf369guoW2teVrNwfxmLEp) concluída com sucesso.
+- Domínio final confirmado em 16/10/2026 às 20h09 (Brasília), com HTTP 200 e a nova narrativa presente no HTML renderizado pelo servidor.
+- Chat conferido em produção no desktop (1280 × 800) e no celular (390 × 844), incluindo as três etapas e o retorno do cabeçalho após sair do encerramento. Sem transbordamento horizontal observado no celular.
+- Retrato em pontilhismo, tecnologias e links conferidos no encerramento. Nenhum erro de console do site observado nessa navegação.
+- Caderno e admin responderam HTTP 200; admin preservou `no-store` e `noindex, nofollow`. Fonte Sora e imagens novas responderam HTTP 200.
+- Recibo técnico e capturas desta publicação: `../research/publication-2026-10-16.json` e `../research/publication-2026-10-16-*.png`.
+
+A comparação ao vivo com a Arena autenticada continua pendente. Essa limitação de fidelidade visual não impede a publicação do estado já aprovado e deve orientar a próxima rodada de revisão.
