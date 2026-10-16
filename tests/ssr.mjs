@@ -33,7 +33,25 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       async () => {
         const { response, body } = await get('/');
         assert.equal(response.status, 200);
-        assert.equal((body.match(/class="moment(?: [^"]+)?"/g) || []).length, 10);
+        assert.equal((body.match(/class="moment(?: [^"]+)?"/g) || []).length, 9);
+        assert.match(body, /id="momento-2025"/);
+        assert.match(body, /Demonstração do Chat do Torneio/);
+        assert.match(body, /Conversa demonstrativa/);
+        assert.doesNotMatch(body, /<img[^>]+arena-(?:chat-torneio|arenito)/);
+        for (const name of ['arena-chat-torneio', 'arena-arenito']) {
+          const asset = await get('/images/work/' + name + '.webp');
+          assert.equal(asset.response.status, 200);
+          assert.match(asset.response.headers.get('content-type'), /image\/webp/);
+        }
+        assert.doesNotMatch(body, /class="stage-bottom"|Conhecer o Nós/);
+        assert.match(body, /TORNEIOS V3/);
+        assert.match(body, /tournaments-table.viewmodel.ts/);
+        assert.match(body, /Demonstração dos componentes de Torneios/);
+        assert.match(body, /LEAGUE V3/);
+        assert.match(body, /197/);
+        assert.match(body, /206 arquivos alterados/);
+        assert.match(body, /Prompt reconstruído/);
+        assert.doesNotMatch(body, /home-notebook|id="textos"|related-text|moment-body/);
         for (const text of [
           'Webroom',
           'Commquest',
@@ -60,6 +78,56 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         assert.equal(destination.hash, '');
       },
     );
+    await t.test('personal projects remain readable without animation, after Arena and before the career', async () => {
+      const { body } = await get('/');
+      const arena = body.indexOf('<app-arena-story');
+      const nos = body.indexOf('id="projeto-nos"');
+      const wakawa = body.indexOf('id="projeto-wakawa"');
+      const career = body.indexOf('id="experiencias-anteriores"');
+      assert.ok(arena >= 0 && arena < nos && nos < wakawa && wakawa < career);
+      const projects = body.slice(nos, career);
+      assert.equal((projects.match(/data-project-scene="/g) || []).length, 12);
+      assert.match(projects, /shared\/utils\/acerto.ts/);
+      assert.match(projects, /src\/network_privacy.h/);
+      assert.match(projects, /Simular acerto/);
+      assert.match(projects, /Interface reconstruída · valores ilustrativos/);
+      assert.match(projects, /aplicativo Windows em desenvolvimento/);
+      assert.match(projects, /\[REDACTED\]/);
+      const scenes = projects.match(/<section\b[^>]*data-project-scene="\d"[^>]*>/g) || [];
+      assert.equal(scenes.length, 12);
+      for (const scene of scenes) assert.doesNotMatch(scene, /aria-hidden="true"|\binert(?:[ =])/);
+      assert.doesNotMatch(projects, /nos-sisal|intro-rope/);
+      for (const name of ['wakawa-wallpaper.webp']) {
+        const { response } = await get('/images/projects/' + name);
+        assert.equal(response.status, 200);
+        assert.match(response.headers.get('content-type'), /image\/webp/);
+      }
+    });
+    await t.test('the closing portrait is readable before hydration and appears only on the homepage', async () => {
+      const { body } = await get('/');
+      const closing = body.indexOf('<app-footer-portrait');
+      assert.ok(closing > body.indexOf('id="momento-2009"'));
+      const footer = body.slice(closing, body.indexOf('</app-site-footer>', closing));
+      assert.match(footer, /id="encerramento"/);
+      assert.match(footer, /Front-end developer/);
+      assert.match(footer, /aria-label="Tecnologias com que trabalho"/);
+      assert.ok(footer.indexOf('>Codex<') >= 0 && footer.indexOf('>Codex<') < footer.indexOf('>Angular<'));
+      assert.ok(footer.indexOf('>Angular<') < footer.indexOf('>TypeScript<'));
+      assert.ok(footer.indexOf('>TypeScript<') < footer.indexOf('>SCSS<'));
+      assert.ok(footer.indexOf('>SCSS<') < footer.indexOf('>RxJS<'));
+      assert.ok(footer.indexOf('>RxJS<') < footer.indexOf('>Supabase<'));
+      assert.ok(footer.indexOf('>Supabase<') < footer.indexOf('>Git<'));
+      assert.doesNotMatch(footer, /class="footer-brand"|Minas Gerais, Brasil/);
+      assert.match(footer, /Passear pela web/);
+      const { response } = await get('/images/footer/andre-pontilhismo.webp');
+      assert.equal(response.status, 200);
+      assert.match(response.headers.get('content-type'), /image\/webp/);
+      for (const path of ['/caderno', '/admin']) {
+        const { body: page } = await get(path);
+        assert.doesNotMatch(page, /<app-footer-portrait|id="encerramento"/);
+        if (path === '/caderno') assert.match(page, /Passear pela web/);
+      }
+    });
     await t.test(
       'an imported article includes its complete text, date and original canonical URL',
       async () => {
@@ -86,7 +154,9 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       async () => {
         const { body } = await get('/');
         assert.match(body, /Trabalhadores constroem uma interface/);
-        assert.match(body, /três mulheres e três homens/);
+        assert.match(body, /corpos e funções diferentes/);
+        assert.doesNotMatch(body, /worker-body fitter/);
+        assert.doesNotMatch(body, /wa.me\/5531992930696/);
         assert.match(body, /\/images\/workshop\/workers-atlas-v2.webp/);
         assert.match(body, /\/images\/workshop\/engraving-atlas.webp/);
         assert.doesNotMatch(body, /\/images\/workshop\/[^"\s]+\.png/);

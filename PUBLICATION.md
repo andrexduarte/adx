@@ -1,5 +1,11 @@
 # Publicação de andre.is-a.dev
 
+## Revisão de 16/10/2026
+
+A versão em preparação acrescenta a narrativa por frames, os exemplos da Trade Arena, Nós e waka’wã, a trajetória por telas e o encerramento em pontilhismo. A revisão individual está concluída até o frame 07; o frame 08 aguarda uma decisão. [TASK_PROGRESS.md](TASK_PROGRESS.md) registra o estado e a sequência de continuidade.
+
+Validação local desta versão: 44 testes aprovados, build de produção sem avisos e nove cenários SSR aprovados, além do agrupador. A implantação deve ser confirmada no domínio final após o merge, distinguindo o preview da Vercel do site em produção. Banco, permissões e variáveis de ambiente não fazem parte desta alteração.
+
 ## Recursos
 
 | Recurso | Configuração |

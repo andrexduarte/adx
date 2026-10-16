@@ -1,0 +1,25 @@
+<section #stage class="closing-stage" aria-labelledby="closing-title">
+  <canvas #canvas aria-hidden="true"></canvas>
+  <div #composition class="closing-composition">
+  <div #portraitTarget class="portrait-target">
+  <img #portrait class="closing-portrait" src="/images/footer/andre-pontilhismo.webp" width="640" height="640" loading="lazy" decoding="async"
+    alt="Retrato de André Duarte de chapéu, formado por pontos claros e terracota sobre fundo escuro."
+    [style.opacity]="ready() ? 0 : 1" [style.transform]="'translateY(' + portraitShift() + 'px)'" />
+  </div>
+  <div class="closing-copy">
+    <h2 id="closing-title"><span class="accessible-title">{{ title }}</span><span aria-hidden="true">{{ frame().title }}<span class="typing-caret" [class.visible]="animated() && progress() > .7 && progress() < .81"></span></span></h2>
+    <ul aria-label="Tecnologias com que trabalho">
+      @for (technology of technologies; track technology.name; let i = $index) {
+        <li [style.opacity]="frame().tools[i]" [style.transform]="'translateY(' + (1 - frame().tools[i]) * 16 + 'px)'">
+          <img [src]="'/images/technology/' + technology.icon + '.svg'" width="32" height="32" alt="" loading="lazy" /><span>{{ technology.name }}</span>
+        </li>
+      }
+    </ul>
+    <div class="closing-links" [style.opacity]="frame().links" [attr.inert]="animated() && frame().links < .1 ? '' : null"><ng-content /></div>
+  </div>
+  </div>
+  <div class="closing-controls">
+    <span class="scroll-cue" [style.opacity]="animated() ? frame().cue : 0" aria-hidden="true">Role para reunir os pontos <span>↓</span></span>
+    <div>@if (animated()) { <button type="button" (click)="seek(progress() > .9 ? .01 : 1)">{{ progress() > .9 ? 'Rever formação' : 'Ver resultado' }}</button> }<button type="button" (click)="toggleMotion()">{{ animated() ? 'Ver sem animação' : 'Ativar animação' }}</button></div>
+  </div>
+</section>

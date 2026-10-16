@@ -1,0 +1,33 @@
+<div class="chapter-kicker">TORNEIOS V3 <span>/ {{ stages[stage()] }}</span></div>
+<div class="panels">
+  <section class="panel idea" [style.opacity]="panelOpacity(0)" [attr.aria-hidden]="!staticMode() && stage() !== 0 ? true : null">
+    <h3>Uma página.<br /><em>Muitos estados.</em></h3>
+    <app-prompt-composer [text]="prompt()" [sent]="staticMode() || progress() >= .11" />
+    <p class="small-note">Prompt reconstruído a partir do trabalho no projeto</p>
+  </section>
+  <section class="panel" [style.opacity]="panelOpacity(1)" [attr.aria-hidden]="!staticMode() && stage() !== 1 ? true : null">
+    <app-build-plan [steps]="steps" [progress]="plan()" />
+  </section>
+  <section class="panel" [style.opacity]="panelOpacity(2)" [attr.aria-hidden]="!staticMode() && stage() !== 2 ? true : null">
+    <app-technology-map kind="tournaments" [progress]="mapProgress()" />
+  </section>
+  <section class="panel" [style.opacity]="panelOpacity(3)" [attr.aria-hidden]="!staticMode() && stage() !== 3 ? true : null">
+    <div class="files-panel"><div class="editor-bar"><span>EXPLORER</span><span>standalone: true</span></div><div class="file-tree"><strong>tournaments / v3</strong><span>├─ tournaments.component.ts</span><span>├─ tournaments.viewmodel.ts <i>dados → apresentação</i></span><span>└─ components /</span><span class="folder">&nbsp; &nbsp;├─ ongoing-tournaments /</span><span class="folder">&nbsp; &nbsp;├─ daily-highlights /</span><span class="folder">&nbsp; &nbsp;└─ tournaments-table /</span><span class="child">&nbsp; &nbsp; &nbsp; ├─ tournaments-table.component.html</span><span class="child">&nbsp; &nbsp; &nbsp; └─ tournaments-table.viewmodel.ts</span></div></div>
+    <p class="caption">Cada componente cuida de uma parte da experiência.</p>
+  </section>
+  <section class="panel" [style.opacity]="panelOpacity(4)" [attr.aria-hidden]="!staticMode() && stage() !== 4 ? true : null">
+    <div class="source-panel"><div class="editor-bar"><span>tournaments-table.component</span><span>TS + HTML</span></div><div class="code-body"><span class="code-label">DADOS PRESENTES</span><pre class="model">{{ modelCode }}</pre><span class="code-label">QUANDO A LISTA NÃO TEM ITENS</span><pre>{{ templateCode }}</pre></div></div>
+    <p class="caption">O estado decide o que aparece na tela.</p><p class="small-note">Trechos reduzidos do componente real</p>
+  </section>
+  <section class="panel result" [style.opacity]="panelOpacity(5)" [attr.aria-hidden]="!staticMode() && stage() !== 5 ? true : null" [attr.inert]="!staticMode() && stage() !== 5 ? '' : null">
+    <div class="state-controls" aria-label="Estados da demonstração de Torneios">
+      @for (item of states; track item.state) { <button type="button" [attr.aria-pressed]="frame().state === item.state" (click)="choose(item.state)">{{ item.label }}</button> }
+    </div>
+    <app-responsive-preview [compact]="compact()" [height]="340" [staticMode]="staticMode()" label="Torneios: os mesmos dados se adaptam para celular, com rolagem horizontal na tabela">
+      <app-tournaments-preview [state]="frame().state" (recover)="choose('ready')" />
+    </app-responsive-preview>
+    <div class="state-explainer"><code>{{ frame().code }}</code><p>{{ compact() > .4 ? 'Mesmos torneios. Filtros compactos e tabela com rolagem horizontal.' : frame().hint }}</p></div>
+    <p class="small-note">Componentes reconstruídos · dados demonstrativos</p>
+  </section>
+</div>
+<div class="process" aria-hidden="true">@for (label of stages; track label; let i = $index) { <span [class.active]="i <= stage()">{{ label }}<i></i></span> }</div>

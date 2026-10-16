@@ -1,0 +1,38 @@
+<section class="project-stage" [attr.aria-label]="project().name + ' — da ideia à interface'">
+  <header class="project-top"><span class="project-brand">{{ project().name }}</span><span class="project-kind">PROJETOS PESSOAIS</span><a [href]="next()">{{ nextLabel() }} <span aria-hidden="true">↘</span></a></header>
+  <div class="scene-space">
+    @for (scene of scenes; track scene; let i = $index) {
+      <section class="project-scene" [class.project-intro]="i === 0" [class.demo-scene]="i === 5" [attr.data-project-scene]="i"
+        [style.opacity]="animated() ? states()[i].opacity : null" [style.transform]="animated() ? 'translateY(' + states()[i].offset + 'px)' : null"
+        [attr.aria-hidden]="animated() && active() !== i ? 'true' : null" [attr.inert]="animated() && active() !== i ? '' : null">
+        @if (i === 0) {
+          @if (project().id === 'wakawa') { <img class="intro-bird" src="/images/projects/wakawa-wallpaper.webp" alt="Acauã em xilogravura, identidade do navegador waka’wã" width="1672" height="941" loading="lazy" /> }
+          <div class="intro-copy"><p class="eyebrow">{{ project().category }}</p><h2>{{ project().name }}</h2><h3>{{ project().title }}</h3><p class="description">{{ project().description }}</p><button type="button" class="text-button" (click)="goTo(1)">Da ideia à interface <span aria-hidden="true">↓</span></button></div>
+        } @else {
+          <p class="scene-label">0{{ i }} / {{ scene }}</p>
+          @switch (i) {
+            @case (1) { <div class="prompt-wrap"><app-prompt-composer [text]="prompt()" [sent]="!animated() || position() > 1.75" /><p class="footnote">Prompt reconstruído a partir do projeto.</p></div> }
+            @case (2) { <app-build-plan [steps]="project().plan" [progress]="planProgress()" /> }
+            @case (3) {
+              <app-project-details [project]="project()" mode="tools" [progress]="toolsProgress()" />
+            }
+            @case (4) {
+              <app-project-details [project]="project()" mode="code" />
+            }
+            @case (5) {
+              <div class="demo-wrap">
+                @if (project().id === 'nos') {
+                  <app-responsive-preview [compact]="compact()" [height]="420" [staticMode]="!animated()" [light]="true" label="Demonstração do Nós, do desktop ao celular"><app-nos-demo /></app-responsive-preview>
+                  <div class="demo-controls"><span>Interface reconstruída · valores ilustrativos</span>@if (animated()) { <button type="button" [attr.aria-pressed]="compact() > .5" (click)="compactChoice.set(compact() > .5 ? 0 : 1)">{{ compact() > .5 ? 'Ver desktop' : 'Ver celular' }} ↔</button> }</div>
+                } @else {
+                  <app-wakawa-demo [progress]="demoProgress()" /><p class="footnote">Interface reconstruída · respostas ilustrativas · aplicativo Windows em desenvolvimento.</p>
+                }
+              </div>
+            }
+          }
+        }
+      </section>
+    }
+  </div>
+  <footer class="project-controls"><nav [attr.aria-label]="'Etapas do projeto ' + project().name">@for (scene of scenes; track scene; let i = $index) { <button type="button" [attr.aria-label]="project().name + ': ' + scene" [attr.aria-current]="animated() && active() === i ? 'step' : null" (click)="goTo(i)"><span class="step-number">0{{ i + 1 }}</span><span>{{ scene }}</span></button> }</nav><button type="button" class="motion-button" (click)="toggleMotion()">{{ animated() ? 'Ver sem animação' : 'Ativar transições' }}</button></footer>
+</section>

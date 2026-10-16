@@ -1,7 +1,15 @@
-<header class="site-header">
+<header class="site-header" [class.has-project]="chrome.arenaContext() !== null">
   <app-wordmark [collapsible]="true" [compact]="compactBrand()" />
-  <nav aria-label="Navegação principal">
-    <a routerLink="/" fragment="percurso">Trajetória</a
-    ><a routerLink="/caderno" routerLinkActive="active" ariaCurrentWhenActive="page">Caderno</a>
-  </nav>
+  <div class="project-identity">
+    @if (chrome.arenaContext(); as context) {
+      <span class="project-context" [style.opacity]="context.opacity">
+        <span>{{ context.project }}</span><i aria-hidden="true"> / </i><span>{{ context.task }}</span>
+      </span>
+    }
+    <span class="project-logo-dock" aria-hidden="true"></span>
+  </div>
 </header>
+@if (chrome.arenaLogo(); as logo) {
+  <img class="travelling-project-logo" src="/images/work/trade-arena-logo.png" width="76" height="76" alt="" aria-hidden="true"
+    [style.transform]="logo.transform" [style.opacity]="logo.opacity" />
+}

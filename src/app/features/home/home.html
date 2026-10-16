@@ -1,94 +1,16 @@
 <div class="page home">
   <section class="hero-scroll" id="apresentacao" aria-labelledby="home-title">
     <h1 id="home-title" class="hero-title">André Duarte, desenvolvedor front-end</h1>
-    <div class="hero">
-      <div class="hero-art">
-        <app-interface-workshop />
-      </div>
-    </div>
-  </section>
-
-  <nav class="crossing" aria-label="Percorrer esta página">
-    <span class="crossing-label" [class.is-reading]="activeSection() === 'percurso'">
-      {{ activeSection() === 'percurso' ? readingMoment() : 'Por aqui' }}
-    </span>
-    @if (hasJourney()) {
-      <a
-        routerLink="/"
-        fragment="percurso"
-        [attr.aria-current]="activeSection() === 'percurso' ? 'location' : null"
-        ><span>01</span> Trajetória <span class="direction" aria-hidden="true">↓</span></a
-      >
-    }
-    <a
-      routerLink="/"
-      fragment="textos"
-      [attr.aria-current]="activeSection() === 'textos' ? 'location' : null"
-      ><span>02</span> Escrita <span class="direction" aria-hidden="true">↓</span></a
-    >
-  </nav>
-
-  @if (hasJourney()) {
-    <section class="home-path stop" id="percurso" aria-labelledby="caminho-title">
-      <div class="trajectory-intro">
-        <p class="eyebrow">
-          <span class="stop-number">01</span> Trajetória · Do presente ao começo
-        </p>
-        <div class="trajectory-opening">
-          <h2 id="caminho-title">Front-end,<br /><em>desde 2009.</em></h2>
-          <div>
-            <p class="intro">
-              Atuo na evolução do front-end da plataforma com Angular e TypeScript, trabalhando em
-              uma aplicação de grande porte e em modernização contínua.
-            </p>
-            <p class="journey-note">Hoje, na Trade Arena.</p>
-          </div>
-        </div>
-      </div>
-      <app-timeline (readingChange)="readingMoment.set($event)" />
-    </section>
-  }
-
-  <section class="home-notebook stop" id="textos" aria-labelledby="caderno-title">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow"><span class="stop-number">02</span> Código, roça e outros assuntos</p>
-        <h2 id="caderno-title">Caderno<span class="red-period">.</span></h2>
-      </div>
-      <a class="text-link" routerLink="/caderno"
-        >Todos os textos <span aria-hidden="true">↗</span></a
-      >
-    </div>
-    @if (featuredArticle(); as article) {
-      <div class="notebook-selection">
-        <a class="featured-article" [routerLink]="['/caderno', article.slug]">
-          <span class="article-meta"
-            ><span>{{ article.category }}</span
-            ><time [attr.datetime]="article.publishedAt">{{
-              article.publishedAt | date: 'dd.MM.yyyy'
-            }}</time></span
-          >
-          <h3>{{ article.title }}</h3>
-          <p>{{ article.excerpt }}</p>
-          <span class="read-article">Ler o texto <span aria-hidden="true">↗</span></span>
-        </a>
-        <div class="other-articles">
-          @for (other of otherArticles(); track other.id) {
-            <a class="notebook-entry" [routerLink]="['/caderno', other.slug]">
-              <span class="article-meta"
-                ><span>{{ other.category }}</span
-                ><time [attr.datetime]="other.publishedAt">{{
-                  other.publishedAt | date: 'dd.MM.yyyy'
-                }}</time></span
-              >
-              <h3>{{ other.title }} <span aria-hidden="true">↗</span></h3>
-              <p>{{ other.excerpt }}</p>
-            </a>
-          }
-        </div>
-      </div>
-    } @else {
-      <p class="intro">Os textos do caderno aparecerão por aqui quando estiverem disponíveis.</p>
-    }
+    <div class="hero"><div class="hero-art"><app-interface-workshop /></div></div>
   </section>
 </div>
+@if (hasJourney()) {
+  <section id="percurso" aria-label="Trajetória, do presente ao começo">
+    <app-arena-story />
+    <app-project-story [project]="projects[0]" next="#projeto-wakawa" nextLabel="Conhecer o waka’wã" />
+    <app-project-story [project]="projects[1]" next="#experiencias-anteriores" nextLabel="Seguir a trajetória" />
+    <section class="previous-work" id="experiencias-anteriores" aria-label="Experiências anteriores à Trade Arena">
+      <app-timeline />
+    </section>
+  </section>
+}

@@ -16,4 +16,5 @@
   }
   <router-outlet />
 </main>
-<app-site-footer />
+<app-site-footer [showPortrait]="router.url.split('#')[0].split('?')[0] === '/'" />
+@if (router.url.split('#')[0].split('?')[0] === '/') { <app-frame-navigation /> }

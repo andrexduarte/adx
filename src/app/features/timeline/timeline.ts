@@ -1,88 +1,100 @@
-import {
-  Component,
-  computed,
-  inject,
-  signal,
-  afterNextRender,
-  DestroyRef,
-  ElementRef,
-  output,
-} from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, DestroyRef, ElementRef, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { ContentStore } from '../../core/content/content-store';
 import { newestCareerFirst } from '../../core/content/career-order';
+import { careerFrames, timelineFrame, timelineIndex, timelinePosition } from './timeline-playback';
 
 @Component({
   selector: 'app-timeline',
-  imports: [RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './timeline.html',
   styleUrl: './timeline.scss',
+  host: { '[class.is-animated]': 'animated()', '[style.--timeline-inset]': 'inset()', '[attr.data-frame]': 'active()' },
 })
 export class Timeline {
   private readonly content = inject(ContentStore);
   private readonly root = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
-  readonly activeId = signal('');
-  readonly progress = signal(0);
-  readonly readingChange = output<string>();
-  readonly moments = computed(() =>
-    this.content
-      .entries()
-      .filter(
-        (entry) =>
-          entry.kind === 'moment' && entry.status === 'published' && entry.slug !== 'agora',
-      )
-      .map((entry) => ({
-        ...entry,
-        article: this.content.articles().find((article) => article.slug === entry.articleSlug),
-      }))
-      .sort(newestCareerFirst),
-  );
+  private view: Window | null = null;
+  private readonly canAnimate = signal(false);
+  private readonly motionChoice = signal<boolean | null>(null);
+  readonly animated = computed(() => this.motionChoice() ?? this.canAnimate());
+  readonly inset = signal<string | null>(null);
+  readonly position = signal(0);
+  readonly moments = computed(() => this.content.entries()
+    .filter(entry => entry.kind === 'moment' && entry.status === 'published' &&
+      entry.slug !== 'agora' && entry.slug !== '2025')
+    .sort(newestCareerFirst));
+  readonly frames = computed(() => careerFrames(this.moments()));
+  readonly active = computed(() => timelineIndex(this.position(), this.frames().length));
+  readonly states = computed(() => this.frames().map((_, index) => timelineFrame(this.position(), index, this.frames().length)));
+  readonly counter = computed(() => `${String(this.active() + 1).padStart(2, '0')} / ${String(this.frames().length).padStart(2, '0')}`);
 
   constructor() {
     afterNextRender(() => {
+      const view = this.document.defaultView;
+      if (!view) return;
+      this.view = view;
+      const reduced = view.matchMedia('(prefers-reduced-motion: reduce), (max-height: 560px)');
+      this.canAnimate.set(!reduced.matches);
       let frame = 0;
-      let lastReadingLabel = '';
       const update = () => {
         frame = 0;
-        const chapters = Array.from(
-          this.root.nativeElement.querySelectorAll<HTMLElement>('.moment'),
-        );
-        const navigationBottom =
-          document.querySelector('.crossing')?.getBoundingClientRect().bottom ?? 160;
-        const readingLine = Math.max(navigationBottom + 48, window.innerHeight * 0.38);
-        const current = [...chapters]
-          .reverse()
-          .find((chapter) => chapter.getBoundingClientRect().top < readingLine);
-        const currentId = current?.id || 'momento-' + (this.moments()[0]?.slug ?? '');
-        this.activeId.set(currentId);
-        const moment = this.moments().find((item) => 'momento-' + item.slug === currentId);
-        const readingLabel = moment ? `${moment.year} · ${moment.company}` : 'Trajetória';
-        if (readingLabel !== lastReadingLabel) {
-          lastReadingLabel = readingLabel;
-          this.readingChange.emit(readingLabel);
-        }
-        const region = this.root.nativeElement.getBoundingClientRect();
-        this.progress.set(
-          region.height > 0
-            ? Math.min(1, Math.max(0, (readingLine - region.top) / region.height))
-            : 0,
-        );
+        const inset = this.headerHeight();
+        this.inset.set(`${inset}px`);
+        if (!this.animated()) return;
+        const rect = this.root.nativeElement.getBoundingClientRect();
+        this.position.set(timelinePosition(rect.top, rect.height, view.innerHeight, inset, this.frames().length));
       };
-      const scheduleUpdate = () => {
-        if (!frame) frame = window.requestAnimationFrame(update);
-      };
-      window.addEventListener('scroll', scheduleUpdate, { passive: true });
-      window.addEventListener('resize', scheduleUpdate);
-      const resizeObserver = new ResizeObserver(scheduleUpdate);
-      resizeObserver.observe(this.root.nativeElement);
-      update();
+      const schedule = () => { if (!frame) frame = view.requestAnimationFrame(update); };
+      const motionChanged = () => { this.canAnimate.set(!reduced.matches); schedule(); };
+      const resize = new ResizeObserver(schedule);
+      resize.observe(this.root.nativeElement);
+      const header = this.document.querySelector('app-site-header');
+      if (header) resize.observe(header);
+      view.addEventListener('scroll', schedule, { passive: true });
+      view.addEventListener('resize', schedule);
+      reduced.addEventListener('change', motionChanged);
+      schedule();
+      // Real anchor stops keep links from the editor and old /trajetoria URLs usable.
+      const anchorFrame = view.requestAnimationFrame(() => {
+        const anchor = view.location.hash.slice(1);
+        const index = this.frames().findIndex(item => item.anchor === anchor);
+        if (index >= 0 && this.animated()) this.goTo(index);
+      });
       this.destroyRef.onDestroy(() => {
-        window.cancelAnimationFrame(frame);
-        window.removeEventListener('scroll', scheduleUpdate);
-        window.removeEventListener('resize', scheduleUpdate);
-        resizeObserver.disconnect();
+        view.cancelAnimationFrame(frame);
+        view.cancelAnimationFrame(anchorFrame);
+        view.removeEventListener('scroll', schedule);
+        view.removeEventListener('resize', schedule);
+        reduced.removeEventListener('change', motionChanged);
+        resize.disconnect();
       });
     });
+  }
+  private headerHeight() {
+    return this.document.querySelector('app-site-header')?.getBoundingClientRect().height ?? 90;
+  }
+  goTo(index: number) {
+    const target = this.frames()[index];
+    if (!target || !this.view) return;
+    const anchor = this.document.getElementById(target.anchor);
+    if (!anchor) return;
+    this.view.scrollTo({ top: this.view.scrollY + anchor.getBoundingClientRect().top - this.headerHeight(), behavior: 'instant' });
+  }
+  toggleMotion() {
+    let index = this.active();
+    if (!this.animated()) {
+      const center = (this.headerHeight() + (this.view?.innerHeight ?? 800)) / 2;
+      const visible = [...this.root.nativeElement.querySelectorAll<HTMLElement>('[data-frame-index]')];
+      const nearest = visible.reduce<HTMLElement | null>((best, item) => {
+        const distance = (node: HTMLElement) => { const rect = node.getBoundingClientRect(); return Math.abs(rect.top + rect.height / 2 - center); };
+        return !best || distance(item) < distance(best) ? item : best;
+      }, null);
+      index = Number(nearest?.dataset['frameIndex'] ?? 0);
+    }
+    this.motionChoice.set(!this.animated());
+    this.view?.requestAnimationFrame(() => { if (!this.destroyRef.destroyed) this.goTo(index); });
   }
 }

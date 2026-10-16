@@ -1,0 +1,73 @@
+@font-face { font-family: 'Arena Sora'; src: url('/fonts/sora-latin.woff2') format('woff2'); font-style: normal; font-weight: 100 800; font-display: swap; }
+:host { display: block; width: 100%; color: #fff; --chat-primary: #fb830e; }
+.chat-workbench { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 36px; align-items: center; text-align: left; }
+.interface-stage { min-width: 0; }
+.viewport-label { display: flex; justify-content: space-between; color: #827b73; font: 8px monospace; letter-spacing: .08em; margin-bottom: 15px; }
+.chat-viewport { width: calc(100% - (100% - min(100%, 342px)) * var(--compact)); margin: auto; }
+.tournament-chat { height: 460px; display: flex; flex-direction: column; gap: 26px; font-family: 'Arena Sora', sans-serif; }
+.chat-title { display: flex; align-items: center; gap: 6px; font-size: 18px; line-height: 1.5; }
+.chat-title > span { font-size: 16px; }
+.chat-panel { background: #1d1d1d; border-radius: 7.5px; overflow: hidden; display: flex; flex: 1; flex-direction: column; min-height: 0; box-shadow: -1.5px -1.5px 7.5px #0000001a; }
+.chat-header { display: flex; align-items: center; padding: 15px; border-bottom: .75px solid #282828; font-size: 14.4px; line-height: 1.5; }
+.chat-header strong { font-weight: 600; }
+// Reuse only the channel's artwork from the supplied 1632 × 760 reference.
+// The panel, messages, typography and input are all rendered HTML.
+.channel-avatar { flex: 0 0 37.5px; width: 37.5px; height: 37.5px; margin-right: 7.5px; border-radius: 50%; background: url('/images/work/arena-chat-torneio.webp') -24px -81px / 1632px 760px; }
+.messages { flex: 1; min-height: 0; overflow: hidden; padding: 15px; border-bottom: .75px solid #282828; container-type: size; }
+.connection-notice { background: #4a3215; color: #fff3d6; font-size: 12px; line-height: 1.5; text-align: center; margin: 0; padding: 8px 12px; }
+// Follow the newest message only when the transcript exceeds the visible area.
+.message-list { display: flex; flex-direction: column; gap: 15px; transform: translateY(min(0px, calc(100cqh - 100%))); }
+.message { display: flex; align-items: start; gap: 7.5px; font-size: 13.2px; }
+.person-avatar { width: 30px; height: 30px; object-fit: cover; flex-shrink: 0; border-radius: 50%; }
+.message-content { min-width: 0; max-width: calc(100% - 37.5px); }
+.nickname { color: #b4d1b1; font-size: 12px; line-height: 1.5; font-weight: 600; display: block; margin-bottom: 6px; }
+.message p { background: #282828; padding: 9px 15px; border-radius: 0 7.5px 7.5px 7.5px; margin: 0 0 3.75px; line-height: 1.5; word-break: break-word; hyphens: auto; }
+.message-time { display: block; font-size: 9.6px; line-height: 1.5; color: #fff; }
+.mine { justify-content: end; }
+.mine .message-content { max-width: 100%; }
+.mine p { background: var(--chat-primary); border-radius: 7.5px 0 7.5px 7.5px; }
+.mine .message-time { text-align: right; }
+.composer { padding: 11.25px 7.5px; display: flex; align-items: center; color: var(--chat-primary); }
+.composer.disabled { opacity: .5; }
+.emoji { font-size: 18px; padding: 6px; line-height: 1; }
+.draft { font-size: 13.2px; line-height: 1.4; font-weight: 500; flex: 1; min-width: 0; min-height: 36px; padding: 9px 12px 9px 4.5px; overflow-wrap: anywhere; }
+.typing-caret { display: inline-block; width: 1px; height: 13px; vertical-align: -2px; background: var(--chat-primary); }
+.send-icon { width: 36px; height: 36px; flex-shrink: 0; display: grid; place-items: center; opacity: .5; }
+.send-icon.ready { opacity: 1; }
+.send-icon.sending { opacity: 1; transform: scale(.9); }
+.send-icon svg { width: 15px; height: 15px; fill: currentColor; }
+.transport { display: flex; align-items: center; gap: 12px; max-width: 270px; margin: 19px auto 0; font: 8px monospace; color: #9c8e7d; }
+.wire { flex: 1; height: 1px; background: #4a3926; position: relative; }
+.wire i { position: absolute; top: -2px; height: 5px; width: 5px; border-radius: 50%; background: #ffae57; }
+.implementation { min-width: 0; border-left: 1px solid #37312b; padding-left: 24px; }
+.implementation-label { display: flex; justify-content: space-between; color: #9b8a75; font: 8px monospace; letter-spacing: .1em; }
+.implementation-label b { font-weight: 400; }
+.implementation h3 { font-size: 27px; line-height: 1.2; color: #e6d6c1; margin: 24px 0; text-wrap: balance; }
+.source-file { color: #bca68b; font: 9px monospace; display: flex; gap: 10px; }
+.source-file > span { color: #ffae57; }
+pre { margin: 16px 0; min-height: 144px; white-space: pre-wrap; overflow-wrap: anywhere; }
+pre code { font: 10px/1.8 monospace; color: #e4ba88; }
+pre span { display: block; }
+.code-hint { font: 11px/1.6 var(--sans); color: #b2aba2; margin: 0 0 16px; }
+.source-note { color: #8f8579; font: 8px/1.5 monospace; }
+.playback-footer { display: flex; align-items: center; gap: 20px; justify-content: space-between; margin-top: 26px; font: 8px monospace; color: #91877a; }
+.playback-step { color: #ffae57; min-width: 110px; }
+.playback-track { display: flex; gap: 4px; }
+.playback-track i { width: 15px; height: 2px; background: #463e35; }
+.playback-track i.passed { background: #ffae57; }
+@media (max-width: 900px) {
+  .chat-workbench { grid-template-columns: 1fr; gap: 17px; }
+  .tournament-chat { height: 452px; gap: 20px; }
+  .viewport-label, .transport { display: none; }
+  .implementation { border: 0; padding: 12px 15px; background: #1c1b19; border-radius: 8px; }
+  .implementation h3, .code-hint, .source-note, .implementation-label { display: none; }
+  .source-file { font-size: 8px; }
+  pre { min-height: 108px; margin: 8px 0 0; }
+  pre code { font-size: 9px; line-height: 1.5; }
+  .playback-footer { margin-top: 15px; flex-wrap: wrap; gap: 10px; }
+  .playback-footer > span:last-child { flex-basis: 100%; text-align: center; font-size: 7px; }
+  .playback-track { margin-left: auto; }
+}
+@media (max-width: 900px) and (min-height: 701px) and (max-height: 800px) {
+  .tournament-chat { height: 390px; }
+}

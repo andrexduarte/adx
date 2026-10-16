@@ -2,6 +2,14 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import ts from 'typescript';
 const files = [
+  'app/features/home/arena-story/story-timing.ts',
+  'app/features/home/frame-navigation/frame-catalog.ts',
+  'app/features/home/arena-story/chat-playback.ts',
+  'app/features/home/arena-story/tournaments-playback.ts',
+  'app/features/home/arena-story/activity-calendar.ts',
+  'app/features/home/arena-story/github-activity-data.ts',
+  'app/features/timeline/timeline-playback.ts',
+  'app/layout/site-footer/portrait-playback.ts',
   'app/core/content/career-order.ts',
   'app/core/content/models.ts',
   'app/core/content/content-utils.ts',

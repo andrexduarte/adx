@@ -1,0 +1,9 @@
+<button type="button" class="toggle" [attr.aria-expanded]="expanded()" aria-controls="page-frame-links" (click)="expanded.set(!expanded())" aria-label="Navegar pelas etapas da página">{{ active() + 1 }}<span>/ {{ frames().length }}</span></button>
+<nav id="page-frame-links" aria-label="Etapas da página" (keydown.escape)="expanded.set(false)">
+  @for (frame of frames(); track frame.id; let i = $index) {
+    <a [href]="'#' + frame.id" [attr.aria-label]="(i + 1) + '. ' + frame.group + ' — ' + frame.title" [attr.aria-current]="active() === i ? 'step' : null" [attr.tabindex]="expanded() || active() === i ? 0 : -1" [class.group-start]="i === 0 || frames()[i - 1].group !== frame.group" (click)="navigate($event, frame, i)" (keydown)="key($event, i)">
+      <span class="tick" aria-hidden="true"></span>
+      <span class="label"><span class="number">{{ (i + 1).toString().padStart(2, '0') }}</span><span><strong>{{ frame.group }}</strong>{{ frame.title }}</span></span>
+    </a>
+  }
+</nav>

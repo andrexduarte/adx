@@ -1,0 +1,13 @@
+:host { display: block; width: min(100%, 650px); }
+.plan { border: 1px solid #51473b; border-radius: 14px; background: #211f1b; padding: 24px 28px 19px; text-align: left; }
+.plan-top { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.plan-icon { width: 37px; height: 37px; display: grid; place-items: center; background: #3b2c1e; border-radius: 10px; color: #ffb35e; font: 25px var(--sans); }
+.plan-brand { border-radius: 8px; flex-shrink: 0; }
+.plan-top div > span { font: 8px monospace; letter-spacing: .14em; color: #b5a28a; }
+h4 { font: 25px var(--serif); letter-spacing: -.03em; color: #ede5d8; margin: 5px 0 0; }
+ol { list-style: none; margin: 0; padding: 0; }
+li { display: flex; align-items: center; gap: 15px; padding: 13px 0; border-top: 1px solid #ffffff0b; color: #d9cebe; font: 13px/1.5 var(--sans); }
+.number { flex-shrink: 0; color: #c59a65; font: 10px monospace; }
+.plan-footer { position: relative; margin-top: 15px; padding-top: 16px; color: #a99c8b; font: 9px var(--sans); }
+.plan-line { position: absolute; height: 1px; background: #b68142; inset: 0 0 auto; transform-origin: left; }
+@media (max-width:760px) { .plan { padding: 20px 18px 16px; } .plan-top { gap: 10px; margin-bottom: 17px; } h4 { font-size: 23px; } li { font-size: 12px; gap: 12px; padding-block: 13px; } .plan-footer { font-size: 8px; } }

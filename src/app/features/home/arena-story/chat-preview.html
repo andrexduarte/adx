@@ -1,0 +1,39 @@
+<div class="chat-workbench">
+  <div class="interface-stage">
+    <div class="viewport-label"><span>{{ frame().compact > .5 ? 'LAYOUT COMPACTO' : 'LAYOUT AMPLO' }}</span><span>HTML · SCSS</span></div>
+    <div class="chat-viewport">
+      <div class="tournament-chat" role="group" aria-label="Demonstração do Chat do Torneio">
+        <div class="chat-title"><span aria-hidden="true">💬</span><strong>Chat do Torneio</strong></div>
+        <div class="chat-panel">
+          <div class="chat-header"><span class="channel-avatar" aria-hidden="true"></span><strong>Diário WDO – Oficial 403</strong></div>
+          @if (!frame().connected) { <p class="connection-notice" role="status">Reconectando o chat…</p> }
+          <div class="messages">
+            <div class="message-list" role="list" aria-label="Mensagens de exemplo">
+              @for (message of frame().messages; track message.id; let last = $last) {
+                <div class="message" role="listitem" [class.mine]="message.mine" [style.opacity]="last ? frame().lastReveal : 1" [style.transform]="'translateY(' + (last ? (1 - frame().lastReveal) * 12 : 0) + 'px)'">
+                  @if (!message.mine) { <img class="person-avatar" src="/images/work/avatars/analista1-128.webp" width="30" height="30" alt="" loading="lazy" /> }
+                  <div class="message-content">@if (!message.mine) { <span class="nickname">{{ message.sender }}</span> }<p>{{ message.content }}</p><time class="message-time">{{ message.time }}</time></div>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="composer" [class.disabled]="!frame().connected" aria-label="Campo de envio demonstrativo">
+            <span class="emoji" aria-hidden="true">😊</span><span class="draft" [class.has-text]="frame().draft">{{ frame().draft || 'Digite sua mensagem...' }}@if (frame().draft) { <i class="typing-caret" aria-hidden="true"></i> }</span>
+            <span class="send-icon" [class.ready]="frame().draft" [class.sending]="frame().sending" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 20 20"><path d="M10.8373 10.202L3.11338 11.4898C3.02458 11.5046 2.94125 11.5425 2.87176 11.5998C2.80228 11.657 2.74909 11.7315 2.71755 11.8158L0.0543605 18.9492C-0.19996 19.6054 0.48609 20.2309 1.11574 19.9161L19.5745 10.688C19.7023 10.6241 19.8099 10.5259 19.885 10.4044C19.9602 10.2829 20 10.1428 20 9.99996C20 9.85707 19.9602 9.71702 19.885 9.59549C19.8099 9.47397 19.7023 9.37578 19.5745 9.31195L1.11574 0.0838418C0.48609 -0.230939 -0.19996 0.395547 0.0543605 1.05074L2.71857 8.18407C2.74997 8.26857 2.80309 8.34331 2.87259 8.40073C2.94208 8.45816 3.02549 8.49625 3.11441 8.51116L10.8384 9.79797C10.8859 9.80629 10.929 9.83111 10.96 9.86805C10.9911 9.905 11.0081 9.95171 11.0081 9.99996C11.0081 10.0482 10.9911 10.0949 10.96 10.1319C10.929 10.1688 10.8859 10.1936 10.8384 10.202H10.8373Z" /></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="transport" aria-hidden="true"><span>interface</span><div class="wire"><i [style.left.%]="frame().packet * 100"></i></div><span>canal STOMP</span></div>
+  </div>
+  <aside class="implementation" aria-label="Código correspondente ao comportamento demonstrado">
+    <span class="implementation-label">NO CÓDIGO <b>0{{ frame().step + 1 }} / 0{{ steps.length }}</b></span>
+    <h3>{{ step().title }}</h3>
+    <div class="source-file"><span>⌘</span>{{ step().file }}</div>
+    <pre><code>@for (line of step().lines; track $index) {<span>{{ line }}</span>}</code></pre>
+    <p class="code-hint">{{ step().hint }}</p>
+    <span class="source-note">Trechos reduzidos do front-end da Trade Arena</span>
+  </aside>
+</div>
+<div class="playback-footer"><span class="playback-step">{{ step().label }}</span><div class="playback-track" aria-hidden="true">@for (item of steps; track $index) { <i [class.passed]="$index <= frame().step"></i> }</div><span>Conversa demonstrativa · rolagem controla a cena</span></div>
+

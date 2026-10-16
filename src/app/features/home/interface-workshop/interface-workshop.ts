@@ -90,14 +90,6 @@ export class InterfaceWorkshop {
           size: 220,
         },
         {
-          id: 'fitter',
-          offsetX: -1024,
-          offsetY: 0,
-          x: right - 44,
-          y: 207,
-          size: 250,
-        },
-        {
           id: 'carrier-left',
           offsetX: 0,
           offsetY: -512,

@@ -1,5 +1,5 @@
-<footer class="site-footer">
-  <nav aria-label="Links do rodapé">
+<ng-template #links>
+  <nav aria-label="Links do rodapé" [class.centered]="showPortrait()">
     <a href="https://github.com/andrexduarte" target="_blank" rel="noopener">GitHub ↗</a
     ><a href="https://www.linkedin.com/in/andrexdev/" target="_blank" rel="noopener">LinkedIn ↗</a
     ><a href="/rss.xml">RSS ↗</a
@@ -22,8 +22,17 @@
       <a [href]="config.fediverseProfile" rel="me noopener" target="_blank">Fediverso ↗</a>
     }
   </nav>
+</ng-template>
+<footer>
+  @if (showPortrait()) {
+    <app-footer-portrait><ng-container [ngTemplateOutlet]="links" /></app-footer-portrait>
+  } @else {
+  <div class="site-footer">
+  <ng-container [ngTemplateOutlet]="links" />
   <div class="footer-brand">
     <app-wordmark />
   </div>
   <small>André Duarte · Minas Gerais, Brasil.</small>
+  </div>
+  }
 </footer>
