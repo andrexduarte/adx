@@ -29,12 +29,16 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       assert.match(response.headers.get('x-robots-tag'), /noindex/);
     });
     await t.test(
-      'the homepage renders ten career chapters with the landscape between periods',
+      'the homepage renders nine career events without the landscape or beginning',
       async () => {
         const { response, body } = await get('/');
         assert.equal(response.status, 200);
         assert.equal((body.match(/class="moment(?: [^"]+)?"/g) || []).length, 9);
         assert.match(body, /id="momento-2025"/);
+        assert.equal((body.match(/id="momento-2025"/g) || []).length, 1);
+        assert.equal((body.match(/id="titulo-2025"/g) || []).length, 1);
+        assert.ok(body.indexOf('id="momento-trade-arena"') < body.indexOf('id="momento-2023"'));
+        assert.match(body, /Desde o verão de 2025 — atual/);
         assert.match(body, /Demonstração do Chat do Torneio/);
         assert.match(body, /Conversa demonstrativa/);
         assert.doesNotMatch(body, /<img[^>]+arena-(?:chat-torneio|arenito)/);
@@ -44,10 +48,11 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
           assert.match(asset.response.headers.get('content-type'), /image\/webp/);
         }
         assert.doesNotMatch(body, /class="stage-bottom"|Conhecer o Nós/);
-        assert.match(body, /TORNEIOS V3/);
+        assert.match(body, /TORNEIOS/);
         assert.match(body, /tournaments-table.viewmodel.ts/);
-        assert.match(body, /Demonstração dos componentes de Torneios/);
-        assert.match(body, /LEAGUE V3/);
+        assert.match(body, /Recorte de Todos os torneios com dados demonstrativos/);
+        assert.match(body, /LEAGUE \/ EXPERIÊNCIA/);
+        assert.doesNotMatch(body, /href="#frame-(?:monitor-[^"]+|clickup-[^"]+|dashboard-codigo|dashboard-numeros|avatar-numeros|league-codigo|dominios-numeros|angular-codigo|angular-numeros|signals-numeros)"/);
         assert.match(body, /197/);
         assert.match(body, /206 arquivos alterados/);
         assert.match(body, /Prompt reconstruído/);
@@ -65,10 +70,13 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         ])
           assert.ok(body.includes(text));
         assert.doesNotMatch(body, /id="(?:momento-agora|agora)"/);
-        assert.match(body, /id="paisagem"/);
-        assert.ok(body.indexOf('id="momento-2015"') < body.indexOf('id="paisagem"'));
-        assert.ok(body.indexOf('id="paisagem"') < body.indexOf('id="momento-2012"'));
+        assert.doesNotMatch(body, /id="paisagem"|href="#frame-paisagem"|href="#frame-momento-2008"/);
         assert.ok(body.indexOf('id="momento-2025"') < body.indexOf('id="momento-2009"'));
+        assert.match(body, /Experiência profissional/);
+        assert.match(body, /Desde quando a web era mato/);
+        const coda = await get('/images/work/html-for-food-xilogravura.webp');
+        assert.equal(coda.response.status, 200);
+        assert.match(coda.response.headers.get('content-type'), /image\/webp/);
         assert.match(body, /WebSocket/);
         assert.doesNotMatch(body, /career-index|app-current-work/);
         const previousRoute = await fetch(base + '/trajetoria', { redirect: 'manual' });
@@ -86,15 +94,20 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
       const career = body.indexOf('id="experiencias-anteriores"');
       assert.ok(arena >= 0 && arena < nos && nos < wakawa && wakawa < career);
       const projects = body.slice(nos, career);
-      assert.equal((projects.match(/data-project-scene="/g) || []).length, 12);
-      assert.match(projects, /shared\/utils\/acerto.ts/);
-      assert.match(projects, /src\/network_privacy.h/);
-      assert.match(projects, /Simular acerto/);
-      assert.match(projects, /Interface reconstruída · valores ilustrativos/);
+      assert.equal((projects.match(/data-project-scene="/g) || []).length, 10);
+      assert.doesNotMatch(body.slice(nos, wakawa), /data-project-scene="4"|shared\/utils\/acerto.ts/);
+      assert.doesNotMatch(projects, /data-project-scene="4"|src\/network_privacy.h/);
+      assert.match(projects, /O que está combinado/);
+      assert.match(projects, /Depende de você/);
+      assert.match(projects, /Esperando os outros/);
+      assert.match(projects, /Página inicial do Nós · dados ilustrativos/);
       assert.match(projects, /aplicativo Windows em desenvolvimento/);
-      assert.match(projects, /\[REDACTED\]/);
+      assert.match(projects, /Conversa ilustrativa com o Codex/);
+      assert.match(projects, /app\/home.css/);
+      assert.match(projects, /COM CODEX/);
+      assert.doesNotMatch(projects, /2 requisições observadas|\[REDACTED\]/);
       const scenes = projects.match(/<section\b[^>]*data-project-scene="\d"[^>]*>/g) || [];
-      assert.equal(scenes.length, 12);
+      assert.equal(scenes.length, 10);
       for (const scene of scenes) assert.doesNotMatch(scene, /aria-hidden="true"|\binert(?:[ =])/);
       assert.doesNotMatch(projects, /nos-sisal|intro-rope/);
       for (const name of ['wakawa-wallpaper.webp']) {
@@ -156,7 +169,14 @@ test('the packaged Vercel function renders public content, metadata, feeds and r
         assert.match(body, /Trabalhadores constroem uma interface/);
         assert.match(body, /corpos e funções diferentes/);
         assert.doesNotMatch(body, /worker-body fitter/);
-        assert.doesNotMatch(body, /wa.me\/5531992930696/);
+        const header = body.match(/<app-site-header[\s\S]*?<\/app-site-header>/)?.[0];
+        const footer = body.match(/<app-site-footer[\s\S]*?<\/app-site-footer>/)?.[0];
+        assert.ok(header);
+        assert.ok(footer);
+        assert.doesNotMatch(header, /wa.me\/5531992930696/);
+        assert.match(footer, /href="https:\/\/wa.me\/5531992930696"/);
+        assert.match(footer, /href="https:\/\/www.instagram.com\/andrexduarte\/"/);
+        assert.doesNotMatch(footer, /href="\/(?:rss.xml|admin)"/);
         assert.match(body, /\/images\/workshop\/workers-atlas-v2.webp/);
         assert.match(body, /\/images\/workshop\/engraving-atlas.webp/);
         assert.doesNotMatch(body, /\/images\/workshop\/[^"\s]+\.png/);

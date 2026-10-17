@@ -1,0 +1,15 @@
+<div class="filters" tabindex="0" role="group" aria-label="Prévia dos filtros: moeda, ativos, premiação e status. Role para ver todos.">
+      @for (filter of filters; track filter; let index = $index) {
+        <span class="filter-trigger">
+          <span class="filter-label">{{ filter }}</span>
+          @if (index === 0) {
+            <span class="filter-icons" aria-hidden="true"><svg class="money-icon" viewBox="0 0 24 24"><path d="M17 4H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 10H3V6h14v8ZM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm13 0v11c0 1.1-.9 2-2 2H4v-2h17V7h2Z" /></svg><img src="/images/work/arena-tournaments-coin.png" width="16" height="16" alt="" /></span>
+          }
+          @if (index === 1) {
+            <span class="filter-icons" aria-hidden="true"><img src="/images/work/arena-tournaments-win.png" width="16" height="16" alt="" /><img src="/images/work/arena-tournaments-wdo.png" width="16" height="16" alt="" /><img src="/images/work/arena-tournaments-bit.png" width="16" height="16" alt="" /></span>
+          }
+          <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" /></svg>
+        </span>
+      }
+      <span class="clear-filter">Limpar filtros</span>
+    </div>

@@ -4,12 +4,12 @@
   <header class="activity-heading">
     <p aria-live="polite"><strong>{{ total() }}</strong> contribuições em {{ selectedYear() }}</p>
     <div class="years" role="group" aria-label="Ano de atividade">
-      @for (year of snapshot.years; track year.year) {
+      @for (year of years; track year.year) {
         <button type="button" [attr.aria-pressed]="selectedYear() === year.year" (click)="selectYear(year.year)">{{ year.year }}</button>
       }
     </div>
   </header>
-  <div class="calendar-scroll" (mouseleave)="hoveredIndex.set(null)">
+  <div #calendarScroll class="calendar-scroll" (mouseleave)="hoveredIndex.set(null)">
     <div class="calendar" [style.--columns]="calendar().columns">
       <div class="months" aria-hidden="true">
         @for (month of calendar().months; track month.label) {
@@ -22,9 +22,9 @@
           @if (day.future) {
             <span class="day future" [style.grid-column]="day.week + 1" [style.grid-row]="day.row + 1" aria-hidden="true"></span>
           } @else {
-            <button #dayButton type="button" class="day" [attr.data-index]="day.index" [attr.data-level]="day.level"
+            <button #dayButton type="button" class="day" [class.playhead]="playheadIndex() === day.index" [attr.data-index]="day.index" [attr.data-level]="day.level"
               [style.grid-column]="day.week + 1" [style.grid-row]="day.row + 1" [style.opacity]="reveal(day.week)"
-              [attr.aria-label]="day.label" [attr.tabindex]="(activeIndex() ?? calendar().lastAvailable) === day.index ? 0 : -1"
+              [attr.aria-label]="day.label" [attr.tabindex]="(activeIndex() ?? playheadIndex() ?? calendar().lastAvailable) === day.index ? 0 : -1"
               (mouseenter)="hoveredIndex.set(day.index)" (focus)="focusDay(day.index)" (blur)="focusedIndex.set(null)"
               (keydown)="navigate($event, day.index, day.row)" (click)="focusDay(day.index)"></button>
           }
@@ -32,13 +32,25 @@
       </div>
     </div>
   </div>
-  <p id="activity-keyboard-help" class="sr-only">Use as setas para consultar os dias. Esquerda e direita mudam de semana; acima e abaixo mudam de dia.</p>
+  <p id="activity-keyboard-help" class="sr-only">Use as setas para consultar os dias. Esquerda e direita mudam de semana; acima e abaixo mudam de dia. Ao selecionar um ano ou dia, a consulta permanece até continuar a rolagem da página.</p>
   <div class="calendar-bottom">
-    <p class="day-detail">{{ detail() ?? 'Cada quadradinho, um dia.' }}</p>
+    <p class="day-detail">{{ detail() ?? cursorLabel() }}</p>
     <div class="legend" aria-label="Intensidade das contribuições, de menos a mais"><span>Menos</span>@for (level of levels; track level) {<i [attr.data-level]="level"></i>}<span>Mais</span></div>
   </div>
 </div>
 <footer>
-  <p>Perfil completo · consulta em {{ updated }}</p>
+  <p>Perfil completo · desde 2025 · consulta em {{ updated }}</p>
   <a [href]="yearUrl()" target="_blank" rel="noopener noreferrer">Ver no GitHub <span aria-hidden="true">↗</span></a>
 </footer>
+<section class="repository-activity" aria-label="Minha atividade no repositório da Trade Arena"
+  [style.opacity]="repositoryReveal()" [style.transform]="'translateY(' + (1 - repositoryReveal()) * 12 + 'px)'"
+  [attr.aria-hidden]="repositoryReveal() < .5 ? true : null">
+  <h4>Meu trabalho na Trade Arena</h4>
+  <dl>
+    @for (metric of repositoryMetrics; track metric.kind) {
+      <div [class]="metric.kind"><dt>{{ metric.label }}</dt><dd>{{ metric.value }}</dd></div>
+    }
+  </dl>
+  <p>{{ repository.repository }} · consulta em {{ repositoryUpdated }}</p>
+  <p>Meus commits nas branches remotas, sem merges. Linhas acumuladas, incluindo reaplicações.</p>
+</section>

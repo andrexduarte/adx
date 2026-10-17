@@ -1,0 +1,21 @@
+            <section class="medidor" aria-label="Equilíbrio do acordo">
+              <div class="medidor-top">
+                <div class="acerto"><span class="status-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><strong>{{ pending().length ? 'Falta a sua parte deste ciclo' : 'Vocês estão em dia' }}</strong><small>nenhum ciclo anterior deixou pendências</small></div></div>
+                <span class="lente">Nosso <span aria-hidden="true">⌄</span></span>
+              </div>
+              @if (pending().length) { <p class="projecao">Neste ciclo, faltam {{ money(total() / 2 - mine()) }} da sua parte.</p> }
+              <div class="eq">
+                <svg viewBox="0 0 300 150" role="img" [attr.aria-label]="money(remaining()) + ' ainda esperam alguém assumir. Você assumiu ' + money(mine()) + ', Beto assumiu ' + money(other())">
+                  <path class="track" d="M46 128 A104 104 0 0 1 254 128" />
+                  <path class="mine" d="M46 128 A104 104 0 0 1 254 128" pathLength="1" [style.stroke-dasharray]="mine() / total() + ' 2'" />
+                  <path class="other" d="M254 128 A104 104 0 0 0 46 128" pathLength="1" [style.stroke-dasharray]="other() / total() + ' 2'" />
+                </svg>
+                <div class="eq-center"><strong>{{ money(remaining()) }}</strong><span>esperando alguém</span></div>
+              </div>
+              <div class="quem"><span>Você assumiu<strong>{{ money(mine()) }}</strong></span><span>Beto assumiu<strong>{{ money(other()) }}</strong></span></div>
+            </section>
+            <section class="pendente" [class.calmo]="!pending().length" aria-label="Sua parte no ciclo">
+              <span class="status-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path [attr.d]="pending().length ? 'M12 7v5l3 2' : 'm8 12 3 3 5-6'"/></svg></span>
+              <div><strong>{{ pending().length ? pending().length === 1 ? '1 conta depende de você' : pending().length + ' contas dependem de você' : 'Está tudo certo do seu lado' }}</strong><span>{{ next() ? next()!.name + ' · ' + money(next()!.part) : '2 contas ainda esperam os outros' }}</span></div>
+              @if (next(); as item) { <button type="button" (click)="register.emit(item.id)" [attr.aria-label]="'Fazer minha parte em ' + item.name + ' na demonstração'">Fazer minha parte</button> }
+            </section>

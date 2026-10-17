@@ -1,0 +1,8 @@
+@if (mobile()) {
+  <div class="bottomnav" aria-hidden="true"><div>@for (item of navigation; track item.label; let index = $index) { @if (index === 2) { <b>＋</b> } <span [class.current]="index === 0"><svg viewBox="0 0 24 24"><path [attr.d]="item.path" /></svg>{{ item.label }}</span> }</div></div>
+} @else {
+      <div class="desktopnav" aria-hidden="true">
+        <img src="/images/projects/nos/home-mark.webp" alt="" width="81" height="60" loading="lazy" />
+        @for (item of navigation; track item.label; let first = $first) { <span [class.nav-current]="first"><svg viewBox="0 0 24 24"><path [attr.d]="item.path" /></svg>{{ item.label }}</span> }<span class="nav-add">＋ Colocar uma conta</span>
+      </div>
+}

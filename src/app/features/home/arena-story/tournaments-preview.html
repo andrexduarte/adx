@@ -1,38 +1,32 @@
-<div class="browser-frame" aria-label="Demonstração dos componentes de Torneios">
-  <div class="browser-bar" aria-hidden="true"><span class="lights">● ● ●</span><span>trade arena / tournaments</span><span>↗</span></div>
-  <div class="tournaments-page">
-    <header class="page-hero">
-      <h4>Torneios</h4><span>Seu próximo desafio começa aqui.</span>
-      <img src="/images/work/arena-tournaments-hero.webp" alt="" width="768" height="160" loading="lazy" />
-    </header>
-    <section class="catalog" aria-label="Todos os torneios">
-      <div class="catalog-heading"><h5>Todos os torneios</h5><span class="count">{{ state() === 'ready' || state() === 'refresh-error' ? '02' : '—' }}</span></div>
-      <div class="filters" aria-hidden="true"><span [class.selected]="state() === 'filtered-empty'">{{ state() === 'filtered-empty' ? 'Ativo: DOL' : 'Todos os ativos' }} <i>⌄</i></span><span>Todos os status <i>⌄</i></span></div>
-      @if (state() === 'refresh-error') { <div class="refresh-warning" role="status"><span>Os torneios exibidos podem estar desatualizados.</span><button type="button" (click)="recover.emit()">Atualizar novamente ↻</button></div> }
-      <div class="table-scroll" tabindex="0" aria-label="Lista demonstrativa de torneios; role horizontalmente em telas pequenas">
-        <table>
-          <thead><tr><th>Torneio</th><th>Ativo</th><th>Data/hora</th><th>Status</th></tr></thead>
-          <tbody>
-            @if (state() === 'ready' || state() === 'refresh-error') {
-              @for (row of rows; track row.asset) {
-                <tr><th scope="row"><span class="trophy" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h10v7a5 5 0 0 1-10 0V3Zm0 2H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4m-5 3v5m-4 1h8" /></svg></span>{{ row.name }}</th><td><span class="asset">{{ row.asset }}</span></td><td>{{ row.date }}</td><td><span class="status" [class.live]="row.live"><i></i>{{ row.status }}</span></td></tr>
-              }
-            } @else {
-              <tr><td colspan="4" class="empty-cell">
-                <div class="state-message" role="status">
-                  @switch (state()) {
-                    @case ('loading') { <span class="state-icon" aria-hidden="true">◷</span><p>Carregando torneios.</p><div class="skeleton" aria-hidden="true"><i></i><i></i></div> }
-                    @case ('filtered-empty') { <span class="state-icon" aria-hidden="true">⌕</span><p>Nenhum torneio encontrado para os filtros selecionados.</p><button type="button" (click)="recover.emit()">Limpar filtros</button> }
-                    @case ('empty') { <span class="state-icon" aria-hidden="true">◇</span><p>Nenhum torneio disponível no momento.</p> }
-                    @case ('error') { <span class="state-icon error-icon" aria-hidden="true">!</span><p>Não foi possível carregar os torneios.</p><button type="button" (click)="recover.emit()">Tentar novamente ↻</button> }
-                  }
-                </div>
-              </td></tr>
+<div class="browser-frame" aria-label="Recorte de Todos os torneios com dados demonstrativos">
+  <div class="browser-bar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span>tradearena.app/tournaments</span><span>↗</span></div>
+  <section class="tournaments-table" aria-label="Todos os torneios">
+    <h4>Todos os torneios</h4>
+    <app-tournaments-preview-filters />
+    <div class="table-scroll" tabindex="0" aria-label="Tabela demonstrativa; no celular, os mesmos torneios aparecem como cartões">
+      <table>
+        <caption class="sr-only">Todos os torneios disponíveis — dados demonstrativos</caption>
+        <thead><tr><th scope="col">Torneio</th><th scope="col">Inscrição</th><th scope="col">Ativos</th><th scope="col">Inscritos</th><th scope="col">Saldo inicial</th><th scope="col">Data/hora</th><th scope="col">Status</th><th scope="col">Detalhes</th></tr></thead>
+        <tbody>
+          @if (state() === 'loading') {
+            <tr class="empty-row"><td colspan="8"><div class="empty-state" role="status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2v6l4 4-4 4v6h12v-6l-4-4 4-4V2H6Zm10 15v3H8v-3l4-4 4 4ZM8 7V4h8v3l-4 4-4-4Z" /></svg><span>Carregando torneios.</span></div></td></tr>
+          } @else {
+            @for (row of rows; track row.id) {
+              <tr class="tournament-row">
+                <th class="tournament-name" scope="row"><div class="baseline"><span class="image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 4h-2V2H7v2H5a2 2 0 0 0-2 2v1a5 5 0 0 0 4.39 4.96A5.01 5.01 0 0 0 11 14.9V18H7v2h10v-2h-4v-3.1a5.01 5.01 0 0 0 3.61-2.94A5 5 0 0 0 21 7V6a2 2 0 0 0-2-2ZM5 7V6h2v3.82A3 3 0 0 1 5 7Zm14 0a3 3 0 0 1-2 2.82V6h2v1Z" /></svg></span><strong>{{ row.name }}</strong></div></th>
+                <td data-label="Inscrição"><span class="entry">@if (row.money === 'coin') {<img src="/images/work/arena-tournaments-coin.png" alt="" width="15" height="15" />} @else {<svg class="money-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 4H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 10H3V6h14v8ZM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm13 0v11c0 1.1-.9 2-2 2H4v-2h17V7h2Z" /></svg>}<span>{{ row.entry }}</span></span></td>
+                <td data-label="Ativos">{{ row.asset }}</td>
+                <td data-label="Inscritos">{{ row.participants }}</td>
+                <td data-label="Saldo inicial">{{ row.balance }}</td>
+                <td class="date"><span class="date-icon" aria-hidden="true">🕒</span><span>{{ row.start }}</span><span class="date-separator" aria-hidden="true">-</span><span>{{ row.end }}</span></td>
+                <td class="status-cell"><span class="status" [attr.data-status]="row.tone" [title]="row.status"><span class="sr-only">Status: {{ row.status }}</span></span></td>
+                <td class="details-cell"><span class="details"><img src="/images/work/arena-tournaments-visibility.svg" width="26" height="18" alt="" aria-hidden="true" /><span>Detalhes</span></span></td>
+              </tr>
             }
-          </tbody>
-        </table>
-      </div>
-      <div class="pagination" aria-hidden="true"><span>{{ state() === 'ready' || state() === 'refresh-error' ? '2 torneios' : '—' }}</span><span>‹ <b>1</b> ›</span></div>
-    </section>
-  </div>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
+

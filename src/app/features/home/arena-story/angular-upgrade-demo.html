@@ -1,6 +1,37 @@
-<div class="upgrade" aria-label="Marcos da evolução do Angular no projeto, com autoria das etapas">
-  <header><span>UMA BASE QUE CONTINUA EVOLUINDO</span><span>16 → 21</span></header>
-  <div class="upgrade-body"><div class="version"><img src="/images/technology/angular.svg" width="36" height="36" alt="Angular" /><strong>{{ current().version }}</strong><span>{{ current().date }}</span><small>{{ current().owner === 'Base' ? 'Versão de origem' : 'Etapa: ' + current().owner }}</small></div><div class="manifest"><span class="filename">package.json</span><div><code>&#64;angular/core</code><strong>{{ current().core }}</strong></div><div><code>typescript</code><strong>{{ current().typescript }}</strong></div><span class="filename builder-label">angular.json / evolução do builder</span><code class="builder" [class.updated]="newBuilder()">{{ newBuilder() ? '@angular/build:application' : 'configuração anterior' }}</code><span class="compatibility">Dependências, configuração e código acompanhando a versão.</span></div></div>
-  <ol class="versions">@for (item of milestones; track item.version; let i = $index) { <li [class.reached]="index() >= i" [class.current]="index() === i"><span class="version-dot" aria-hidden="true"></span><strong>{{ item.version }}</strong><small>{{ item.owner }}</small></li> }</ol>
+<div class="upgrade" aria-label="Marcos reais da evolução do Angular no projeto">
+  <header><span>EVOLUÇÃO DO PROJETO</span><span>16 → 21</span></header>
+  <div class="upgrade-body">
+    <div class="version">
+      <div class="version-mark"><img src="/images/technology/angular.svg" width="36" height="36" alt="Angular" /><strong>{{ current().version }}</strong></div>
+      <span>{{ current().date }}</span>
+    </div>
+    <div class="implementation">
+      <dl class="manifest" aria-label="Versões neste marco">
+        <div><dt>&#64;angular/core</dt><dd>{{ current().core }}</dd></div>
+        <div><dt>TypeScript</dt><dd>{{ current().typescript }}</dd></div>
+      </dl>
+      @for (milestone of [current()]; track milestone.version) {
+        <section class="change" [attr.aria-label]="milestone.title">
+          <h3>{{ milestone.title }}</h3>
+          <p>{{ milestone.detail }}</p>
+          <div class="code-window">
+            <div class="filename" [attr.title]="milestone.path"><span aria-hidden="true">⌘</span>{{ milestone.file }}</div>
+            @if (milestone.before) {
+              <pre class="code-before"><span class="diff-mark" aria-hidden="true">−</span><code>{{ milestone.before }}</code></pre>
+            }
+            <pre [class.code-after]="milestone.before" [class.code-base]="!milestone.before"><span class="diff-mark" aria-hidden="true">{{ milestone.before ? '+' : '·' }}</span><code>{{ milestone.after }}</code></pre>
+          </div>
+          <span class="source">{{ milestone.source }}</span>
+        </section>
+      }
+    </div>
+  </div>
+  <ol class="versions" aria-label="Marcos consultados no histórico">
+    @for (item of milestones; track item.version; let i = $index) {
+      <li [class.reached]="index() >= i" [class.current]="index() === i" [attr.aria-current]="index() === i ? 'step' : null">
+        <span class="version-dot" aria-hidden="true"></span><strong>{{ item.version }}</strong>
+      </li>
+    }
+  </ol>
 </div>
-<p class="note">Marcos conferidos no Git · 17 e 19: André · 20 e 21: equipe</p>
+<p class="note">Recortes reais do Git · evolução feita em equipe.</p>

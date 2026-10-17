@@ -7,8 +7,15 @@ export type TimelineFrame =
 export function careerFrames(moments: readonly Entry[]): TimelineFrame[] {
   const frames: TimelineFrame[] = [];
   for (const moment of moments) {
-    frames.push({ kind: 'moment', anchor: 'momento-' + moment.slug, label: `${moment.year} — ${moment.company}`, moment });
-    if (moment.slug === '2015') frames.push({ kind: 'landscape', anchor: 'paisagem', label: 'Xilogravura do cerrado' });
+    if (moment.slug === '2008') continue;
+    const current = moment.slug === '2025';
+    frames.push({
+      kind: 'moment',
+      // The original 2025 anchor still belongs to the detailed Arena story.
+      anchor: current ? 'momento-trade-arena' : 'momento-' + moment.slug,
+      label: `${moment.year} — ${moment.company}`,
+      moment: current ? { ...moment, title: 'Front-end developer · experimentando IA', excerpt: 'Desde o verão de 2025 — atual' } : moment,
+    });
   }
   return frames;
 }
@@ -26,4 +33,12 @@ export function timelineFrame(position: number, index: number, count: number) {
   const incoming = index === 0 ? 1 : ease((position - index + .14) / .28);
   const outgoing = index === count - 1 ? 0 : ease((position - index - 1 + .14) / .28);
   return { opacity: incoming * (1 - outgoing), offset: (1 - incoming - outgoing) * 28 };
+}
+
+// A continuous agenda wheel: the centered event grows while its neighbours remain visible.
+export function careerAgendaFrame(position: number, index: number, count: number) {
+  const center = Math.max(0, Math.min(count - 1, position - .25));
+  const offset = index - center;
+  const distance = Math.abs(offset);
+  return { offset, scale: 1 - Math.min(1, distance) * .24, opacity: distance <= 1 ? 1 - distance * .55 : .45 * (1 - clamp((distance - 1) / .65)) };
 }

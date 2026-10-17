@@ -1,12 +1,22 @@
-<header class="site-header" [class.has-project]="chrome.arenaContext() !== null">
+<header class="site-header" [class.has-project]="chrome.arenaContext() !== null || chrome.personalProject() !== null || chrome.careerContext() !== null" [class.has-career]="chrome.careerContext() !== null">
   <app-wordmark [collapsible]="true" [compact]="compactBrand()" />
   <div class="project-identity">
+    @if (chrome.careerContext(); as career) {
+      <span class="career-heading">Experiência profissional</span>
+      @if (career.counter) {
+        <span class="career-counter" aria-label="Posição no percurso">{{ career.counter }}</span>
+      }
+    } @else if (chrome.personalProject(); as project) {
+      <span class="project-context personal-context">PROJETOS PESSOAIS</span>
+      <strong class="personal-project-name">{{ project.name }}</strong>
+    } @else {
     @if (chrome.arenaContext(); as context) {
       <span class="project-context" [style.opacity]="context.opacity">
         <span>{{ context.project }}</span><i aria-hidden="true"> / </i><span>{{ context.task }}</span>
       </span>
     }
     <span class="project-logo-dock" aria-hidden="true"></span>
+    }
   </div>
 </header>
 @if (chrome.arenaLogo(); as logo) {

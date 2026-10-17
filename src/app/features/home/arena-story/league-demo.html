@@ -1,23 +1,28 @@
-<div class="league-window" aria-label="Demonstração da League V3 com dados fictícios">
-  <div class="browser-bar"><span aria-hidden="true">● ● ●</span><code>league / {{ view() === 'teams' ? 'teams' : view() === 'ranking' ? 'ranking' : 'feed' }}</code><span>{{ view() === 'teams' ? 'GESTÃO' : 'COMUNIDADE' }}</span></div>
-  <header class="league-hero">
-    <img class="banner" src="/images/work/arena-league-banner.webp" alt="" width="1920" height="343" loading="lazy" />
-    <div class="identity"><img src="/images/work/arena-symbol.svg" width="42" height="42" alt="" /><div><h4>Liga Trade Arena</h4><span>Uma comunidade. Diferentes experiências.</span></div><div class="league-stats"><strong>128<small>membros</small></strong><strong>12<small>torneios</small></strong></div></div>
-  </header>
-  <div class="league-tabs" aria-label="Recorte das áreas da League">@for (tab of tabs; track tab.id) { <span [class.active]="view() === tab.id || (view() === 'loading' && tab.id === 'feed')">{{ tab.label }}</span> }</div>
-  <div class="league-content">
-    @switch (view()) {
-      @case ('loading') { <div class="loading-state"><span class="loading-icon" aria-hidden="true">◷</span><strong>Carregando a liga</strong><span class="skeleton"></span><span class="skeleton short"></span></div> }
-      @case ('feed') {
-        <div class="feed-layout"><aside><span class="following">Seguindo</span><h5>Sobre a liga</h5><p>Um espaço para acompanhar torneios e compartilhar conquistas.</p></aside><div class="activity"><article><img src="/images/work/arena-symbol.svg" alt="" width="24" height="24" /><div><strong>Liga Trade Arena</strong><small>Hoje · demonstração</small><p>Inscrições abertas para Diário WDO.</p><span class="activity-tag">Torneio</span></div></article><article><span class="event-icon" aria-hidden="true">↗</span><div><strong>Mais uma disputa concluída</strong><p>O resultado já faz parte do Feed.</p></div></article></div></div>
+<div class="league-window" aria-label="Recortes da League com dados demonstrativos">
+  <nav #navigation class="league-tabs" aria-label="Conteúdo da liga">
+    <div class="league-tabs-list">
+      @for (tab of tabs; track tab.id) {
+        <span class="league-tab" [class.active]="!staticMode() && view() === tab.id" [attr.aria-current]="!staticMode() && view() === tab.id ? 'page' : null">
+          <svg aria-hidden="true"><use [attr.href]="'/images/work/league-demo-icons.svg#tab-' + tab.id" /></svg>
+          <span>{{ tab.label }}</span>
+        </span>
       }
-      @case ('ranking') {
-        <div class="ranking-header"><h5>Ranking da liga</h5><span>Todos os ativos · Pontos</span></div>
-        <div class="podium">@for (leader of leaders; track leader.position) { <div class="leader" [class.first]="leader.position === 1"><img [src]="'/images/work/avatars/' + leader.image + '-128.webp'" width="42" height="42" alt="" loading="lazy" /><span>{{ leader.name }}</span><strong>{{ leader.score }} <small>pts</small></strong><div class="place">{{ leader.position }}º</div></div> }</div>
+    </div>
+  </nav>
+  <div #viewport class="content-viewport" aria-label="Recorte da interface da League">
+    <div #content class="content" [attr.data-view]="view()">
+      @if (staticMode()) {
+        <section class="static-section"><h2>Feed de Atividade</h2><app-league-demo-feed /></section>
+        <section class="static-section"><h2>Ranking</h2><app-league-demo-ranking /></section>
+        <section class="static-section"><h2>Estatísticas</h2><app-league-demo-statistics /></section>
+      } @else {
+        @switch (view()) {
+          @case ('feed') { <app-league-demo-feed /> }
+          @case ('ranking') { <app-league-demo-ranking /> }
+          @case ('statistics') { <app-league-demo-statistics /> }
+        }
       }
-      @case ('teams') {
-        <div class="team-card"><div class="team-summary"><div class="team-heading"><span class="team-symbol">HN</span><div><h5>Horizonte Norte</h5><p>Aprender e evoluir em equipe.</p></div></div><div class="team-stats"><span>Membros<strong>24</strong></span><span>Ranking<strong>2º</strong></span><span class="membership">Membro da equipe</span></div></div><div class="benefits"><h5>Principais benefícios</h5><span><i>↗</i>Torneios para a equipe</span><span><i>↗</i>Conteúdo para aprender</span><small>Equipes disponíveis no contexto de gestão</small></div></div>
-      }
-    }
+    </div>
   </div>
+  <p class="demo-caption">{{ staticMode() ? 'League · três áreas' : 'League · ' + (view() === 'feed' ? 'Feed de Atividade' : view() === 'ranking' ? 'Ranking' : 'Estatísticas') }} <span>Dados demonstrativos</span></p>
 </div>

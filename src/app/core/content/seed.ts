@@ -310,7 +310,7 @@ export const SEED_ENTRIES: Entry[] = [
     id: '03dfabb9-3997-5f78-a84b-9699e2433c04',
     slug: '2022',
     kind: 'moment',
-    title: 'AngularJS, React.js e React Native.',
+    title: 'AngularJS, React e React Native.',
     excerpt: 'Maio de 2022 — março de 2023',
     category: 'Vida',
     html: '<ul><li>Sustentação e manutenção de sistemas em AngularJS, React.js e React Native;</li><li>Desenvolvimento de soluções escaláveis e reutilizáveis para projetos existentes;</li><li>Participação em reuniões ágeis e definição de sprints em ambiente Scrum;</li><li>Integração com serviços Azure e resolução de bugs críticos;</li><li>Garantia de qualidade no código através de revisões e testes.</li></ul>',

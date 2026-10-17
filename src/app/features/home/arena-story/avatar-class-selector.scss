@@ -1,0 +1,16 @@
+:host { display: block; min-width: 0; align-self: start; }
+.class-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 0; margin: 0; list-style: none; }
+li { border: 1px solid #444; padding: 3px; min-width: 0; }
+li.selected { border-color: #f80; }
+button { display: block; width: 100%; position: relative; font: inherit; color: inherit; background: transparent; border: 0; padding: 0; cursor: pointer; }
+button:focus-visible { outline: 2px solid #f80; outline-offset: 3px; }
+img { display: block; width: 100%; height: auto; aspect-ratio: 9/16; object-fit: cover; filter: saturate(0); }
+.selected img { filter: none; }
+.selected button:after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent,#ff880080); pointer-events: none; }
+.class-title { position: absolute; inset: auto 3px 7px; text-align: center; font-size: 10px; font-weight: 600; z-index: 1; }
+.class-title small { display: block; font-size: 8px; }
+@media (max-width: 760px) {
+  .class-selection { gap: 10px; }
+  .class-title { font-size: 12px; }
+  .class-title small { font-size: 9px; }
+}

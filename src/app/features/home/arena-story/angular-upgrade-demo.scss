@@ -1,45 +1,58 @@
 :host { display: block; width: min(100%, 830px); text-align: left; }
+* { box-sizing: border-box; }
 .upgrade { border: 1px solid #514136; border-radius: 14px; background: #201d1a; overflow: hidden; }
-header { display: flex; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #ffffff0b; color: #b5a18b; font: 8px monospace; letter-spacing: .07em; }
+header { display: flex; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid #ffffff0b; color: #b5a18b; font: 9px monospace; letter-spacing: .07em; }
 header > span:last-child { color: #f1b478; }
-.upgrade-body { display: grid; grid-template-columns: 240px 1fr; padding: 27px 32px; gap: 35px; }
-.version { display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #ffffff0b; padding-right: 30px; }
-.version > strong { color: #f6b66f; font: 104px/1 var(--serif); letter-spacing: -.065em; margin-top: 8px; }
-.version > span { color: #c7b39a; font: 9px monospace; margin-top: 14px; }
-.version small { color: #9c8d7a; font: 8px var(--sans); margin-top: 7px; }
-.manifest { align-self: center; }
-.filename { display: block; color: #b49774; font: 9px monospace; margin-bottom: 14px; }
-.manifest > div { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid #ffffff0b; padding: 11px 0; font: 12px monospace; }
-.manifest code { color: #bca88d; }
-.manifest strong { color: #eac390; font-weight: 400; }
-.builder-label { margin-top: 22px; font-size: 8px; }
-.builder { display: block; font: 11px monospace; color: #aa9070; }
-.builder.updated { color: #e9b776; }
-.compatibility { display: block; font: 9px/1.6 var(--sans); color: #9f927e; margin-top: 16px; max-width: 280px; }
-.versions { display: flex; list-style: none; padding: 18px 32px; margin: 0; background: #29231e; border-top: 1px solid #ffffff0b; }
+.upgrade-body { display: grid; grid-template-columns: 170px minmax(0, 1fr); padding: 24px 28px; gap: 28px; }
+.version { display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #ffffff0b; padding-right: 28px; }
+.version-mark { display: flex; flex-direction: column; align-items: center; }
+.version strong { color: #f6b66f; font: 104px/1 var(--serif); letter-spacing: -.065em; margin-top: 8px; }
+.version > span { color: #c7b39a; font: 9px/1.5 monospace; margin-top: 14px; text-align: center; }
+.implementation { min-width: 0; }
+.manifest { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 20px; }
+.manifest > div { display: flex; flex-wrap: wrap; gap: 6px; font: 10px/1.5 monospace; }
+.manifest dt { color: #9f927e; }
+.manifest dd { margin: 0; color: #eac390; }
+.change { animation: change-enter 260ms ease-out both; }
+.change h3 { margin: 0; font: 500 22px/1.2 var(--serif); letter-spacing: -.02em; color: #f2e6d8; }
+.change p { margin: 8px 0 14px; color: #bba995; font: 11px/1.6 var(--sans); }
+.code-window { overflow: hidden; border: 1px solid #ffffff0c; border-radius: 8px; background: #171615; }
+.filename { display: flex; align-items: center; gap: 8px; padding: 10px 12px; color: #ac9a84; border-bottom: 1px solid #ffffff0b; font: 9px/1.4 monospace; overflow-wrap: anywhere; }
+.filename > span { color: #e7b275; }
+pre { display: flex; gap: 10px; margin: 0; padding: 11px 12px; font: 10px/1.65 monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+pre + pre { border-top: 1px solid #ffffff08; }
+pre code { min-width: 0; font: inherit; }
+.diff-mark { flex: none; width: 7px; user-select: none; }
+.code-before { color: #bf9692; background: #b65a500b; }
+.code-after { color: #b9c9a5; background: #6c8c4810; }
+.code-base { color: #d8be9c; }
+.source { display: block; margin-top: 9px; color: #998975; font: 8px/1.5 monospace; }
+.versions { display: flex; list-style: none; padding: 15px 28px; margin: 0; background: #29231e; border-top: 1px solid #ffffff0b; }
 .versions li { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; gap: 6px; color: #8f7c65; }
 .versions li::before { content: ''; position: absolute; height: 1px; background: #564431; top: 4px; left: 0; right: 0; }
 .version-dot { width: 8px; height: 8px; position: relative; border: 1px solid #856239; background: #30261c; border-radius: 50%; }
 .versions strong { font: 17px var(--serif); }
-.versions small { font: 7px monospace; }
 .versions .reached { color: #c3a478; }
 .versions .reached .version-dot { background: #ab783f; }
 .versions .current { color: #ffc581; }
 .versions .current .version-dot { background: #ffba6a; box-shadow: 0 0 0 4px #ffba6a16; }
-.note { text-align: center; font: 8px/1.5 monospace; color: #a89b89; margin: 13px 0 0; }
-@media (max-width:760px) {
-  header { padding: 14px; font-size: 6px; }
-  .upgrade-body { grid-template-columns: 90px 1fr; padding: 23px 13px; gap: 15px; }
-  .version { padding-right: 13px; }
-  .version > img { width: 28px; height: 28px; }
-  .version > strong { font-size: 67px; }
-  .version > span { font-size: 7px; line-height: 1.5; text-align: center; }
-  .version small { font-size: 7px; }
-  .manifest > div { font-size: 8px; gap: 5px; padding-block: 11px; }
-  .filename { font-size: 8px; margin-bottom: 9px; }
-  .builder-label { font-size: 6px; line-height: 1.5; }
-  .builder { font-size: 8px; overflow-wrap: anywhere; }
-  .compatibility { font-size: 8px; }
-  .versions { padding: 16px 15px; }
+.note { text-align: center; font: 8px/1.5 monospace; color: #a89b89; margin: 12px 0 0; }
+@keyframes change-enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  header { padding: 12px 16px; font-size: 8px; }
+  .upgrade-body { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
+  .version { flex-direction: row; justify-content: space-between; padding: 0 0 14px; border-right: 0; border-bottom: 1px solid #ffffff0b; }
+  .version-mark { flex-direction: row; gap: 12px; }
+  .version img { width: 28px; height: 28px; }
+  .version strong { font-size: 56px; margin: 0; }
+  .version > span { margin: 0; font-size: 8px; text-align: right; }
+  .manifest { margin-bottom: 12px; gap: 8px 18px; }
+  .manifest > div { font-size: 9px; }
+  .change h3 { font-size: 21px; }
+  .change p { font-size: 10px; margin-bottom: 12px; }
+  pre { padding: 10px; gap: 7px; font-size: 10px; line-height: 1.55; }
+  .filename { padding: 9px 10px; font-size: 8px; }
+  .versions { padding: 12px 15px; }
   .note { font-size: 7px; }
 }
+@media (prefers-reduced-motion: reduce) { .change { animation: none; } }

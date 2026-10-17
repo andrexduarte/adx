@@ -1,9 +1,54 @@
-<div class="dashboard" aria-label="Demonstração do dashboard de torneios, com dados fictícios">
-  <header><div><span class="eyeline">DESEMPENHO / TORNEIO</span><h4>Operações, em perspectiva.</h4></div><span class="period">Visão geral <i>⌄</i></span></header>
+<div class="dashboard" aria-label="Recorte de quatro gráficos do Dashboard V2 da Trade Arena; dados demonstrativos">
   <div class="charts">
-    <section class="chart hourly"><h5>Operações totais × Tempo</h5><div class="bars" role="img" aria-label="Barras demonstrativas de operações por horário">@for (bar of bars; track $index) { <span [style.height.%]="bar * draw()"><i>{{ Math.round(bar * draw()) }}</i></span> }</div><div class="axis"><span>09h</span><span>12h</span><span>17h</span></div></section>
-    <section class="chart distribution"><h5>Distribuição das operações</h5><div class="donut-wrap"><svg viewBox="0 0 120 120" role="img" aria-label="Distribuição demonstrativa: 68 por cento compra e 32 por cento venda"><circle class="ring-bg" cx="60" cy="60" r="43" /><circle class="ring" cx="60" cy="60" r="43" pathLength="100" [attr.stroke-dasharray]="68 * draw() + ' 100'" /><text x="60" y="57">{{ Math.round(68 * draw()) }}%</text><text class="ring-label" x="60" y="73">COMPRA</text></svg><div class="legend"><span><i></i>Compra</span><span><i></i>Venda</span></div></div></section>
-    <section class="chart by-asset"><h5>PNL e operações por ativo</h5><div class="horizontal-bars" role="img" aria-label="Comparativo demonstrativo entre WDO, WIN e BIT">@for (asset of assets; track asset.name) { <div><span>{{ asset.name }}</span><i><b [style.width.%]="asset.value * draw()"></b></i><small>{{ Math.round(asset.value * draw()) }}</small></div> }</div></section>
-    <section class="chart histogram"><h5>Histograma PNL por faixa</h5><div class="bars" role="img" aria-label="Histograma ilustrativo, com maior concentração nas faixas centrais">@for (bar of histogram; track $index) { <span [style.height.%]="bar * draw()"></span> }</div><div class="axis"><span>Perdas</span><span>0</span><span>Ganhos</span></div></section>
+    <section class="widget operations" aria-label="Operações totais por tempo">
+      <h4>Operações totais x Tempo</h4>
+      <div class="bar-chart" role="img" aria-label="Dados demonstrativos: 100 operações ao longo do dia, com maior volume às 12 horas">
+        <div class="hour-bars">
+          @for (bar of hours; track bar.hour) {
+            <div class="hour-column" [title]="bar.hour + ': ' + bar.value + ' operações'"><div class="hour-bar" [style.height.%]="bar.height" [style.transform]="'scaleY(' + draw() + ')'"></div></div>
+          }
+        </div>
+        <div class="hour-labels"><span>09h</span><span>12h</span><span>15h</span><span>18h</span></div>
+        <span class="day-label">Dia 1</span>
+      </div>
+    </section>
+    <section class="widget distribution" aria-label="Distribuição das operações">
+      <h4>Distribuição das operações</h4>
+      <div class="donut-chart">
+        <ul class="donut-legend">
+          @for (slice of slices; track slice.label; let index = $index) {
+            <li (mouseenter)="hovered.set(index)" (mouseleave)="hovered.set(null)" [class.highlighted]="hovered() === index"><i [style.background]="slice.color" aria-hidden="true"></i><span>{{ slice.label }}: {{ slice.value }}%</span></li>
+          }
+        </ul>
+        <svg class="donut" viewBox="0 0 250 250" role="img" aria-label="Dados demonstrativos: 20% negativos, 5% stopados, 67% positivos e 8% zerados">
+          @for (slice of slices; track slice.label; let index = $index) {
+            <circle cx="125" cy="125" r="95" pathLength="100" [attr.stroke]="slice.color" [attr.stroke-width]="hovered() === index ? 40 : 32" [attr.stroke-dasharray]="slice.value * draw() + ' ' + (100 - slice.value * draw())" [attr.stroke-dashoffset]="75 - slice.offset" [attr.opacity]="hovered() === null || hovered() === index ? 1 : .4" (mouseenter)="hovered.set(index)" (mouseleave)="hovered.set(null)" />
+          }
+        </svg>
+      </div>
+    </section>
+    <section class="widget performance" aria-label="PNL e operações por ativo">
+      <h4>PNL e Operações por ativo</h4>
+      <div class="horizontal-chart" role="img" aria-label="Dados demonstrativos: WDO com 62 operações e PNL positivo de 1480 reais; WIN com 38 operações e PNL negativo de 320 reais">
+        <div class="asset-list">
+          @for (asset of assets; track asset.label) {
+            <div class="asset">
+              <div class="asset-header"><span>{{ asset.label }}</span><span class="pnl" [class.positive]="asset.pnl >= 0" [class.negative]="asset.pnl < 0">{{ asset.formatted }}</span></div>
+              <div class="track total-track"><i [style.transform]="'scaleX(' + asset.totalWidth / 100 * draw() + ')'"></i></div>
+              <div class="track pnl-track" [class.positive]="asset.pnl >= 0" [class.negative]="asset.pnl < 0"><i [style.transform]="'scaleX(' + asset.pnlWidth / 100 * draw() + ')'"></i></div>
+            </div>
+          }
+        </div>
+        <div class="asset-legend"><span><i></i>Total Operações</span><span><i></i>PNL Acumulado</span></div>
+      </div>
+    </section>
+    <section class="widget histogram" aria-label="Histograma PNL por faixa">
+      <h4>Histograma PNL por faixa</h4>
+      <div class="histogram-bars" role="img" aria-label="Dados demonstrativos: 12 operações na faixa menos 2 mil, 13 na menos mil, 8 na zero, 42 na mil e 25 na 2 mil reais">
+        @for (item of histogram; track item.label) {
+          <div class="histogram-column" [title]="item.label + ': ' + item.value + ' operações'"><div class="histogram-bar" [class.loss]="item.tone === 'loss'" [class.neutral]="item.tone === 'neutral'" [class.profit]="item.tone === 'profit'" [style.height.%]="item.height * draw()" [style.opacity]="item.opacity"></div><span>{{ item.label }}</span></div>
+        }
+      </div>
+    </section>
   </div>
 </div>

@@ -21,7 +21,7 @@ export class TournamentsStory {
   readonly seek = output<number>();
   readonly selectedState = signal<TournamentDemoState>('ready');
   readonly states = tournamentStates;
-  readonly stages = ['A ideia', 'O plano', 'Ferramentas', 'Arquivos', 'O código', 'A interface'];
+  readonly stages = ['A ideia', 'O plano', 'O fluxo', 'Arquivos', 'O código', 'A interface'];
   readonly starts = TOURNAMENT_STAGE_STARTS;
   readonly stage = computed(() => Math.max(0, this.starts.filter(start => start <= this.progress()).length - 1));
   readonly plan = computed(() => this.staticMode() ? 1 : clamp((this.progress() - .13) / .11));
@@ -32,16 +32,23 @@ export class TournamentsStory {
     ? this.states.find(item => item.state === this.selectedState())! : tournamentFrame(tournamentPlaybackProgress(this.progress())));
   readonly prompt = computed(() => 'Vamos construir a página de torneios.'.slice(0,
     this.staticMode() ? undefined : Math.ceil(36 * phase(this.progress(), 0, .10))));
-  readonly templateCode = `@switch (tableState.kind) {
-  @case ('loading') { /* Carregando torneios. */ }
-  @case ('empty') { /* Nenhum torneio disponível. */ }
-  @case ('filtered-empty') { /* Rever filtros. */ }
-  @case ('error') { /* retry.emit() */ }
+  readonly templateCode = `@if (vm$ | async; as vm) {
+  <app-user-tournament-summary [state]="vm.userSummary" />
+  <!-- Demais seções omitidas neste recorte. -->
 }`;
-  readonly modelCode = `if (this.filteredRows.length) {
-  this.tableState = { kind: 'ready' };
-  return;
-}`;
+  readonly modelCode = `protected readonly vm$ = combineLatest({
+  person: this.personState$,
+  league: this.tournamentsService.leagueState$,
+  tournamentRanking: this.tournamentsService.tournamentRankingState$,
+  openTournaments: this.tournamentsService.openTournamentsState$,
+  participations: this.tournamentsService.participationsState$,
+  dashboardStatus: this.tournamentsService.dashboardStatusState$,
+  highlights: this.tournamentsService.highlightsState$
+}).pipe(
+  map(buildTournamentsPageVm),
+  startWith(TOURNAMENTS_PAGE_VM_INITIAL),
+  shareReplay({ bufferSize: 1, refCount: true })
+);`;
   panelOpacity(index: number) {
     if (this.staticMode()) return 1;
     const starts = this.starts;

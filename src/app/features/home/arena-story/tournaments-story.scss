@@ -1,7 +1,7 @@
 :host { display: block; width: min(100%, 960px); }
 .chapter-kicker { font: 9px monospace; color: #b6aa9b; letter-spacing: .16em; margin-bottom: 18px; }
 .chapter-kicker > span { color: #ffae57; letter-spacing: 0; margin-left: 8px; }
-.panels { position: relative; height: min(64svh, 500px); min-height: 440px; }
+.panels { position: relative; height: 560px; }
 .panel { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .idea h3 { font: 48px/1.1 var(--serif); letter-spacing: -.04em; margin: 0 0 30px; }
 .idea h3 em { color: #ffae57; font-weight: 400; }
@@ -22,6 +22,14 @@
 .code-label { font: 8px monospace; letter-spacing: .1em; color: #a29582; }
 pre { color: #d3baa0; font: 12px/1.8 monospace; margin: 10px 0 0; overflow-x: auto; scrollbar-width: thin; }
 pre.model { color: #a8bd9b; margin-bottom: 22px; }
+.source-panel { flex-shrink: 0; }
+.source-panel .editor-bar { padding-block: 8px; line-height: 1.4; }
+.source-panel .code-body { padding-block: 8px; }
+.source-panel .code-label { display: block; line-height: 1.25; }
+.source-panel pre { font-size: 11px; line-height: 1.6; margin-top: 6px; scrollbar-color: #75614b #1d1d1d; }
+.source-panel pre.model { margin-bottom: 10px; }
+.code-panel .caption { line-height: 1.2; margin-top: 10px; }
+.code-panel .small-note { margin-top: 6px; }
 .state-controls { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 14px; }
 .state-controls button { pointer-events: auto; cursor: pointer; border: 1px solid #494137; border-radius: 20px; background: transparent; color: #b7aa99; font: 9px var(--sans); padding: 7px 12px; }
 .state-controls button[aria-pressed=true] { color: #ffbf77; background: #382a1c; border-color: #9a6938; }
@@ -41,7 +49,6 @@ app-tournaments-preview { width: 100%; }
 :host(.static) .process { display: none; }
 @media (max-width: 760px) {
   .chapter-kicker { font-size: 8px; margin-bottom: 14px; }
-  .panels { height: 510px; min-height: 0; }
   .idea h3 { font-size: 37px; margin-bottom: 25px; }
   .tools { gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
   .tools > span { font-size: 9px; gap: 5px; }
@@ -53,6 +60,7 @@ app-tournaments-preview { width: 100%; }
   .caption { font-size: 17px; margin-top: 18px; }
   .code-body { padding: 17px 14px; }
   pre { font-size: 9px; }
+  .source-panel pre { font-size: 9px; }
   .state-controls { gap: 5px; margin-bottom: 10px; }
   .state-controls button { padding: 6px 8px; font-size: 8px; }
   .state-explainer code { font-size: 8px; }

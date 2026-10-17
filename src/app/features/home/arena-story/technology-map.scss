@@ -14,6 +14,11 @@ circle { fill: #ffae57; }
 .symbol { display: grid; place-items: center; height: 35px; font: 22px monospace; color: #ffae57; }
 :host(.chat) .core { width: 135px; height: 135px; }
 :host(.chat) .core strong { font-size: 36px; }
+:host(.nos) .core { background:#e9e4d6; border-color:#ae9870; }
+:host(.nos) .core > span { color:var(--accent); }
+:host(.nos) .core small, :host(.nos) .technology small { color:var(--project-muted); }
+:host(.nos) path { stroke:#9a7b4560; }
+:host(.nos) circle { fill:#a27a27; }
 @media (max-width: 760px) {
   .constellation { width: 82%; height: 350px; }
   .technology { min-width: 75px; }

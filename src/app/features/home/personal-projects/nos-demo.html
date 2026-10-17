@@ -1,0 +1,47 @@
+<div class="app-window" role="group" aria-label="Página inicial do Nós, demonstração com dados ilustrativos">
+  <div class="window-bar" aria-hidden="true"><span>● ● ●</span><span>Nós / Início</span><i></i></div>
+  <div #viewport class="viewport">
+    <div #content class="nos-app">
+      <app-nos-navigation />
+      <div class="dash">
+        <header class="appbar">
+          <img class="mobile-brand" src="/images/projects/nos/home-mark.webp" alt="Nós" width="81" height="60" loading="lazy" />
+          <div class="heading"><h4>Nossa casa</h4><span>outubro de 2026</span></div><span class="avatar" aria-label="Ana">A</span>
+        </header>
+        <div class="body">
+          <div class="resumo">
+            <app-nos-balance [mine]="mine()" [other]="other" [total]="total" [pending]="pending()" (register)="register($event)" />
+          </div>
+          <section class="quadro" aria-label="Contas do ciclo">
+            <div class="section-heading"><h4>O que está combinado</h4><span>Ver os ciclos anteriores</span></div>
+            <p class="orientacao">Pague pelo celular e registre aqui. Cada conta mostra de quem é a vez.</p>
+            <div class="filtros" role="group" aria-label="Filtrar contas demonstrativas">
+              <button type="button" [attr.aria-pressed]="!dueSoon()" (click)="dueSoon.set(false)">Tudo</button><button type="button" [attr.aria-pressed]="dueSoon()" (click)="dueSoon.set(true)">Vence logo</button>
+            </div>
+            <div class="grupos">
+              @for (group of visibleGroups(); track group.id) {
+                <section [class]="'grupo grupo-' + group.id" [class.empty]="!group.items.length">
+                  <h5>{{ group.title }}<span>{{ group.items.length }}</span></h5>
+                  <div class="extrato">
+                    @for (item of group.items; track item.id) {
+                      <article class="item">
+                        <img [src]="'/images/projects/nos/' + item.icon + '.webp'" alt="" width="32" height="32" loading="lazy" />
+                        <div class="item-body"><div class="item-top"><strong>{{ item.name }}</strong><b>{{ money(item.part) }}</b></div>
+                          <div class="item-sub"><span>de {{ money(item.total) }}</span><span>{{ item.category }}</span></div>
+                          <p>{{ item.summary }}</p>
+                          @if (!item.mine) { <button class="part-button" type="button" (click)="register(item.id)" [attr.aria-label]="'Registrar minha parte em ' + item.name + ' na demonstração'">Fazer minha parte</button> }
+                        </div>
+                      </article>
+                    } @empty { <p class="empty-message">{{ group.id === 'fechado' ? 'As contas resolvidas ficam aqui.' : 'Nenhuma conta esperando por aqui.' }}</p> }
+                  </div>
+                </section>
+              }
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-nos-navigation [mobile]="true" [staticMode]="staticMode()" />
+</div>
+<div class="demo-status"><span role="status">{{ done().length ? 'Registro demonstrativo atualizado.' : 'Experimente registrar sua parte em uma conta.' }}</span>@if (done().length) { <button type="button" (click)="done.set([])">Reiniciar exemplo</button> }</div>

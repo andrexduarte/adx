@@ -7,9 +7,9 @@
 @if (hasJourney()) {
   <section id="percurso" aria-label="Trajetória, do presente ao começo">
     <app-arena-story />
-    <app-project-story [project]="projects[0]" next="#projeto-wakawa" nextLabel="Conhecer o waka’wã" />
-    <app-project-story [project]="projects[1]" next="#experiencias-anteriores" nextLabel="Seguir a trajetória" />
-    <section class="previous-work" id="experiencias-anteriores" aria-label="Experiências anteriores à Trade Arena">
+    <app-project-story [project]="projects[0]" />
+    <app-project-story [project]="projects[1]" />
+    <section class="previous-work" id="experiencias-anteriores" aria-label="Experiência profissional">
       <app-timeline />
     </section>
   </section>

@@ -1,0 +1,13 @@
+<header><div class="identity"><img src="/images/projects/wakawa-acaua.png" width="28" height="28" alt="" /><span>waka'wã <small>COM CODEX</small></span></div><button type="button" aria-label="Fechar painel Codex da demonstração" (click)="closePanel.emit()">×</button></header>
+<section class="target" aria-label="Projeto e página ativa"><div><span>WAKAWA</span><span>Projeto ↗</span></div><strong>Início</strong><small>app/home.html</small></section>
+<div class="tools"><span>DevTools</span><span>Erros recentes</span><span>Abrir projeto</span><span>Nova conversa</span></div>
+<div class="conversation" aria-label="Conversa ilustrativa com o Codex">
+  @if (conversation()) {
+    <article class="message user"><small>VOCÊ</small><p>Encontre no projeto os estilos do campo de pedido desta página.</p></article>
+    <article class="message"><small>CODEX</small><p>O campo está em <code>app/home.html</code>. A aparência vem de <code>.composer</code> e <code>.composer textarea</code>, em <code>app/home.css</code>.</p></article>
+  } @else {
+    <p class="eyebrow">SEU PROJETO, EM FOCO</p><h4>Inspecione.<br>Entenda. Construa.</h4><p class="intro">Use o botão direito em um elemento para levá-lo ao Codex ou abrir seu estilo no VS Code.</p>
+    <div class="suggestions"><button type="button" (click)="sendExample.emit()">Localizar no projeto ↗</button><span>Investigar um erro ↗</span></div>
+  }
+</div>
+<footer><div class="composer"><p>{{ conversation() ? 'O que vamos resolver nesta página?' : 'Encontre no projeto os estilos do campo de pedido desta página.' }}</p><div><span>Conversa desta aba</span><button type="button" (click)="sendExample.emit()" [disabled]="conversation()">Enviar ↗</button></div></div><div class="account"><span>Conversa ilustrativa</span><span>Verificar conta</span></div></footer>

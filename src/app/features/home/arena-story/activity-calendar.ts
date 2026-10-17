@@ -9,6 +9,27 @@ export interface ActivitySnapshot {
   retrievedAt: string;
   years: readonly ActivityYear[];
 }
+
+export const ACTIVITY_CALENDAR_END = .78;
+export const ACTIVITY_CALENDAR_START = .06;
+
+export function activityPlayback(snapshot: ActivitySnapshot, progress: number, firstYear = 2025) {
+  const periods = snapshot.years
+    .filter(year => year.year >= firstYear)
+    .map(data => ({ data, count: data.days.filter(([date]) => date <= snapshot.retrievedAt).length }))
+    .filter(period => period.count > 0)
+    .sort((left, right) => left.data.year - right.data.year);
+  const totalDays = periods.reduce((total, period) => total + period.count, 0);
+  if (!totalDays) return null;
+  const calendarProgress = Math.max(0, Math.min(1, (progress - ACTIVITY_CALENDAR_START) / (ACTIVITY_CALENDAR_END - ACTIVITY_CALENDAR_START)));
+  let dayIndex = Math.min(totalDays - 1, Math.floor(calendarProgress * totalDays));
+  for (const period of periods) {
+    if (dayIndex < period.count) return { year: period.data.year, dayIndex, date: period.data.days[dayIndex][0] };
+    dayIndex -= period.count;
+  }
+  return null;
+}
+
 const dateFormat = new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 export function activityCalendar(data: ActivityYear, retrievedAt: string) {

@@ -4,6 +4,7 @@ import ts from 'typescript';
 const files = [
   'app/features/home/arena-story/story-timing.ts',
   'app/features/home/frame-navigation/frame-catalog.ts',
+  'app/features/home/personal-projects/project-timing.ts',
   'app/features/home/arena-story/chat-playback.ts',
   'app/features/home/arena-story/tournaments-playback.ts',
   'app/features/home/arena-story/activity-calendar.ts',

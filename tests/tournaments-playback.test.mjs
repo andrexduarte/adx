@@ -1,9 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { tournamentFrame, tournamentStates, tournamentPlaybackProgress, tournamentSeek } from '../.test-output/app/features/home/arena-story/tournaments-playback.mjs';
+import { TOURNAMENT_STAGE_STARTS } from '../.test-output/app/features/home/arena-story/story-timing.mjs';
 
 test('state navigation reaches each state and scroll recovery returns to data', () => {
+  assert.deepEqual(tournamentStates.map(stop => stop.state), ['loading', 'ready', 'refresh-error']);
   for (const stop of tournamentStates) assert.equal(tournamentFrame(stop.at).state, stop.state);
+  assert.equal(tournamentFrame(.83).state, 'refresh-error');
   assert.equal(tournamentFrame(.90).state, 'ready');
   assert.equal(tournamentFrame(1).state, 'ready');
 });
@@ -12,6 +15,7 @@ test('state buttons seek their state after the tools scene and resizing preserve
   for (const stop of tournamentStates) {
     assert.equal(tournamentFrame(tournamentPlaybackProgress(tournamentSeek(stop.state))).state, stop.state);
     assert.ok(tournamentSeek(stop.state) >= .61 && tournamentSeek(stop.state) < .84);
+    assert.ok(tournamentSeek(stop.state) > TOURNAMENT_STAGE_STARTS[5] + .015, 'state navigation must finish the interface crossfade');
   }
   for (const progress of [.84, .88, .92, .96, 1]) {
     assert.equal(tournamentFrame(tournamentPlaybackProgress(progress)).state, 'ready');

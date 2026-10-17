@@ -50,9 +50,10 @@ app-prompt-composer { margin-bottom: 24px; }
 .migration-metric strong span { font: italic 25px var(--serif); color: #d6b481; margin-left: 12px; letter-spacing: 0; }
 .migration-metric p { font-size: 11px; color: #c7baaa; margin: 12px 0; }
 .total-files { font: 9px monospace; color: #b09a7e; }
-.test-matrix { display: grid; grid-template-columns: repeat(8,1fr); gap: 6px; width: 240px; }
-.test-matrix > span { display: grid; place-items: center; border: 1px solid #55402b; border-radius: 3px; color: #ac8d66; font: 10px monospace; }
-.test-matrix .converted { background: #463220; color: #ffd29b; border-color: #a1713c; }
+app-test-matrix { margin-top:16px; }
+.migration-example { min-width: 0; }
+.migration-example pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: #d6a895; font: 11px/1.8 monospace; }
+.migration-example pre.added { color: #ffc480; }
 .runner-code { display: flex; align-items: center; gap: 20px; background: #25231f; padding: 14px 24px; color: #dfd5c8; font: 11px monospace; }
 .runner-code > span { font-size: 9px; color: #b6a189; }
 .runner-tag { margin-left: auto; }
@@ -76,12 +77,15 @@ app-prompt-composer { margin-bottom: 24px; }
   .file-strip > span:last-child { display: none; }
   .refactor-top { padding-inline: 17px; font-size: 10px; }
   .runner-change { font-size: 18px; gap: 16px; padding: 16px; }
-  .migration-body { padding: 18px 16px; gap: 12px; align-items: center; }
+  .migration-body { padding: 18px 16px; gap: 18px; flex-direction: column; }
   .migration-metric strong { font-size: 46px; white-space: nowrap; }
   .migration-metric strong span { font-size: 18px; margin-left: 7px; }
   .migration-metric p { font-size: 10px; }
-  .test-matrix { grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(12,minmax(0,1fr)); gap: 3px; width: 54px; height: 144px; flex-shrink: 0; }
-  .test-matrix > span { min-height: 0; font-size: 8px; line-height: 1; }
+  .migration-metric { display:grid; grid-template-columns:1fr 60px; align-items:center; column-gap:12px; }
+  app-test-matrix { grid-column:2; grid-row:1/4; margin:0; }
+  .migration-metric > strong, .migration-metric > p, .migration-metric > .total-files { grid-column:1; }
+  .migration-example pre { font-size: 9px; line-height: 1.7; }
+  .migration-example .diff-label { margin-bottom: 10px; }
   .total-files { font-size: 8px; }
   .runner-code { padding-inline: 15px; gap: 7px; font-size: 8px; }
   .runner-tag { display: none; }

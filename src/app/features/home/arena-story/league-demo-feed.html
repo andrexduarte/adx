@@ -1,0 +1,27 @@
+<section class="activity-feed" aria-label="Feed de atividade da liga">
+  <article class="activity-card">
+    <header class="activity-header">
+      <span class="activity-avatar"><img src="/images/work/arena-symbol.svg" alt="" width="46" height="46" /></span>
+      <div class="activity-identity"><h2>Liga Trade Arena</h2><time>Há 2 horas</time></div>
+    </header>
+    <p>O torneio Diário WDO foi finalizado.</p>
+    <div class="activity-picture" aria-label="Pódio demonstrativo: Aurora em primeiro, Horizonte em segundo e Serra em terceiro">
+      <img src="/images/work/league-demo-finished-podium.webp" alt="" width="1672" height="941" loading="lazy" />
+      @for (winner of winners; track winner.position) {
+        <div class="podium-winner" [attr.data-position]="winner.position">
+          <img [src]="'/images/work/avatars/' + winner.picture + '-128.webp'" alt="" width="128" height="128" />
+          <span>{{ winner.name.replace('Trader ', '') }}</span>
+        </div>
+      }
+    </div>
+    <footer><span class="tournament-action">Ver torneio</span></footer>
+  </article>
+  <article class="activity-card">
+    <header class="activity-header">
+      <span class="activity-avatar"><img src="/images/work/arena-symbol.svg" alt="" width="46" height="46" /></span>
+      <div class="activity-identity"><h2>Liga Trade Arena</h2><time>Há 5 horas</time></div>
+    </header>
+    <p>Inscrições abertas para Diário WIN.</p>
+    <footer><span class="tournament-action">Participar</span></footer>
+  </article>
+</section>
