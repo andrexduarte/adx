@@ -33,7 +33,7 @@ O servidor usa `PORT`, com padrão 4000. Sem configuração do Supabase, o desen
 
 `src/app/features` reúne home, trajetória, caderno e administração. Cada componente mantém TypeScript, HTML e SCSS juntos. `core/content` concentra modelos, acesso ao Supabase e estado; `layout` contém cabeçalho e rodapé; `shared` contém elementos reutilizados. O template ativo da home é `src/app/features/home/home.html`.
 
-O topo usa `features/home/interface-workshop` e os atlas de `public/images/workshop`. `arena-story` reúne os exemplos da Trade Arena; `personal-projects` apresenta Nós e waka’wã; `frame-navigation` mantém os links das etapas. A trajetória usa uma experiência por tela. O encerramento em `layout/footer` forma o retrato com partículas e recolhe o cabeçalho.
+O topo usa `features/home/interface-workshop` e os atlas de `public/images/workshop`. `arena-story` reúne os exemplos da Trade Arena; `personal-projects` apresenta Nós e waka’wã; `frame-navigation` mantém os links das etapas. A trajetória exibe uma lista por rolagem com a experiência central em destaque, começando pela Trade Arena. O encerramento em `layout/footer` forma o retrato com partículas e recolhe o cabeçalho.
 
 [TASK_PROGRESS.md](TASK_PROGRESS.md) registra as decisões aprovadas, os limites das demonstrações e o ponto exato para retomar a revisão por frames.
 
@@ -69,7 +69,7 @@ npm run build:vercel
 npm run test:ssr
 ```
 
-Em 16/10/2026: 44 testes aprovados, build de produção sem avisos e nove cenários SSR aprovados, além do agrupador. O chat foi conferido em 1280 × 800, 390 × 844 e 360 × 780. A comparação visual ao vivo com a Arena autenticada continua pendente; esta revisão usou o código e os prints fornecidos. Lint não foi executado.
+Em 17/10/2026: 64 testes aprovados e nove cenários SSR aprovados, além do agrupador. A revisão tem 64 frames, nove experiências profissionais e matriz animada de checks no Vitest. O chat foi conferido em 1280 × 800, 390 × 844 e 360 × 780. A comparação visual ao vivo com a Arena autenticada continua pendente; esta revisão usou o código e os prints fornecidos. Lint não foi executado.
 
 Na publicação inicial de 14/10/2026, a API real do Supabase foi verificada para login, permissões de visitante e editor, revisão de rascunhos, upload privado, publicação e arquivamento. O login também foi verificado no navegador com uma conta temporária, removida ao concluir. Esses fluxos não foram alterados nesta revisão visual.
 
