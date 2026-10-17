@@ -1,12 +1,11 @@
 import { Component, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { Wordmark } from '../../shared/wordmark/wordmark';
 import { siteConfig } from '../../core/config/site-config';
 import { FooterPortrait } from './footer-portrait';
 @Component({
   selector: 'app-site-footer',
-  imports: [RouterLink, Wordmark, FooterPortrait, NgTemplateOutlet],
+  imports: [Wordmark, FooterPortrait, NgTemplateOutlet],
   templateUrl: './site-footer.html',
   styleUrl: './site-footer.scss',
   host: { '[class.has-portrait]': 'showPortrait()' },

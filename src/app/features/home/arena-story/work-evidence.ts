@@ -30,7 +30,11 @@ export const WORK_EVIDENCE: Readonly<Partial<Record<number, WorkEvidence>>> = {
     ['66eccfc0395dd16635c5aff412de14e5af860c94', 158, 104],
     ['4e88251ca07a6594a4ab4a8d889d7f71001c1e7f', 72, 0],
   ]),
-  6: pr('Torneios V3', 767, 134, 18203, 196),
+  6: {
+    ...pr('Torneios', 767, 134, 18203, 196),
+    note: 'Totais do PR #767, incluindo integrações. Consulta em 16/10/2026.',
+    sources: [],
+  },
   7: selected('Dashboard', 'Recorte · ViewModels e cards analíticos', [
     ['68bbe50c0783a5e49d6165df50fe952e75ab3fc0', 98, 0],
     ['a993d04843837de42f698b53d2792ef19a218cc3', 179, 160],
@@ -42,7 +46,11 @@ export const WORK_EVIDENCE: Readonly<Partial<Record<number, WorkEvidence>>> = {
     ['f453fdc89060943a337c89511efaf9d9da9dc370', 412, 166],
     ['7e9dd8e1319988ec1a7116001aca7a9d02804bed', 1183, 1037],
   ]),
-  10: pr('League V3', 877, 213, 48441, 805),
+  10: {
+    ...pr('League', 877, 213, 48441, 805),
+    note: 'Totais do PR #877, incluindo integrações. Consulta em 16/10/2026.',
+    sources: [],
+  },
   11: selected('Organização por domínio', 'Recorte · League, entradas públicas e Sheriff', [
     ['77dff79fd8e41200a5aa114ceb71f13f9bde4c16', 5342, 1400],
     ['382a1368167b24d7ea7e1e995c75f4dde39db784', 1235, 99],
@@ -55,5 +63,9 @@ export const WORK_EVIDENCE: Readonly<Partial<Record<number, WorkEvidence>>> = {
   14: selected('Signals na League', 'Recorte · estado de apresentação', [
     ['efc99c1c2e83a141384c360a8aab3d3b76888724', 307, 236],
   ]),
-  15: pr('Migração para Vitest', 925, 3, 6533, 6901),
+  15: {
+    ...pr('Migração para Vitest', 925, 3, 6533, 6901),
+    note: 'Totais do PR #925, incluindo integrações. Consulta em 16/10/2026.',
+    sources: [],
+  },
 };

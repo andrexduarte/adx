@@ -1,5 +1,11 @@
 # Publicação de andre.is-a.dev
 
+## Revisão de 17/10/2026 — preparada para publicação
+
+A revisão reúne 64 frames, demonstrações conferidas no código da Arena, páginas reconstruídas de Nós e waka’wã, nove experiências profissionais e links finais de WhatsApp/Instagram. A matriz de checks do Vitest foi recuperada junto do antes/depois real. O retrato em pontilhismo permanece no encerramento.
+
+Validação: suíte completa com 64 testes, build de produção e nove cenários SSR mais agrupador. A comparação autenticada ao vivo com a Arena continua pendente nos exemplos indicados em TASK_PROGRESS.md. A confirmação de PR, implantação e domínio será registrada após a publicação.
+
 ## Revisão de 16/10/2026
 
 A versão publicada pelo [PR #7](https://github.com/andrexduarte/adx/pull/7), commit `1e46604970785f48249dedfe1d67fe1a055a33ce`, acrescenta a narrativa por frames, os exemplos da Trade Arena, Nós e waka’wã, a trajetória por telas e o encerramento em pontilhismo. A revisão individual está concluída até o frame 07; o frame 08 aguarda uma decisão. [TASK_PROGRESS.md](TASK_PROGRESS.md) registra o estado e a sequência de continuidade.

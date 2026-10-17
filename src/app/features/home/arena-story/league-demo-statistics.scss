@@ -1,0 +1,53 @@
+:host { display: block; width: 100%; min-width: 0; }
+* { box-sizing: border-box; }
+.league-statistics { display: flex; flex-direction: column; gap: 36px; color: #fff; }
+.statistics-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+h2 { margin: 0; font: 700 24px/1.25 'Arena Sora', sans-serif; letter-spacing: normal; }
+.statistics-header p, .statistics-section-header p { margin: 6px 0 0; color: #8c8c8c; font-size: 13px; line-height: 1.35; }
+.statistics-header > div:first-child { flex: 1; }
+.statistics-periods { display: inline-flex; flex: none; padding: 3px; border-radius: 999px; background: #242424; }
+.statistics-periods span { display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 0 12px; color: #8c8c8c; border-radius: inherit; font-size: 12px; white-space: nowrap; }
+.statistics-periods .active { background: #555; color: #fff; }
+.statistics-summary { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); min-width: 0; margin: 0; padding: 0; border-radius: 12px; overflow: auto; scrollbar-width: none; }
+.statistics-summary:focus-visible { outline: 2px solid #fb830e; outline-offset: 4px; }
+.summary-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 20px 16px; background: #1d1d1d; }
+.summary-item + .summary-item { background-image: linear-gradient(#232323, #232323); background-position: left center; background-size: 1px 55%; background-repeat: no-repeat; }
+dt { color: #8c8c8c; font-size: 12px; font-weight: 400; line-height: 1.2; text-align: center; }
+dd { display: flex; flex-direction: column; align-items: center; order: -1; gap: 8px; margin: 0; font-size: 20px; font-weight: 700; line-height: 1; white-space: nowrap; }
+dd svg { width: 20px; height: 20px; flex: none; color: #fb830e; }
+.statistics-section { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.statistics-section-header h3 { position: relative; margin: 0; padding-left: 12px; font: 700 18px/1.25 'Arena Sora', sans-serif; letter-spacing: normal; }
+.statistics-section-header h3::before { position: absolute; content: ''; inset: 2px auto 2px 0; width: 4px; border-radius: 2px; background: #fb830e; }
+.statistics-records { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.statistics-record { min-width: 0; padding: 18px 20px; border-radius: 12px; background: #1d1d1d; }
+.statistics-record header { display: flex; min-width: 0; align-items: center; gap: 9px; }
+.record-icon { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 8px; background: rgba(251, 131, 14, .12); color: #fb830e; }
+.record-icon svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+h4 { margin: 0; min-width: 0; font: 500 12px/1.4 'Arena Sora', sans-serif; letter-spacing: normal; }
+.record-status { margin-left: auto; padding: 5px 10px; border-radius: 12px; background: #272727; color: #777; font-size: 9px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
+.statistics-record > strong { display: block; margin: 14px 0; color: #fb830e; font-size: 21px; }
+.statistics-record footer { display: flex; align-items: center; gap: 8px; color: #ddd; font-size: 11px; }
+footer img { width: 32px; height: 32px; flex: none; object-fit: cover; border-radius: 50%; }
+time { margin-left: auto; color: #777; font-size: 10px; white-space: nowrap; }
+@container (max-width: 992px) {
+  .statistics-header { flex-direction: column; align-items: stretch; }
+  .statistics-periods { width: 100%; }
+  .statistics-periods span { flex: 1; min-width: 0; padding-inline: 8px; }
+  .statistics-summary { display: flex; gap: 12px; border-radius: 0; scroll-snap-type: x mandatory; overscroll-behavior-inline: contain; }
+  .summary-item { flex: 0 0 150px; align-items: flex-start; padding: 18px; border-radius: 12px; scroll-snap-align: start; }
+  .summary-item + .summary-item { background-image: none; }
+  dd { font-size: 18px; }
+  .statistics-records { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (max-width: 768px) {
+  h2 { font-size: 20px; }
+  .statistics-header p { font-size: 13px; }
+  .statistics-periods span { font-size: 10px; }
+  .statistics-section-header h3 { font-size: 15px; }
+  .statistics-section-header p { font-size: 10px; }
+  .statistics-records { grid-template-columns: 1fr; gap: 10px; }
+  .statistics-record { padding: 14px; }
+  h4 { font-size: 10px; }
+  .record-status { font-size: 8px; }
+  .statistics-record > strong { font-size: 18px; }
+}

@@ -1,0 +1,8 @@
+:host { display:grid; grid-template-columns:repeat(8,1fr); gap:4px; width:208px; height:104px; }
+span { display:grid; place-items:center; border:1px solid #55402b; border-radius:3px; color:#ac8d66; font:10px monospace; transition:background-color 140ms ease, border-color 140ms ease; }
+.converted { background:#463220; color:#ffd29b; border-color:#a1713c; }
+@media(max-width:760px) {
+  :host { grid-template-columns:repeat(4,1fr); gap:3px; width:60px; height:110px; }
+  span { font-size:8px; line-height:1; }
+}
+@media(prefers-reduced-motion:reduce) { span { transition:none; } }

@@ -1,20 +1,12 @@
-:host { display:block; width:min(100%,960px); } * { box-sizing:border-box; } .tool-map { margin:auto; } .decision { margin-inline:auto; } :focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
-.tool-map { width:min(100%,900px); height:340px; position:relative; }
-.tool-hub { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:148px; height:148px; border:1px solid #71633e; border-radius:50%; background:color-mix(in srgb,currentColor 3%,transparent); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; }
-.tool-hub>span { color:var(--accent); font-size:22px; } .tool-hub strong { font:33px var(--serif); letter-spacing:-1px; } .tool-hub small { font:8px var(--sans); color:#b4ac98; }
-.tool { position:absolute; width:160px; display:flex; align-items:center; flex-direction:column; text-align:center; gap:8px; }
-.tool b { font:600 27px var(--sans); color:var(--accent); height:36px; } .tool strong { font:12px var(--sans); } .tool>span { color:#a49c8b; font:9px var(--sans); }
-.tool::after { content:''; position:absolute; height:1px; width:130px; background:linear-gradient(90deg,#71633e,transparent); top:50%; pointer-events:none; }
-.tool:nth-child(2) { left:9%; top:0; } .tool:nth-child(3) { right:9%; top:0; } .tool:nth-child(4) { left:0; top:41%; } .tool:nth-child(5) { right:0; top:41%; } .tool:nth-child(6) { left:9%; bottom:0; } .tool:nth-child(7) { right:9%; bottom:0; }
-.tool:nth-child(even)::after { left:95%; transform:rotate(20deg); transform-origin:left; } .tool:nth-child(odd)::after { right:95%; transform:rotate(-20deg); transform-origin:right; } .tool:nth-child(4)::after,.tool:nth-child(5)::after { transform:rotate(0); } .tool:nth-child(6)::after { transform:rotate(-20deg); } .tool:nth-child(7)::after { transform:rotate(20deg); }
+:host { display:block; width:min(100%,960px); } * { box-sizing:border-box; } .decision { margin-inline:auto; } :focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
 .code-workbench { display:grid; grid-template-columns:270px 1fr; width:min(100%,960px); border:1px solid #44443a; border-radius:12px; overflow:hidden; text-align:left; background:#20201c; }
 .code-workbench aside { padding:23px 16px; border-right:1px solid #44443a; background:#1b1b18; } aside>span { font:8px monospace; color:#a49c8b; letter-spacing:.12em; display:block; margin:0 0 22px 8px; } aside div { padding:10px 8px; font:10px monospace; color:#bcb8aa; overflow-wrap:anywhere; display:flex; gap:7px; } aside i { font-style:normal; color:var(--accent); } aside .selected { background:#ffdd0010; border-radius:5px; color:#f2f0e8; }
 .code-file { min-width:0; } .code-file header { display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; border-bottom:1px solid #44443a; padding:17px 20px; color:var(--accent); font:10px monospace; } .code-file header span { color:#a49c8b; font-size:8px; } pre { color:#d8dbc3; padding:20px; margin:0; font:12px/1.7 monospace; overflow:auto; tab-size:2; }
 .decision { max-width:640px; margin:23px 0 0; text-align:center; font:12px/1.8 var(--sans); color:#bcb8aa; }
 
-@media(max-width:760px) { .tool-map { height:auto; display:grid; grid-template-columns:repeat(2,1fr); gap:26px 10px; padding-top:5px; } .tool { position:static; width:auto; gap:5px; } .tool-hub { display:none; } .tool::after { display:none; } .tool b { height:29px; font-size:23px; } .tool strong { font-size:11px; } .tool>span { font-size:8px; }
+@media(max-width:760px) {
   .code-workbench { display:block; } .code-workbench aside { border-right:0; border-bottom:1px solid #44443a; padding:12px; } aside>span { display:none; } aside div { font-size:8px; padding:5px 4px; } .code-file header { padding:12px; font-size:8px; } .code-file header span { font-size:7px; } pre { font-size:9px; padding:13px; line-height:1.6; } .decision { font-size:10px; margin-top:15px; line-height:1.6; }
  }
 
-.tool>span,.tool-hub small,.decision { color:var(--project-muted); }
+.decision { color:var(--project-muted); }
 .code-workbench { --accent:#e8bc45; }

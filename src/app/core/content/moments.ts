@@ -100,7 +100,7 @@ export const MOMENTS: Moment[] = [
     id: '2022',
     year: '2022',
     place: 'Trabalho remoto',
-    title: 'AngularJS, React.js e React Native.',
+    title: 'AngularJS, React e React Native.',
     company: 'Plural Systems',
     period: 'Maio de 2022 — março de 2023',
     paragraphs: [],

@@ -1,10 +1,30 @@
-<div class="domain-workspace" aria-label="Organização da League em um domínio versionado">
-  <header><span>REORGANIZAR POR RESPONSABILIDADE</span><span class="badge">{{ bounded() ? 'Sheriff / fronteiras' : 'League V3' }}</span></header>
-  <div class="migration-path"><code [class.retired]="moved()">pages / user / league / v3</code><span aria-hidden="true">↓</span><strong [class.active]="moved()">domains / league / v3</strong></div>
-  <div class="domain-layout">
-    <div class="tree"><span class="tree-label">ESTRUTURA DO DOMÍNIO</span>@for (folder of folders; track folder; let i = $index) { <div [style.opacity]="reveal(i)" [style.transform]="'translateX(' + (1 - reveal(i)) * -18 + 'px)'"><i>↳</i>{{ folder }}</div> }</div>
-    <div class="boundary"><span class="tree-label">ENTRADAS PÚBLICAS</span><code>&#64;arena/league</code><code>&#64;arena/league/routes</code><div class="dependency" [style.opacity]="bounded() ? 1 : .3"><span>REGRA DE DEPENDÊNCIA</span><strong>feature:league-teams</strong><i aria-hidden="true">↓</i><strong>data:league-teams</strong><small>Dados e contratos com limites explícitos.</small></div></div>
+<div class="domain-workspace" aria-label="Detective, organização do domínio League e verificação com Sheriff">
+  <ol class="workflow" aria-label="Etapas da reorganização">
+    @for (step of steps; track step.tool; let i = $index) {
+      <li [class.current]="stage() === i" [class.reached]="stage() >= i" [attr.aria-current]="stage() === i ? 'step' : null"><span>{{ step.tool }}</span><small>{{ step.action }}</small></li>
+    }
+  </ol>
+  <header><h4>{{ titles[stage()] }}</h4><span class="badge">{{ steps[stage()].tool }}</span></header>
+  <div class="workspace-body">
+    @if (stage() === 0) {
+      <section class="inspection" aria-label="Recorte dos escopos configurados no Detective">
+        <div class="inspection-label"><span>ESCOPOS DA INSPEÇÃO</span><code>.detective/config.json</code></div>
+        <div class="scopes">@for (scope of scopes; track scope; let i = $index) { <div [class.domain-scope]="i === 1" [style.opacity]=".35 + inspected() * .65"><span aria-hidden="true">{{ i === 1 ? '◇' : '▤' }}</span><code>{{ scope }}</code></div> }</div>
+        <div class="inspection-line" aria-hidden="true"><i [style.transform]="'scaleX(' + inspected() + ')' "></i></div>
+        <p>Inspecionar os imports entre os escopos antes de reorganizar.</p>
+      </section>
+    } @else {
+      <div class="migration-path"><code>pages / user / league / v3</code><span aria-hidden="true">→</span><strong>domains / league / v3</strong></div>
+      <div class="domain-layout">
+        <div class="tree"><span class="tree-label">RESPONSABILIDADES</span>@for (folder of folders; track folder; let i = $index) { <div [style.opacity]="reveal(i)" [style.transform]="'translateX(' + (1 - reveal(i)) * -12 + 'px)'"><i>↳</i>{{ folder }}</div> }</div>
+        <div class="boundary"><span class="tree-label">ENTRADAS PÚBLICAS</span><code>&#64;arena/league</code><code>&#64;arena/league/routes</code><div class="dependency" [style.opacity]="verification()"><span>DEPENDÊNCIA PERMITIDA</span><strong>feature:league-teams</strong><i aria-hidden="true">↓</i><strong>data:league-teams</strong><small>Regra declarada em sheriff.config.ts</small></div></div>
+      </div>
+    }
   </div>
-  <footer><span class="boundary-dot" aria-hidden="true"></span>{{ bounded() ? 'A regra também faz parte da arquitetura.' : 'O código muda de lugar. As responsabilidades ficam claras.' }}</footer>
+  <footer>
+    @if (stage() === 0) { <code>npm run architecture:inspect</code><span>Detective · visualização das dependências</span> }
+    @else if (stage() === 1) { <code>&#64;arena/league</code><span>Capacidades públicas, detalhes internos.</span> }
+    @else { <code>npm run architecture:verify</code><span>Sheriff · verificar as regras configuradas</span> }
+  </footer>
 </div>
-<p class="note">Reorganização e configuração reais da League · adoção incremental</p>
+<p class="note">Fluxo ilustrativo com configurações reais · adoção incremental na League</p>

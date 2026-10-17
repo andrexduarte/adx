@@ -1,7 +1,7 @@
 <p class="chapter-kicker">{{ content().label }}</p>
 <div class="panels">
   <section class="panel idea" [style.opacity]="opacity(0)" [attr.aria-hidden]="!staticMode() && stage() !== 0 ? true : null">
-    <h3>{{ content().title }}</h3><app-prompt-composer [text]="prompt()" [sent]="staticMode() || progress() > promptEnd() + .01" /><p class="note">Prompt reconstruído a partir do trabalho no projeto</p>
+    <h3>{{ content().title }}</h3><app-prompt-composer [text]="prompt()" [sent]="staticMode() || contentProgress() > promptEnd() + .01" /><p class="note">Prompt reconstruído a partir do trabalho no projeto</p>
   </section>
   <section class="panel" [style.opacity]="opacity(1)" [attr.aria-hidden]="!staticMode() && stage() !== 1 ? true : null">
     <app-build-plan [steps]="content().steps" [progress]="plan()" />
@@ -11,21 +11,23 @@
       <app-technology-map [kind]="toolsKind" [progress]="mapProgress()" />
     </section>
   }
+  @if (showCode()) {
   <section class="panel" [style.opacity]="opacity(codeStage())" [attr.aria-hidden]="!staticMode() && stage() !== codeStage() ? true : null">
     @if (!mapKind()) {
-    <div class="tech-row"><span><img src="/images/technology/angular.svg" alt="" width="25" height="25" />Angular</span><span><img [src]="'/images/technology/' + (kind() === 'domains' || kind() === 'upgrade' ? 'typescript' : 'reactivex') + '.svg'" alt="" width="25" height="25" />{{ kind() === 'domains' || kind() === 'upgrade' ? 'TypeScript' : 'RxJS' }}</span><span>{{ kind() === 'dashboard' ? 'OnPush' : kind() === 'monitor' ? 'Canvas + Web APIs' : kind() === 'avatar' ? 'WebP + transições' : kind() === 'league' ? 'Rotas + Signals' : kind() === 'domains' ? 'Sheriff' : kind() === 'upgrade' ? 'Compatibilidade' : 'Contrato + fallback' }}</span></div>
+    <div class="tech-row"><span><img src="/images/technology/angular.svg" alt="" width="25" height="25" />Angular</span><span><img [src]="'/images/technology/' + (kind() === 'domains' || kind() === 'upgrade' ? 'typescript' : 'reactivex') + '.svg'" alt="" width="25" height="25" />{{ kind() === 'domains' || kind() === 'upgrade' ? 'TypeScript' : 'RxJS' }}</span><span>{{ kind() === 'dashboard' ? 'OnPush' : kind() === 'monitor' ? 'Canvas + Web APIs' : kind() === 'avatar' ? 'WebP + transições' : kind() === 'league' ? 'Rotas + Signals' : kind() === 'domains' ? 'Sheriff + Detective' : kind() === 'upgrade' ? 'Compatibilidade' : 'Contrato + fallback' }}</span></div>
     }
     <div class="workspace"><aside><span class="editor-label">{{ content().folder }}</span>@for (file of content().files; track file) { <span class="file"><i>↳</i>{{ file }}</span> }</aside><div class="source"><span class="editor-label">{{ codeLabel() }}</span><pre>{{ content().code }}</pre></div></div>
     <p class="note">{{ content().note }}</p>
   </section>
+  }
   <section class="panel" [style.opacity]="opacity(resultStage())" [attr.aria-hidden]="!staticMode() && stage() !== resultStage() ? true : null" [attr.inert]="!staticMode() && stage() !== resultStage() ? '' : null">
-    @if (kind() === 'dashboard') { <app-responsive-preview [compact]="compact()" [staticMode]="staticMode()" label="Dashboard: os mesmos gráficos passam de duas colunas para uma"><app-dashboard-demo [progress]="demoContent()" /></app-responsive-preview><p class="note">{{ compact() > .4 ? 'Mesmos dados. Gráficos em uma coluna.' : content().note }}</p> }
+    @if (kind() === 'dashboard') { <app-responsive-preview [desktopWidth]="1280" [height]="500" [fitHeight]="true" [pan]="dashboardPan()" [compact]="compact()" [staticMode]="staticMode()" label="Quatro gráficos do Dashboard: duas colunas no desktop, uma no celular"><app-dashboard-demo [progress]="demoContent()" /></app-responsive-preview><p class="note">{{ compact() > .4 ? 'Os quatro gráficos se reorganizam em uma coluna.' : 'Quatro gráficos da branch feat/dashboad-torneios · dados demonstrativos' }}</p> }
     @else if (kind() === 'monitor') { <app-monitor-demo [progress]="demo()" /> }
     @else if (kind() === 'avatar') { <app-avatar-demo [progress]="demo()" /> }
-    @else if (kind() === 'league') { <app-responsive-preview [compact]="compact()" [staticMode]="staticMode()" label="League: a mesma equipe se adapta para uma tela de celular"><app-league-demo [progress]="demoContent()" /></app-responsive-preview><p class="note">{{ compact() > .4 ? 'A mesma equipe. Conteúdo reorganizado para o celular.' : 'Feed, Ranking e Equipes · dados demonstrativos' }}</p> }
+    @else if (kind() === 'league') { <app-responsive-preview [height]="480" [fitHeight]="true" [pan]="0" [compact]="compact()" [staticMode]="staticMode()" label="League: Feed, Ranking e Estatísticas se adaptam do desktop ao celular"><app-league-demo [progress]="demo()" [staticMode]="staticMode()" /></app-responsive-preview><p class="note">Feed, Ranking e Estatísticas · interface reconstruída com dados demonstrativos</p> }
     @else if (kind() === 'domains') { <app-domain-demo [progress]="demo()" /> }
     @else if (kind() === 'upgrade') { <app-angular-upgrade-demo [progress]="demo()" /> }
     @else { <app-handoff-demo [progress]="demo()" [staticMode]="staticMode()" /> }
   </section>
 </div>
-<div class="process" aria-hidden="true"><span [class.active]="stage() >= 0">A ideia</span><i></i><span [class.active]="stage() >= 1">O plano</span><i></i>@if (mapKind()) { <span [class.active]="stage() >= 2">As ferramentas</span><i></i> }<span [class.active]="stage() >= codeStage()">O código</span><i></i><span [class.active]="stage() >= resultStage()">A interface</span></div>
+<div class="process" aria-hidden="true"><span [class.active]="stage() >= 0">A ideia</span><i></i><span [class.active]="stage() >= 1">O plano</span><i></i>@if (mapKind()) { <span [class.active]="stage() >= 2">As ferramentas</span><i></i> }@if (showCode()) { <span [class.active]="stage() >= codeStage()">O código</span><i></i> }<span [class.active]="stage() >= resultStage()">A interface</span></div>

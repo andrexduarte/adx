@@ -12,7 +12,7 @@ import { WorkChapter } from './work-chapter';
 import { WORK_EVIDENCE } from './work-evidence';
 import { TechnologyMap } from './technology-map';
 import { GithubActivity } from './github-activity';
-import { chapterProgress, contentRange, clamp, phase, sceneIndex, sceneOpacity, storyProgress, STORY_END, STORY_SCENES, STORY_SCROLL_SCALE } from './story-timing';
+import { chapterProgress, contentRange, clamp, phase, sceneIndex, sceneOpacity, storyProgress, STORY_END, STORY_SCENES, STORY_SCROLL_SCALE, VISIBLE_STORY_SCENES } from './story-timing';
 
 @Component({
   selector: 'app-arena-story',
@@ -36,16 +36,16 @@ export class ArenaStory {
   readonly active = computed(() => sceneIndex(this.progress()));
   readonly evidence = WORK_EVIDENCE;
   readonly chapter = computed(() => Math.max(0, this.active() - 5));
-  readonly caseTitles = ['task: chat', 'DADOS QUE VIRAM INTERFACE', 'DAR FORMA AOS DADOS', 'ACOMPANHAR DE PERTO', 'UMA IDENTIDADE NO JOGO', 'UMA COMUNIDADE GANHA FORMA', 'ORGANIZAR PARA EVOLUIR', 'ANGULAR 16 → 21', 'RELATAR E ACOMPANHAR', 'ESTADO E APRESENTAÇÃO', 'CUIDAR DAS ENTREGAS', 'ATIVIDADE NO GITHUB'];
-  readonly productCases = [
-    { kind: 'dashboard', label: 'Dashboard: operações transformadas em gráficos' },
-    { kind: 'monitor', label: 'Monitor: acompanhar o torneio em Picture-in-Picture' },
-    { kind: 'avatar', label: 'Avatar: seleção de classe, prévia e atualização do perfil' },
-    { kind: 'league', label: 'League: identidade, Feed, Ranking e Equipes' },
-    { kind: 'domains', label: 'Domínios: organização, entradas públicas e regras de dependência' },
-    { kind: 'upgrade', label: 'Angular 16 ao 21: evolução da base em etapas' },
-    { kind: 'handoff', label: 'ClickUp: relatar e acompanhar problemas com o backend' },
-  ] as const;
+  readonly caseTitles = ['task: chat', 'task: torneios', 'DAR FORMA AOS DADOS', 'ACOMPANHAR DE PERTO', 'UMA IDENTIDADE NO JOGO', 'UMA COMUNIDADE GANHA FORMA', 'ORGANIZAR PARA EVOLUIR', 'ANGULAR 16 → 21', 'RELATAR E ACOMPANHAR', 'ESTADO E APRESENTAÇÃO', 'CUIDAR DAS ENTREGAS', 'ATIVIDADE NO GITHUB'];
+  readonly productCases = ([
+    { scene: 7, kind: 'dashboard', label: 'Dashboard: operações transformadas em gráficos' },
+    { scene: 8, kind: 'monitor', label: 'Monitor: acompanhar o torneio em Picture-in-Picture' },
+    { scene: 9, kind: 'avatar', label: 'Avatar: seleção de classe, prévia e atualização do perfil' },
+    { scene: 10, kind: 'league', label: 'League: identidade, Feed, Ranking e Equipes' },
+    { scene: 11, kind: 'domains', label: 'Domínios: organização, entradas públicas e regras de dependência' },
+    { scene: 12, kind: 'upgrade', label: 'Angular 16 ao 21: evolução da base em etapas' },
+    { scene: 13, kind: 'handoff', label: 'ClickUp: relatar e acompanhar problemas com o backend' },
+  ] as const).filter(item => VISIBLE_STORY_SCENES.includes(item.scene));
   readonly chatPlan = ['Definir o canal e o ciclo de conexão.', 'Tratar envio, recebimento e histórico.', 'Atualizar mensagens sem duplicar IDs.', 'Adaptar a conversa ao desktop e ao celular.'];
   readonly plan = computed(() => this.staticMode() ? 1 : clamp((this.progress() - .35) / .16));
   readonly prompt = computed(() => this.staticMode() ? 'Vamos construir um chat.' :

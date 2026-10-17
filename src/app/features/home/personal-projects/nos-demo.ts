@@ -1,43 +1,70 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { afterRenderEffect, ChangeDetectionStrategy, Component, computed, ElementRef, input, signal, viewChild } from '@angular/core';
+import { NosNavigation } from './nos-navigation';
+import { NosBalance } from './nos-balance';
+import { phase } from '../arena-story/story-timing';
 
+type Group = 'voce' | 'alguem' | 'fechado';
+// Sources: nos/app/pages/index.vue, layouts/app.vue, EquilibrioAcordo/v2,
+// Acerto/v1, useGruposDoCiclo.ts (17 Oct 2026). Fictional data; local state only.
 @Component({
   selector: 'app-nos-demo',
+  imports: [NosBalance, NosNavigation],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="nos-app">
-      <header><strong>Nós</strong><span>nosso combinado</span><i aria-hidden="true">A</i></header>
-      <div class="nos-body">
-        <section class="overview" aria-label="Resumo ilustrativo da casa">
-          <p class="eyebrow">UM POUCO MAIS EM SINTONIA</p><h4>As contas em dia.<br>A vida mais leve.</h4>
-          <div class="balance" [class.balanced]="houseSettled()"><div><span>{{ houseSettled() ? 'Acerto registrado' : 'Contas da casa' }}</span><strong>{{ houseSettled() ? 'Tudo certo' : 'R$ 840,00' }}</strong><small>{{ houseSettled() ? 'Nesta demonstração' : 'Divisão de 50% para cada pessoa' }}</small></div></div>
-          <div class="people"><span><i>A</i> Ana · 50%</span><span><i>B</i> Beto · 50%</span></div>
-        </section>
-        <section class="accounts" aria-label="Selecionar contas demonstrativas">
-          <div class="account-title"><h4>Vamos acertar?</h4><span>EXEMPLO</span></div>
-          <div class="switch" aria-label="Tipo de conta"><button type="button" [attr.aria-pressed]="!personal()" (click)="changeGroup(false)">Compartilhadas</button><button type="button" [attr.aria-pressed]="personal()" (click)="changeGroup(true)">Pessoais</button></div>
-          @for (item of items(); track item.name; let i = $index) {
-            <label class="account"><input type="checkbox" [checked]="selected()[i]" (change)="toggle(i)" /><span class="item-icon" aria-hidden="true">{{ item.icon }}</span><span><b>{{ item.name }}</b><small>{{ personal() ? 'Gasto pessoal · fora do acordo' : 'Pago por Beto · sua parte: 50%' }}</small></span><strong>{{ money(item.part) }}</strong></label>
-          }
-          <div class="settlement"><span>{{ personal() ? 'Seu reembolso' : 'Sua parte no acerto' }}<small>{{ selectedCount() }} {{ selectedCount() === 1 ? 'item selecionado' : 'itens selecionados' }}</small></span><strong>{{ money(total()) }}</strong></div>
-          <button class="confirm" type="button" [disabled]="total() === 0 || settled()" (click)="settled.set(true)">{{ settled() ? '✓ Acerto demonstrativo registrado' : 'Simular acerto' }}<span aria-hidden="true">↗</span></button>
-          <p class="notice" role="status">{{ settled() ? 'Pagamento original preservado. Você pode selecionar outros itens.' : personal() ? 'Gastos pessoais não alteram a divisão da casa.' : 'Selecione os itens para experimentar o fluxo.' }}</p>
-        </section>
-      </div>
-    </div>
-  `,
+  templateUrl: './nos-demo.html',
   styleUrl: './nos-demo.scss',
+  host: { '[class.static]': 'staticMode()' },
 })
 export class NosDemo {
-  readonly personal = signal(false);
-  readonly selected = signal([true, true]);
-  readonly settled = signal(false);
-  readonly items = computed(() => this.personal()
-    ? [{ name: 'Fone de ouvido', icon: '♫', part: 120 }]
-    : [{ name: 'Mercado', icon: '◫', part: 300 }, { name: 'Internet', icon: '⌁', part: 120 }]);
-  readonly total = computed(() => this.items().reduce((sum, item, index) => sum + (this.selected()[index] ? item.part : 0), 0));
-  readonly selectedCount = computed(() => this.items().filter((_, index) => this.selected()[index]).length);
-  readonly houseSettled = computed(() => this.settled() && !this.personal() && this.total() === 420);
+  readonly progress = input(0);
+  readonly staticMode = input(false);
+  private readonly viewport = viewChild<ElementRef<HTMLElement>>('viewport');
+  private readonly content = viewChild<ElementRef<HTMLElement>>('content');
+  private readonly size = signal(0);
+  readonly dueSoon = signal(false);
+  readonly done = signal<readonly string[]>([]);
+
+  readonly groups: readonly { id: Group; title: string }[] = [
+    { id: 'voce', title: 'Depende de você' },
+    { id: 'alguem', title: 'Esperando os outros' },
+    { id: 'fechado', title: 'Fechado' },
+  ];
+  private readonly accounts = [
+    { id: 'internet', name: 'Internet', category: 'Casa', total: 120, mine: false, other: true, due: true, icon: 'internet' },
+    { id: 'mercado', name: 'Mercado', category: 'Alimentação', total: 600, mine: false, other: false, due: false, icon: 'supermercado' },
+    { id: 'luz', name: 'Energia', category: 'Casa', total: 200, mine: true, other: false, due: true, icon: 'luz' },
+    { id: 'aluguel', name: 'Aluguel', category: 'Moradia', total: 1800, mine: true, other: true, due: false, icon: 'aluguel' },
+  ];
+  readonly items = computed(() => this.accounts.map(item => {
+    const mine = item.mine || this.done().includes(item.id);
+    const group: Group = !mine ? 'voce' : !item.other ? 'alguem' : 'fechado';
+    return { ...item, mine, group, part: item.total / 2,
+      summary: group === 'fechado' ? 'Vocês estão quites' : mine ? 'Você já fez · falta Beto'
+        : item.other ? 'Beto já fez · falta você' : 'Ninguém começou ainda' };
+  }));
+  readonly visibleGroups = computed(() => this.groups.map(group => ({ ...group,
+    items: this.items().filter(item => item.group === group.id && (!this.dueSoon() || (item.due && item.group !== 'fechado'))),
+  })));
+  readonly mine = computed(() => this.items().reduce((sum, item) => sum + (item.mine ? item.part : 0), 0));
+  readonly other = 960;
+  readonly total = 2720;
+  readonly pending = computed(() => this.items().filter(item => !item.mine));
+  readonly camera = computed(() => this.staticMode() ? 0 : phase(this.progress(), .22, .88));
+  constructor() {
+    afterRenderEffect(onCleanup => {
+      const viewport = this.viewport()?.nativeElement;
+      const content = this.content()?.nativeElement;
+      if (!viewport || !content) return;
+      const observer = new ResizeObserver(() => this.size.update(value => value + 1));
+      observer.observe(viewport); observer.observe(content);
+      onCleanup(() => observer.disconnect());
+    });
+    afterRenderEffect(() => {
+      const viewport = this.viewport()?.nativeElement;
+      this.size(); this.visibleGroups();
+      if (!viewport || this.staticMode()) return;
+      viewport.scrollTop = this.camera() * Math.max(0, viewport.scrollHeight - viewport.clientHeight);
+    });
+  }
   money(value: number) { return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-  changeGroup(personal: boolean) { this.personal.set(personal); this.selected.set([true, true]); this.settled.set(false); }
-  toggle(index: number) { this.selected.update(values => values.map((value, i) => i === index ? !value : value)); this.settled.set(false); }
+  register(id: string) { this.done.update(values => values.includes(id) ? values : [...values, id]); }
 }

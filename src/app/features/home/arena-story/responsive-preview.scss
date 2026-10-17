@@ -6,6 +6,7 @@
 .viewport-stage { position: relative; width: 100%; overflow: clip; }
 .viewport { position: absolute; top: 50%; left: 50%; transform-origin: center; overflow: auto; scrollbar-width: thin; scrollbar-color: #745735 #191919; pointer-events: auto; overscroll-behavior-x: contain; border-radius: 12px; text-align: left; }
 .viewport:focus-visible { outline: 2px solid #ffae57; outline-offset: -2px; }
+:host(.controlled) .viewport { overflow: hidden; }
 :host(.static) .ruler { display: none; }
 :host(.light) .ruler { color: #706a5c; }
 :host(.light) .ruler .active, :host(.light) .width { color: #80630c; }

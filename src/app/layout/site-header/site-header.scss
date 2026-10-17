@@ -22,6 +22,11 @@
 .project-identity { display:flex; align-items:center; justify-content:flex-end; gap:12px; min-width:0; margin-left:auto; }
 .project-context { color:#aca59a; font:9px/1.5 monospace; letter-spacing:.08em; text-align:right; }
 .project-context i { color:#9b8269; font-style:normal; margin-inline:6px; }
+.personal-context { color:inherit; opacity:.65; }
+.personal-project-name { font:500 23px/1 var(--sans); letter-spacing:-.05em; white-space:nowrap; }
+.career-heading { font:500 18px/1.3 var(--sans); letter-spacing:-.02em; text-align:right; }
+.career-counter { font:10px/1.5 monospace; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.site-header.has-career { flex-wrap:nowrap; justify-content:space-between; }
 .project-logo-dock { display:block; width:36px; height:36px; flex:0 0 36px; }
 .travelling-project-logo { position:fixed; top:0; left:0; width:76px; height:76px; border-radius:16px; transform-origin:top left; pointer-events:none; }
 nav {
@@ -29,7 +34,7 @@ nav {
   gap: 28px;
   align-items: center;
 }
-:host-context([data-showcase='nos']) .site-header { background:#f2efe5f5; color:#242320; }
+:host-context([data-showcase='nos']) .site-header { background:color-mix(in srgb,#141414f5,#f2efe5f5 calc(var(--nos-intro-reveal,1)*100%)); color:color-mix(in srgb,#f2f0e8,#242320 calc(var(--nos-intro-reveal,1)*100%)); }
 :host-context([data-showcase='wakawa']) .site-header { background:#171713f5; color:#f2f0e8; }
 :host-context([data-showcase='footer']) .site-header { background:#141414f5; color:#f3eddf; }
 .site-header nav a {
@@ -45,6 +50,8 @@ nav {
 }
 
 @media (max-width: 620px) {
+  .career-heading { font-size:15px; }
+  .career-counter { font-size:9px; }
   .site-header.has-project app-wordmark { width:36px; }
   .project-context { font-size:8px; max-width:210px; }
   .project-context span { display:inline-block; }

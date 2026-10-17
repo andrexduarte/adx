@@ -1,42 +1,44 @@
 @if (frames().length) {
   <div class="timeline-track" [style.--frame-count]="frames().length">
     <div class="timeline-stage">
-      <div class="timeline-top">
-        <h2>Antes disso</h2>
+      <div class="timeline-top" [class.is-docked]="chrome.careerContext() !== null">
+        <h2>Experiência profissional</h2>
         <span class="page-counter" [hidden]="!animated()" aria-label="Posição no percurso">{{ counter() }}</span>
       </div>
       <div class="frame-space">
         @for (frame of frames(); track frame.anchor; let i = $index) {
           @if (frame.kind === 'moment') {
             <section class="moment timeline-frame" [attr.id]="animated() ? null : frame.anchor" [attr.data-frame-index]="i"
-              [attr.aria-labelledby]="'titulo-' + frame.moment.slug" [attr.aria-hidden]="animated() && active() !== i ? true : null"
+              [attr.aria-labelledby]="'titulo-experiencia-' + frame.moment.slug" [attr.aria-hidden]="animated() && active() !== i ? true : null"
               [attr.inert]="animated() && active() !== i ? '' : null"
-              [style.opacity]="animated() ? states()[i].opacity : 1" [style.transform]="animated() ? 'translateY(' + states()[i].offset + 'px)' : null">
-              <header class="moment-lead">
-                <p class="moment-year">{{ frame.moment.year }}</p>
-                <h3 [id]="'titulo-' + frame.moment.slug">{{ frame.moment.company }}</h3>
-              </header>
-              <div class="moment-summary">
-                <p class="moment-role">{{ frame.moment.title }}</p>
-                <p class="period">{{ frame.moment.excerpt }}</p>
+              [style.opacity]="animated() ? states()[i].opacity : 1" [style.--agenda-offset]="states()[i].offset" [style.transform]="animated() ? 'translateY(calc(var(--agenda-offset) * var(--agenda-step))) scale(' + states()[i].scale + ')' : null">
+              <div class="agenda">
+                <header class="agenda-date">
+                  <p class="moment-year">{{ frame.moment.year }}</p>
+                </header>
+                <div class="agenda-event">
+                  <h3 [id]="'titulo-experiencia-' + frame.moment.slug">
+                    @if (frame.moment.slug === '2025') {
+                      <a href="#momento-2025" aria-label="Trade Arena — ver o trabalho em detalhes">{{ frame.moment.company }}</a>
+                    } @else {
+                      {{ frame.moment.company }}
+                    }
+                  </h3>
+                  <p class="moment-role">{{ frame.moment.slug === '2022' ? 'AngularJS, React e React Native.' : frame.moment.title }}</p>
+                  <p class="period">{{ frame.moment.excerpt }}</p>
+                </div>
+                @if (i === frames().length - 1) {
+                  <figure class="career-note" [style.opacity]="animated() ? closing() : 1" [attr.aria-hidden]="animated() && closing() === 0 ? true : null">
+                    <img src="/images/work/html-for-food-xilogravura.webp" width="600" height="600" loading="lazy" alt="Xilogravura de um desenvolvedor segurando uma placa: Will code HTML for food." />
+                    <figcaption>Desde quando a web era mato.</figcaption>
+                  </figure>
+                }
               </div>
             </section>
-          } @else {
-            <figure class="landscape timeline-frame" [attr.id]="animated() ? null : frame.anchor" [attr.data-frame-index]="i"
-              [attr.aria-hidden]="animated() && active() !== i ? true : null" [attr.inert]="animated() && active() !== i ? '' : null"
-              [style.opacity]="animated() ? states()[i].opacity : 1" [style.transform]="animated() ? 'translateY(' + states()[i].offset + 'px)' : null">
-              <img src="/images/cerrado-xilogravura.jpg" width="1536" height="1024" loading="lazy"
-                alt="André a cavalo, visto de costas, acompanhado por seu red heeler no cerrado, em xilogravura." />
-            </figure>
           }
         }
       </div>
       <div class="timeline-bottom">
-        <nav aria-label="Experiências anteriores" [hidden]="!animated()">
-          @for (frame of frames(); track frame.anchor; let i = $index) {
-            <button type="button" [attr.aria-label]="frame.label" [attr.title]="frame.label" [attr.aria-current]="active() === i ? 'step' : null" (click)="goTo(i)"><span></span></button>
-          }
-        </nav>
         <button class="motion-toggle" type="button" (click)="toggleMotion()">{{ animated() ? 'Ver sem animação' : 'Ativar transições' }}</button>
       </div>
     </div>

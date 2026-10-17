@@ -2,7 +2,8 @@ import { afterNextRender, ChangeDetectionStrategy, Component, computed, DestroyR
 import { DOCUMENT } from '@angular/common';
 import { ContentStore } from '../../core/content/content-store';
 import { newestCareerFirst } from '../../core/content/career-order';
-import { careerFrames, timelineFrame, timelineIndex, timelinePosition } from './timeline-playback';
+import { careerFrames, careerAgendaFrame, timelinePosition } from './timeline-playback';
+import { PageChrome } from '../../core/ui/page-chrome';
 
 @Component({
   selector: 'app-timeline',
@@ -12,6 +13,7 @@ import { careerFrames, timelineFrame, timelineIndex, timelinePosition } from './
   host: { '[class.is-animated]': 'animated()', '[style.--timeline-inset]': 'inset()', '[attr.data-frame]': 'active()' },
 })
 export class Timeline {
+  readonly chrome = inject(PageChrome);
   private readonly content = inject(ContentStore);
   private readonly root = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly document = inject(DOCUMENT);
@@ -24,11 +26,16 @@ export class Timeline {
   readonly position = signal(0);
   readonly moments = computed(() => this.content.entries()
     .filter(entry => entry.kind === 'moment' && entry.status === 'published' &&
-      entry.slug !== 'agora' && entry.slug !== '2025')
+      entry.slug !== 'agora')
     .sort(newestCareerFirst));
   readonly frames = computed(() => careerFrames(this.moments()));
-  readonly active = computed(() => timelineIndex(this.position(), this.frames().length));
-  readonly states = computed(() => this.frames().map((_, index) => timelineFrame(this.position(), index, this.frames().length)));
+  readonly active = computed(() => Math.max(0, Math.min(this.frames().length - 1, Math.round(this.position() - .25))));
+  readonly closing = computed(() => Math.max(0, Math.min(1, (this.position() - this.frames().length + .7) / .45)));
+  readonly states = computed(() => this.frames().map((_, index) => {
+    const state = careerAgendaFrame(this.position(), index, this.frames().length);
+    const last = index === this.frames().length - 1;
+    return { ...state, offset: state.offset - this.closing() * (last ? .7 : 1), opacity: state.opacity * (last ? 1 : 1 - this.closing()) };
+  }));
   readonly counter = computed(() => `${String(this.active() + 1).padStart(2, '0')} / ${String(this.frames().length).padStart(2, '0')}`);
 
   constructor() {
@@ -43,9 +50,12 @@ export class Timeline {
         frame = 0;
         const inset = this.headerHeight();
         this.inset.set(`${inset}px`);
-        if (!this.animated()) return;
         const rect = this.root.nativeElement.getBoundingClientRect();
-        this.position.set(timelinePosition(rect.top, rect.height, view.innerHeight, inset, this.frames().length));
+        if (this.animated()) this.position.set(timelinePosition(rect.top, rect.height, view.innerHeight, inset, this.frames().length));
+        const focusLine = inset + (view.innerHeight - inset) * .4;
+        this.chrome.careerContext.set(this.frames().length && rect.top <= focusLine && rect.bottom > focusLine
+          ? { counter: this.animated() ? this.counter() : null }
+          : null);
       };
       const schedule = () => { if (!frame) frame = view.requestAnimationFrame(update); };
       const motionChanged = () => { this.canAnimate.set(!reduced.matches); schedule(); };
@@ -70,6 +80,7 @@ export class Timeline {
         view.removeEventListener('resize', schedule);
         reduced.removeEventListener('change', motionChanged);
         resize.disconnect();
+        this.chrome.careerContext.set(null);
       });
     });
   }

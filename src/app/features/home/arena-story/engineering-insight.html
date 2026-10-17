@@ -34,17 +34,16 @@
           </div>
           <div class="file-strip"><span>league.component.ts</span><span>league.component.html</span><span>feature-teams</span></div>
         </div>
-        <p class="caption">RxJS no fluxo. Signals na apresentação.</p>
-        <p class="evidence">Mudança real na League · trechos reduzidos para apresentação</p>
+        <p class="caption">O template lê Signals. RxJS continua nos dados.</p>
+        <p class="evidence">Recorte real da League · estado inicial explícito</p>
       }
       @case ('tests') {
         <div class="migration-panel">
           <div class="runner-change"><span [class.retired]="changed()">Karma / Jasmine</span><span class="migration-arrow">→</span><strong [class.current]="changed()">Vitest</strong></div>
-          <div class="migration-body"><div class="migration-metric"><strong>197<span>specs</span></strong><p>convertidos para o novo runner</p><span class="total-files">206 arquivos alterados na migração</span></div><div class="test-matrix" aria-hidden="true">@for (cell of cells; track cell) { <span [class.converted]="work() * 62 > cell">{{ work() * 62 > cell ? '✓' : '·' }}</span> }</div></div>
+          <div class="migration-body"><div class="migration-metric"><strong>197<span>specs</span></strong><p>adaptados no commit de migração</p><span class="total-files">206 arquivos alterados no commit</span><app-test-matrix [progress]="work()" /></div><div class="migration-example"><span class="diff-label">{{ changed() ? 'DEPOIS / VITEST' : 'ANTES / JASMINE' }}</span><pre [class.added]="changed()">{{ changed() ? testAfter : testBefore }}</pre></div></div>
           <div class="runner-code"><span>angular.json</span><code>{{ changed() ? '@angular/build:unit-test' : '@angular/build:karma' }}</code><span class="runner-tag">{{ changed() ? 'runner: vitest' : 'karma.conf.cjs' }}</span></div>
         </div>
-        <p class="caption">Evoluir também é cuidar do que já existe.</p>
-        <p class="evidence">Karma/Jasmine → Vitest · contagem do commit de migração</p>
+        <p class="evidence">69bf27aa5 · league-about.component.spec.ts · preparação omitida</p>
       }
     }
   </div>

@@ -1,0 +1,10 @@
+<ul class="class-selection" aria-label="Classes disponíveis nesta demonstração">
+  @for (item of classes(); track item.name; let index = $index) {
+    <li [class.selected]="selected() === index" [attr.aria-current]="active() === index ? 'true' : null">
+      <button type="button" (click)="choose.emit(index)" [attr.aria-pressed]="selected() === index">
+        <img [src]="'/images/work/avatar-modal-real/' + item.preview" width="180" height="320" [alt]="item.name" loading="lazy" />
+        <span class="class-title">{{ item.name }}@if (active() === index) { <small>(Atual)</small> }</span>
+      </button>
+    </li>
+  }
+</ul>

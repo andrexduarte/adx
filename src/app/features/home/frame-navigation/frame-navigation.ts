@@ -25,7 +25,7 @@ export class FrameNavigation {
   readonly active = signal(0);
   readonly frames = computed(() => {
     const moments = this.content.entries().filter(entry => entry.kind === 'moment' && entry.status === 'published' && entry.slug !== 'agora');
-    const career = careerFrames(moments.filter(entry => entry.slug !== '2025').sort(newestCareerFirst));
+    const career = careerFrames(moments.sort(newestCareerFirst));
     const frames = pageFrames(career);
     return moments.length ? frames : frames.filter(frame => frame.region === 'hero' || frame.region === 'closing');
   });
@@ -109,7 +109,7 @@ export class FrameNavigation {
       }
       let element: Element | null | undefined = region.root;
       if (frame.region === 'arena') {
-        element = region.root.querySelectorAll('.scene-space > .scene')[frame.scene ?? 0];
+        element = region.root.querySelector(`[data-arena-scene="${frame.scene ?? 0}"]`);
         if (frame.evidence) element = element?.querySelector('.evidence') ?? element;
         else if (frame.panel !== undefined) element = element?.querySelectorAll('.panel')[frame.panel] ?? element;
       } else if (frame.region === 'nos' || frame.region === 'wakawa') {

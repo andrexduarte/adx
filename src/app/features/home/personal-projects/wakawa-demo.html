@@ -1,0 +1,21 @@
+<div class="browser" aria-label="Demonstração do navegador waka’wã">
+  <div class="tabs"><span class="tab"><img src="/images/projects/wakawa-acaua.png" width="16" height="16" alt="" /> Início <span aria-hidden="true">×</span></span><span aria-hidden="true">＋</span><span class="window" aria-hidden="true">− &nbsp; □ &nbsp; ×</span></div>
+  <div class="address"><span class="navigation" aria-hidden="true">☰ &nbsp; ← &nbsp; → &nbsp; ⟳ &nbsp; ⌂</span><div>Início</div><button type="button" (click)="select(step() ? 0 : 1)" [attr.aria-pressed]="step() > 0" aria-label="Alternar painel Codex na demonstração">Codex</button><span class="tools-label">DevTools</span></div>
+  <div class="browser-body" [class.with-codex]="step() > 0">
+    <section class="page-preview" aria-label="Página inicial do waka’wã">
+      <header class="masthead"><span class="identity"><img src="/images/projects/wakawa-acaua.png" width="28" height="28" alt="" />waka'wã</span><span class="home-actions">Histórico &nbsp; Senhas</span></header>
+      <div class="welcome">
+        <p class="eyebrow">WAKA'WÃ <span>✦</span> INÍCIO</p><h4>O que vamos fazer?</h4><p class="intro">Um lugar para navegar, criar e investigar suas ideias.</p>
+        <div class="composer"><p>Pergunte, descreva uma ideia ou diga qual página quer explorar...</p><div><small>Codex · conectado quando você pedir</small><span aria-hidden="true">↗</span></div></div>
+        <p class="account">Conta ChatGPT · não verificada <span>Verificar conexão</span></p>
+        <div class="workspace-actions"><span>C:\projetos\wakawa</span><span>Abrir projeto ↗</span><span>Configurar projeto</span><span>Nova conversa</span></div>
+        <div class="hints"><span>Recarregar <kbd>F5</kbd></span><span>DevTools <kbd>F12</kbd></span><span>Endereço <kbd>Ctrl+L</kbd></span></div>
+      </div>
+      <footer><span>ACAUÃ · XILOGRAVURA</span><span>Leve para pensar longe.</span></footer>
+    </section>
+    @if (step() > 0) { <app-wakawa-workbench [conversation]="step() === 2" (closePanel)="select(0)" (sendExample)="select(2)" /> }
+  </div>
+</div>
+<nav class="demo-steps" aria-label="Etapas da demonstração do waka’wã">
+  @for (label of steps; track label; let i = $index) { <button type="button" [attr.aria-pressed]="step() === i" (click)="select(i)"><span>0{{ i + 1 }}</span>{{ label }}</button> }
+</nav>

@@ -12,6 +12,9 @@
     <clipPath id="workshop-arm-clip" clipPathUnits="userSpaceOnUse">
       <use href="#workshop-hammer-arm" />
     </clipPath>
+    <clipPath id="workshop-worker-cell" clipPathUnits="userSpaceOnUse">
+      <rect width="512" height="512" />
+    </clipPath>
     <mask
       id="workshop-rigger-body"
       maskUnits="userSpaceOnUse"
@@ -22,6 +25,8 @@
     >
       <rect width="1536" height="1024" fill="white" />
       <use href="#workshop-hammer-arm" fill="black" />
+      <!-- Keep the shoulder underneath the moving sleeve so the joint stays closed. -->
+      <circle cx="260" cy="137" r="32" fill="white" />
     </mask>
     <symbol id="workshop-panel" viewBox="44 58 456 422" preserveAspectRatio="none">
       <image href="/images/workshop/engraving-atlas.webp" width="1536" height="1024" />
@@ -397,16 +402,18 @@
           [attr.width]="worker.size"
           [attr.height]="worker.size"
           viewBox="0 0 512 512"
-          overflow="hidden"
+          [attr.overflow]="worker.id === 'rigger' ? 'visible' : 'hidden'"
         >
           <g [attr.class]="'worker-body ' + worker.id">
             @if (worker.id === 'rigger') {
-              <image
-                href="/images/workshop/workers-atlas-v2.webp"
-                width="1536"
-                height="1024"
-                mask="url(#workshop-rigger-body)"
-              />
+              <g clip-path="url(#workshop-worker-cell)">
+                <image
+                  href="/images/workshop/workers-atlas-v2.webp"
+                  width="1536"
+                  height="1024"
+                  mask="url(#workshop-rigger-body)"
+                />
+              </g>
               <g class="hammer-arm">
                 <image
                   href="/images/workshop/workers-atlas-v2.webp"

@@ -1,0 +1,26 @@
+<section class="ranking" aria-label="Recorte do ranking por vitórias">
+  <ol class="podium-list" aria-label="Três primeiros colocados">
+    @for (trader of traders; track trader.position) {
+      <li class="podium-card" [attr.data-position]="trader.position" [attr.aria-label]="trader.position + 'º lugar: ' + trader.name">
+        <img class="podium-avatar" [src]="'/images/work/avatars/' + trader.picture + '-128.webp'" alt="" width="120" height="120" />
+        <div class="podium-identity"><h3>{{ trader.name }}</h3><p>{{ trader.nickname }}</p></div>
+        <div class="podium-value-box"><strong>{{ trader.wins }} vitórias</strong><small>Vitórias</small></div>
+        <span class="profile-action" aria-hidden="true">Ver perfil</span>
+      </li>
+    }
+  </ol>
+  <div class="ranking-table-shell">
+    <table aria-label="Classificação da liga por vitórias">
+      <thead><tr><th scope="col">Posição</th><th scope="col">Usuário</th><th scope="col">Vitórias</th></tr></thead>
+      <tbody>
+        @for (trader of traders; track trader.position) {
+          <tr>
+            <td>{{ trader.position }}º</td>
+            <td><span class="table-identity"><img [src]="'/images/work/avatars/' + trader.picture + '-128.webp'" alt="" width="30" height="30" /><span>{{ trader.name }}</span></span></td>
+            <td>{{ trader.wins }} vitórias</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

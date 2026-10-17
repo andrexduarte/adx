@@ -1,0 +1,76 @@
+<div class="workflow" role="group" aria-label="Meu fluxo de trabalho: referências, plano com Codex, implementação e revisão">
+  <svg class="connections desktop-connections" viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true">
+    <g [style.opacity]="reveal(.12)">
+      <path d="M170 75 C240 75 250 62 310 62" />
+      <path d="M170 165 C240 165 235 62 310 62" />
+      <path d="M350 80 V116" />
+    </g>
+    <path d="M170 257 C245 257 235 192 277 192" [style.stroke-dashoffset]="1 - reveal(.24)" pathLength="1" class="draw" />
+    <path d="M423 192 H515" [style.stroke-dashoffset]="1 - reveal(.39)" pathLength="1" class="draw" />
+    <path d="M765 192 H823" [style.stroke-dashoffset]="1 - reveal(.67)" pathLength="1" class="draw" />
+    <path class="feedback" d="M900 285 V324 Q900 339 885 339 H365 Q350 339 350 324 V278 M345 285 L350 278 L355 285" [style.opacity]="reveal(.82)" />
+  </svg>
+  <svg class="connections mobile-connections" viewBox="0 0 360 464" preserveAspectRatio="none" aria-hidden="true">
+    <g [style.opacity]="reveal(.12)">
+      <path d="M126 66 C178 66 183 51 239 51" />
+      <path d="M126 125 C185 125 180 51 239 51" />
+      <path d="M270 69 V98" />
+    </g>
+    <path d="M126 184 C174 184 175 149 219 149" [style.stroke-dashoffset]="1 - reveal(.24)" pathLength="1" class="draw" />
+    <path d="M270 202 V215 Q270 225 260 225 H100 Q90 225 90 235 V256" [style.stroke-dashoffset]="1 - reveal(.39)" pathLength="1" class="draw" />
+    <path d="M155 337 H209" [style.stroke-dashoffset]="1 - reveal(.67)" pathLength="1" class="draw" />
+    <path class="feedback" d="M300 399 H340 V155 H324 M330 150 L324 155 L330 160" [style.opacity]="reveal(.82)" />
+  </svg>
+
+  <div class="workflow-grid">
+    <section class="references" aria-label="Referências para o trabalho">
+      <h3 class="phase-label">01 / Contexto</h3>
+      <div class="reference figma" [style.opacity]="reveal(0)">
+        <span class="figma-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <strong>Figma</strong><small>{{ copy().figma }}</small>
+      </div>
+      <div class="reference repository" [style.opacity]="reveal(.06)">
+        <img src="/images/technology/git.svg" width="26" height="26" alt="" />
+        <strong>Git / GitHub</strong><small>código, branches e PRs</small>
+      </div>
+      <div class="reference specs" [style.opacity]="reveal(.12)">
+        <span class="spec-icon" aria-hidden="true">{{ '{ }' }}</span>
+        <strong>specs/</strong><small>padrões, referências e decisões</small>
+      </div>
+    </section>
+
+    <section class="pairing" aria-label="Planejamento e implementação com Codex">
+      <h3 class="phase-label">02 / André + Codex</h3>
+      <div class="mcp" [style.opacity]="reveal(.18)"><span aria-hidden="true">⌘</span> MCP<small>conecta as ferramentas</small></div>
+      <div class="codex" [style.opacity]="reveal(.27)">
+        <img src="/images/technology/codex.svg" width="30" height="30" alt="" />
+        <strong>Codex</strong><small>contexto → plano → código</small>
+      </div>
+      <p class="human-review" [style.opacity]="reveal(.31)">Eu direciono e reviso.</p>
+    </section>
+
+    <section class="implementation" [attr.aria-label]="'Tecnologias usadas na implementação de ' + copy().name">
+      <h3 class="phase-label">03 / Construção</h3>
+      <ul class="stack">
+        @for (tool of stack(); track tool.name; let i = $index) {
+          <li [style.opacity]="reveal(.36 + i * .045)">
+            @if (tool.icon) { <img [src]="'/images/technology/' + tool.icon + '.svg'" width="27" height="27" alt="" /> }
+            @else { <span class="tool-symbol" aria-hidden="true">{{ tool.symbol }}</span> }
+            <strong>{{ tool.name }}</strong><small>{{ tool.detail }}</small>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="result" aria-label="Interface e verificação">
+      <h3 class="phase-label">04 / Interface</h3>
+      <div class="result-content" [style.opacity]="reveal(.68)">
+        <app-workflow-interface [kind]="kind()" />
+        <strong>{{ copy().result }}</strong>
+        <small>{{ copy().layout }}</small>
+        <p class="verification">{{ copy().verification }}<br />Testes e comparação visual</p>
+      </div>
+    </section>
+  </div>
+  <p class="iteration" [style.opacity]="reveal(.82)"><span aria-hidden="true">↶</span> Revisar, ajustar e testar de novo.</p>
+</div>

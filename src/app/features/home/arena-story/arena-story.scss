@@ -14,6 +14,7 @@
 .role { font-size: clamp(16px, 2vw, 22px); line-height: 1.6; margin: 0 0 15px; }
 .role em { color: var(--quiet); font: italic 1.2em var(--serif); }
 .season { color: var(--quiet); font-size: 11px; }
+.prompt-scene h3 { font: 45px/1.1 var(--serif); letter-spacing: -.04em; margin: 0 0 35px; }
 .code-scene app-chat-code { width: min(100%, 900px); }
 .scene-caption { font: italic 21px var(--serif); color: #c7bfb2; margin: 22px 0 0; }
 .result-scene app-chat-preview { max-width: 1100px; }
@@ -28,6 +29,7 @@
   .story-track { --story-length: 4380svh; --story-inset: 76px; }
   .story-stage { top: 76px; height: calc(100svh - 76px); min-height: 530px; padding: 15px 24px 20px; }
   .scene-kicker { font-size: 8px; margin-bottom: 24px; }
+  .prompt-scene h3 { font-size: 37px; line-height: 1.15; }
   .scene-caption { font-size: 18px; }
 }
 @media (min-width: 761px) and (max-height: 760px) {

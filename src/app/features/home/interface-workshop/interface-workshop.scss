@@ -60,7 +60,8 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .hammer-arm {
-    transform-origin: 241px 150px;
+    transform-box: view-box;
+    transform-origin: 260px 137px;
     animation: hammering 3.6s ease-in-out infinite;
     animation-play-state: paused;
   }
@@ -76,11 +77,11 @@
     }
     18%,
     54% {
-      transform: rotate(-10deg);
+      transform: rotate(-7deg);
     }
     24%,
     60% {
-      transform: rotate(5deg);
+      transform: rotate(3deg);
     }
   }
 }

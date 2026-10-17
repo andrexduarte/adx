@@ -3,31 +3,34 @@ import { afterNextRender, ChangeDetectionStrategy, Component, computed, DestroyR
 import { timelineFrame, timelineIndex, timelinePosition } from '../../timeline/timeline-playback';
 import { PromptComposer } from '../arena-story/prompt-composer';
 import { BuildPlan } from '../arena-story/build-plan';
-import { ResponsivePreview } from '../arena-story/responsive-preview';
+import { visibleProjectScenes } from './project-timing';
 import { clamp, phase } from '../arena-story/story-timing';
 import { NosDemo } from './nos-demo';
 import { WakawaDemo } from './wakawa-demo';
 import { PersonalProject } from './project-data';
 import { ProjectDetails } from './project-details';
+import { PageChrome } from '../../../core/ui/page-chrome';
 
 @Component({
   selector: 'app-project-story',
-  imports: [PromptComposer, BuildPlan, ResponsivePreview, NosDemo, WakawaDemo, ProjectDetails],
+  imports: [PromptComposer, BuildPlan, NosDemo, WakawaDemo, ProjectDetails],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './project-story.html',
   styleUrl: './project-story.scss',
   host: {
     '[class.animated]': 'animated()', '[class.nos]': 'project().id === "nos"',
     '[class.wakawa]': 'project().id === "wakawa"', '[style.--project-inset]': 'inset()',
+    '[style.--intro-reveal]': 'introReveal()',
+    '[style.--scene-count]': 'visibleScenes().length',
     '[attr.id]': '"projeto-" + project().id', '[attr.data-scene]': 'active()',
   },
 })
 export class ProjectStory {
   readonly project = input.required<PersonalProject>();
-  readonly next = input.required<string>();
-  readonly nextLabel = input.required<string>();
   readonly scenes = ['O projeto', 'A ideia', 'O plano', 'As ferramentas', 'O código', 'Na prática'];
+  readonly visibleScenes = computed(() => visibleProjectScenes(this.project().id));
   private readonly root = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly chrome = inject(PageChrome);
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   private view: Window | null = null;
@@ -36,11 +39,12 @@ export class ProjectStory {
   readonly animated = computed(() => this.motionChoice() ?? this.canAnimate());
   readonly inset = signal('90px');
   readonly position = signal(0);
-  readonly active = computed(() => timelineIndex(this.position(), this.scenes.length));
-  readonly states = computed(() => this.scenes.map((_, i) => timelineFrame(this.position(), i, this.scenes.length)));
-  readonly demoProgress = computed(() => this.animated() ? clamp((this.position() - 5.1) / .75) : 1);
-  readonly compactChoice = signal<number | null>(null);
-  readonly compact = computed(() => this.compactChoice() ?? phase(this.demoProgress(), .2, .85));
+  readonly introReveal = computed(() => this.animated() && this.project().id === 'nos' ? phase(this.position(), .18, .58) : 1);
+  readonly introductionOpacity = computed(() => this.animated() ? 1 - phase(this.position(), .25, .43) : 1);
+  readonly projectIntroOpacity = computed(() => this.animated() && this.project().id === 'nos' ? phase(this.position(), .42, .64) : 1);
+  readonly active = computed(() => this.visibleScenes()[timelineIndex(this.position(), this.visibleScenes().length)]);
+  readonly states = computed(() => this.scenes.map((_, i) => timelineFrame(this.position(), this.visibleScenes().indexOf(i), this.visibleScenes().length)));
+  readonly demoProgress = computed(() => this.animated() ? clamp((this.position() - this.visibleScenes().indexOf(5) - .1) / .75) : 1);
   readonly prompt = computed(() => this.animated()
     ? this.project().prompt.slice(0, Math.ceil(this.project().prompt.length * phase(this.position(), 1.08, 1.7)))
     : this.project().prompt);
@@ -62,10 +66,19 @@ export class ProjectStory {
         const rect = this.root.nativeElement.getBoundingClientRect();
         const page = this.document.documentElement;
         const focusLine = inset + (view.innerHeight - inset) * .4;
-        if (rect.top <= focusLine && rect.bottom > focusLine) page.dataset['showcase'] = this.project().id;
-        else if (page.dataset['showcase'] === this.project().id) delete page.dataset['showcase'];
-        if (!this.animated()) return;
-        this.position.set(timelinePosition(rect.top, rect.height, view.innerHeight, inset, this.scenes.length));
+        if (rect.top <= focusLine && rect.bottom > focusLine) {
+          page.dataset['showcase'] = this.project().id;
+          this.chrome.personalProject.set({ id: this.project().id, name: this.project().name });
+        } else {
+          if (page.dataset['showcase'] === this.project().id) delete page.dataset['showcase'];
+          if (this.chrome.personalProject()?.id === this.project().id) this.chrome.personalProject.set(null);
+        }
+        if (!this.animated()) {
+          if (this.project().id === 'nos') page.style.setProperty('--nos-intro-reveal', '1');
+          return;
+        }
+        this.position.set(timelinePosition(rect.top, rect.height, view.innerHeight, inset, this.visibleScenes().length));
+        if (this.project().id === 'nos') page.style.setProperty('--nos-intro-reveal', String(this.introReveal()));
       };
       const schedule = () => { if (!frame) frame = view.requestAnimationFrame(update); };
       const motionChanged = () => { this.canAnimate.set(!media.matches); schedule(); };
@@ -84,17 +97,21 @@ export class ProjectStory {
         view.removeEventListener('resize', schedule);
         media.removeEventListener('change', motionChanged);
         if (this.document.documentElement.dataset['showcase'] === this.project().id) delete this.document.documentElement.dataset['showcase'];
+        if (this.chrome.personalProject()?.id === this.project().id) this.chrome.personalProject.set(null);
+        if (this.project().id === 'nos') this.document.documentElement.style.removeProperty('--nos-intro-reveal');
       });
     });
   }
   private headerHeight() { return this.document.querySelector('app-site-header')?.getBoundingClientRect().height ?? 90; }
   goTo(index: number) {
-    if (!this.view) return;
+    const step = this.visibleScenes().indexOf(index);
+    if (!this.view || step < 0) return;
     const root = this.root.nativeElement;
     const inset = this.headerHeight();
     if (this.animated()) {
-      const distance = (root.offsetHeight - this.view.innerHeight + inset) / this.scenes.length;
-      this.view.scrollTo({ top: this.view.scrollY + root.getBoundingClientRect().top - inset + distance * (index + .35), behavior: 'instant' });
+      const distance = (root.offsetHeight - this.view.innerHeight + inset) / this.visibleScenes().length;
+      const point = index === 0 && this.project().id === 'nos' ? .1 : step + .35;
+      this.view.scrollTo({ top: this.view.scrollY + root.getBoundingClientRect().top - inset + distance * point, behavior: 'instant' });
     } else {
       const scene = root.querySelector<HTMLElement>(`[data-project-scene="${index}"]`);
       if (scene) this.view.scrollTo({ top: this.view.scrollY + scene.getBoundingClientRect().top - inset - 20, behavior: 'instant' });

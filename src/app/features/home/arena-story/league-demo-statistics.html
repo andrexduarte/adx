@@ -1,0 +1,37 @@
+<div class="league-statistics">
+  <header class="statistics-header">
+    <div><h2>Hall da Fama</h2><p>Os traders que marcaram a história desta liga — títulos, recordes e o que os números mostram.</p></div>
+    <div class="statistics-periods" aria-label="Período: desde sempre"><span class="active">Desde sempre</span><span>Últimos 30 dias</span><span>Últimos 7 dias</span></div>
+  </header>
+  <dl class="statistics-summary" aria-label="Resumo da liga com dados demonstrativos" tabindex="0">
+    @for (item of summary; track item.label) {
+      <div class="summary-item">
+        <dt>{{ item.label }}</dt>
+        <dd><svg aria-hidden="true"><use [attr.href]="'/images/work/league-demo-icons.svg#statistics-' + item.icon" /></svg><span>{{ item.value }}</span></dd>
+      </div>
+    }
+  </dl>
+  <section class="statistics-section" aria-label="Recorte de três recordes da liga">
+    <header class="statistics-section-header"><h3>Recordes da liga</h3><p>Marcas extremas que ninguém superou ou levou o primeiro tombo.</p></header>
+    <div class="statistics-records">
+      @for (record of records; track record.title) {
+        <article class="statistics-record">
+          <header>
+            <span class="record-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                @switch (record.icon) {
+                  @case ('trend') { <path d="m3 17 6-6 4 4 8-8M15 7h6v6" /> }
+                  @case ('bolt') { <path d="m13 2-8 12h6l-1 8 9-13h-6z" /> }
+                  @default { <circle cx="12" cy="12" r="9" /><path d="M15 8h-4a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4H9m3-10v12" /> }
+                }
+              </svg>
+            </span>
+            <h4>{{ record.title }}</h4><span class="record-status">Recorde atual</span>
+          </header>
+          <strong>{{ record.value }}</strong>
+          <footer><img [src]="'/images/work/avatars/' + record.picture + '-128.webp'" alt="" width="32" height="32" /><span>{{ record.holder }}</span><time>{{ record.date }}</time></footer>
+        </article>
+      }
+    </div>
+  </section>
+</div>
