@@ -1,10 +1,10 @@
 # Publicação de andre.is-a.dev
 
-## Revisão de 17/10/2026 — preparada para publicação
+## Revisão de 17/10/2026 — publicada
 
 A revisão reúne 64 frames, demonstrações conferidas no código da Arena, páginas reconstruídas de Nós e waka’wã, nove experiências profissionais e links finais de WhatsApp/Instagram. A matriz de checks do Vitest foi recuperada junto do antes/depois real. O retrato em pontilhismo permanece no encerramento.
 
-Validação: suíte completa com 64 testes, build de produção e nove cenários SSR mais agrupador. A comparação autenticada ao vivo com a Arena continua pendente nos exemplos indicados em TASK_PROGRESS.md. A confirmação de PR, implantação e domínio será registrada após a publicação.
+Validação: suíte completa com 64 testes, build de produção e nove cenários SSR mais agrupador. A comparação autenticada ao vivo com a Arena continua pendente nos exemplos indicados em TASK_PROGRESS.md. Publicada pelo [PR #8](https://github.com/andrexduarte/adx/pull/8), integrado no commit `2062a2a995a5fa44003ebfc02135b473b0de2e2b`. A [implantação de produção](https://vercel.com/andre-duarte/andre-is-a-dev/4yzbM7K4Su3KDRfvQtG3uHxvTgme) terminou com sucesso. Em 17/10/2026 às 02h57 (Brasília), o domínio retornou HTTP 200 com os 64 frames, a primeira experiência Trade Arena, os contatos e a matriz do Vitest. No navegador de produção, os 48 checks foram conferidos preenchidos e voltaram a dois após recuar a rolagem; nenhum erro de console observado. Evidência local em `../research/publication-2026-10-17.json`.
 
 ## Revisão de 16/10/2026
 

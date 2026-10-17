@@ -1,8 +1,8 @@
 # Progresso da revisão do site pessoal
 
-Atualizado em 17 de outubro de 2026. O catálogo local tem 64 frames: Trade Arena entra como primeira das nove experiências profissionais, no frame 53; os três frames de pontilhismo e contato encerram a página. A revisão passou pelos projetos pessoais e pelas experiências. As alterações descritas nas últimas entradas continuam locais, sem nova publicação. O registro abaixo preserva decisões, versões superadas, evidências e publicações anteriores.
+Atualizado em 17 de outubro de 2026, após a publicação do PR #8. O catálogo publicado tem 64 frames: Trade Arena entra como primeira das nove experiências profissionais, no frame 53; os três frames de pontilhismo e contato encerram a página. Toda a revisão descrita até a recuperação dos checks do Vitest está em produção. As menções a “localmente” e “sem deploy” no histórico descrevem a situação no momento de cada etapa, anterior à publicação.
 
-Verificação mais recente: build:vercel concluído sem avisos em 17/10 às 05h46 UTC; 15 testes focados de timeline/navegação e dez testes SSR aprovados. Conferência da primeira experiência e cabeçalho no desktop e 390 × 844, além do link de retorno à apresentação da Arena. A fidelidade das demonstrações dos projetos continua limitada às fontes e às comparações já registradas em cada etapa.
+Validação final: 64 testes passaram; build:vercel concluído sem avisos às 05h52 UTC; dez testes SSR aprovados. Conferência local em desktop e celular, seguida da confirmação no domínio em 17/10 às 02h57 (Brasília): HTTP 200, 64 links de frames, Trade Arena na carreira, WhatsApp/Instagram e animação reversível dos 48 checks do Vitest. A fidelidade das demonstrações continua limitada às fontes e comparações registradas em cada etapa.
 
 ## Direção aprovada
 
@@ -77,26 +77,25 @@ Verificação mais recente: build:vercel concluído sem avisos em 17/10 às 05h4
 | 47 anterior — Código de Nós | Oculto | Conteúdo preservado em project-data.ts; removido da exibição, dos links e da duração. André esclareceu que a crítica à interface se referia ao antigo 48. |
 | [47 atual — Home de Nós](http://127.0.0.1:4301/#frame-nos-interface) | Reconstruída a partir do código real; QA concluída | Indicador de equilíbrio, situação do ciclo, quadro em três grupos, filtro e registro demonstrativo. A rolagem percorre a página sem transformar sua largura. Dados de Ana e Beto são fictícios. |
 
-Os números ocultos do chat, Dashboard, Monitor, Avatar, Domínios, Angular e Signals foram preservados em `work-evidence.ts`. O chat registra dois commits da entrada nas páginas de torneio, com 230 adições e 104 remoções; não representa toda sua construção. A numeração lateral se ajusta às remoções, preservando os IDs dos frames que continuam visíveis. A tabela distingue números anteriores dos atuais: catálogo de 66 frames, com dez experiências anteriores.
+Os números ocultos do chat, Dashboard, Monitor, Avatar, Domínios, Angular e Signals foram preservados em `work-evidence.ts`. O chat registra dois commits da entrada nas páginas de torneio, com 230 adições e 104 remoções; não representa toda sua construção. A numeração lateral se ajusta às remoções, preservando os IDs dos frames que continuam visíveis. A tabela preserva números anteriores junto aos atuais; o catálogo vigente tem 64 frames e nove experiências profissionais.
 
 ## O que já está implementado depois do chat
 
 - Exemplos visíveis da Trade Arena: chat, Torneios, Dashboard, avatares, League, organização por domínios, evolução do Angular, Signals e migração de testes, além dos calendários de atividade do GitHub.
 - Monitor flutuante e toda a área de ClickUp estão preservados no código, mas ocultos por decisão de André. O fluxo de ClickUp representa relatar e acompanhar problemas; não deve sugerir uma integração automática inexistente.
 - Projetos Nós e waka’wã após a Arena, com mudança de ambiente visual. Nós usa o nome, sem sua logo.
-- Experiências anteriores centralizadas, com uma experiência por tela durante a rolagem.
+- Experiência profissional em lista tipográfica: item central maior, vizinhos visíveis e troca contínua pela rolagem; Trade Arena abre os nove itens.
 - Encerramento em pontilhismo: os pontos formam o retrato, ele sobe, o cabeçalho desaparece e entram cargo, tecnologias e links. Codex aparece primeiro nas tecnologias; Supabase também está incluído.
 
-A revisão individual está incorporada até Nós, com o código oculto e a home demonstrada. A abertura do waka’wã (48) foi simplificada por pedido posterior; o prompt (49) parte do problema que motivou o navegador. O plano (50) foi reduzido a três passos; a próxima decisão é ferramentas (51). Os frames seguintes de waka’wã, experiências anteriores e encerramento ainda aguardam esta rodada; preservar seu conteúdo até a decisão de André.
+A revisão passou por Nós, waka’wã e pelo formato geral das experiências. As etapas detalhadas após a tabela estão registradas no histórico abaixo. O código do waka’wã permanece oculto; a demonstração mostra o navegador e o Codex. O encerramento preserva integralmente as etapas de pontilhismo. O próximo conteúdo de carreira a revisar individualmente é Freelancer, agora no frame 56.
 
 ## Próximos passos
 
-1. Concluir o frame 42 de GitHub: percurso 2025 → 2026 e apresentação separada dos totais do repositório Arena e do perfil. Conferir navegação e escopo das fontes, mantendo o catálogo de 67 frames.
-2. Definir com André a passagem para os projetos pessoais na revisão de Nós, frame 43: transição dentro da abertura, frame próprio ou apenas rótulo. A pergunta já foi enviada; não implementar a sugestão “Projetos pessoais” / “Nós · waka’wã” nem antecipar alterações nos frames seguintes antes da decisão.
-3. Conferir visualmente o novo percurso de GitHub, incluindo celular, retorno da rolagem e modo estático. Preservar a QA já concluída de Dashboard, Vitest, League, Domínios/Angular e Avatar; completar as pendências específicas de movimento reduzido, Avatar estático e Avatar/League a 360px. Torneios 12–14 só deve ser repetido se novas alterações afetarem o trecho.
-4. Repetir e registrar os checks finais após as últimas edições de Vitest/GitHub. O último resultado consolidado é de 27 testes focados, `build:vercel` sem avisos às 03h55 UTC e nove cenários SSR mais o agrupador às 03h46 UTC em 17/10; esses checks antecedem as últimas edições. Não tratá-los como uma suíte completa atualizada, prova de produção ou validação da Arena.
-5. Conferir fidelidade contra código, prints e, quando disponível, aplicação autenticada ou Figma. Para o Dashboard, usar `feat/dashboad-torneios`, conforme a confirmação de André. Pedir referência específica quando faltar evidência visual; não inventar estados ou resultados.
-6. Revisar Nós, waka’wã, experiências anteriores e encerramento, mantendo o pontilhismo. Antes da próxima publicação, conferir também links, rolagem reversa, desktop, celular e movimento reduzido.
+1. Continuar a revisão de conteúdo das experiências com André por Freelancer, frame 56 (`#frame-momento-2015`), preservando a lista com destaque central, Trade Arena no início e o pontilhismo no final.
+2. Completar a conferência específica do detalhe selecionado ao retomar a rolagem do GitHub e do calendário em modo estático. Percurso 2025 → 2026 e totais separados da Arena já estão implementados e publicados.
+3. Completar as verificações pendentes de movimento reduzido, Avatar estático e Avatar/League a 360px, além da QA final do fluxo da League e do código de Domínios. Preservar as evidências dos demais recortes; repetir apenas quando novas alterações os afetarem.
+4. Comparar as reconstruções com a Arena autenticada ou referências visuais fornecidas por André. O Dashboard está em `feat/dashboad-torneios`, não em main. A reprodução atual parte do código e dos assets consultados, com dados demonstrativos; não equivale a uma comparação visual completa do produto em execução.
+5. Nas próximas mudanças, registrar decisão, fonte e verificação no mesmo histórico. A publicação atual está concluída; não há nova alteração de produto pendente desta rodada.
 
 ## Referências e arquivos principais
 
@@ -398,3 +397,12 @@ Verificação: 15 testes focados de navegação/timeline aprovados; build:vercel
 ### Preparação da publicação — checks do Vitest recuperados
 
 André identificou a retirada da matriz animada como regressão. Recuperados os 48 indicadores decorativos, que se preenchem conforme a rolagem e retornam ao voltar, mantendo ao lado o antes/depois real de Jasmine para Vitest. No celular, a matriz fica ao lado das métricas e o código abaixo. A frase descartada não foi restaurada. Componente isolado para preservar o limite de CSS existente. Conferência local desktop/mobile e rolagem reversa: 48 checks ao concluir e 22 no recuo conferido. A publicação autorizada abrange esta correção e toda a revisão aprovada.
+
+
+### Publicação concluída em 17/10/2026
+
+PR #8: https://github.com/andrexduarte/adx/pull/8. Três commits preservados: `ae70478` (martelo), `b5770a5` (portfólio e checks do Vitest) e `c0deb10` (documentação). Merge `2062a2a995a5fa44003ebfc02135b473b0de2e2b` na main, com implantação Vercel concluída em https://vercel.com/andre-duarte/andre-is-a-dev/4yzbM7K4Su3KDRfvQtG3uHxvTgme.
+
+Domínio https://andre.is-a.dev/ confirmado com HTTP 200 às 02h57 (Brasília). HTML contém 64 frames, primeira experiência Trade Arena, WhatsApp/Instagram e matriz de checks; novos assets retornam HTTP 200. No navegador de produção, a matriz tinha 48 checks ao concluir e dois após recuar, retornando a 48 com o avanço. Nenhum erro de console observado. Captura: `../research/vitest-publicado-2026-10-17.png`; evidência estruturada: `../research/publication-2026-10-17.json`.
+
+Validação local consolidada: 64 testes aprovados, build sem avisos e dez verificações SSR aprovadas. A comparação autenticada com a Arena e os recortes de QA citados nos próximos passos continuam pendentes. Banco e variáveis da implantação não foram alterados.
